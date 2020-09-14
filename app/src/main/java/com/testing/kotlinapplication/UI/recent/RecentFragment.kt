@@ -32,14 +32,14 @@ class RecentFragment : Fragment() {
 
     fun mapping(view: View) {
         rv_top = view.findViewById(R.id.rv_top)
-        mList=ArrayList()
+        mList = ArrayList()
         for (i in 0..9) {
             mList.add("new omega");
         }
         productAdapter = ProductAdapter(mList, view.context)
         rv_top.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(view.context,2)
+            layoutManager = GridLayoutManager(view.context, 2)
             adapter = productAdapter
         }
     }
