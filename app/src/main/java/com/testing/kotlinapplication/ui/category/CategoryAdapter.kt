@@ -1,4 +1,4 @@
-package com.testing.kotlinapplication.UI.category
+package com.testing.kotlinapplication.ui.category
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.testing.kotlinapplication.R
-import com.testing.kotlinapplication.UI.category.model.Category
+import com.testing.kotlinapplication.ui.category.model.Category
 import kotlinx.android.synthetic.main.row_category.view.*
 
 class CategoryAdapter(val mContext: Context, val mList: ArrayList<Category>) :

@@ -1,17 +1,14 @@
-package com.testing.kotlinapplication.UI.category
+package com.testing.kotlinapplication.ui.category
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
 import com.testing.kotlinapplication.R
-import com.testing.kotlinapplication.UI.category.model.Category
+import com.testing.kotlinapplication.ui.category.model.Category
 import kotlinx.android.synthetic.main.fragment_category.*
 
 /**

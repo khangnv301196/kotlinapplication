@@ -1,4 +1,4 @@
-package com.testing.kotlinapplication.UI.help
+package com.testing.kotlinapplication.ui.help
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.testing.kotlinapplication.R
-import com.testing.kotlinapplication.UI.help.model.Item
+import com.testing.kotlinapplication.ui.help.model.Item
 import kotlinx.android.synthetic.main.row_help.view.*
 
 class ItemAdapter(val mContext: Context, val mList: ArrayList<Item>) :

@@ -8,26 +8,49 @@
 
     <fragment
         android:id="@+id/recentFragment"
-        android:name="com.testing.kotlinapplication.UI.recent.RecentFragment"
+        android:name="com.testing.kotlinapplication.ui.recent.RecentFragment"
         android:label="fragment_receent"
-        tools:layout="@layout/fragment_recent"/>
+        tools:layout="@layout/fragment_recent">
+        <action
+            android:id="@+id/action_recentFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.testing.kotlinapplication.UI.category.CategoryFragment"
+        android:name="com.testing.kotlinapplication.ui.category.CategoryFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category"/>
     <fragment
         android:id="@+id/helpFragment"
-        android:name="com.testing.kotlinapplication.UI.help.HelpFragment"
+        android:name="com.testing.kotlinapplication.ui.help.HelpFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_help"/>
+        tools:layout="@layout/fragment_help">
+        <action
+            android:id="@+id/action_helpFragment_to_detailHelpFragment"
+            app:destination="@id/detailHelpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.testing.kotlinapplication.UI.profile.ProfileFragment"
+        android:name="com.testing.kotlinapplication.ui.profile.ProfileFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_profile">
 
+    </fragment>
+    <fragment
+        android:id="@+id/detailProductFragment"
+        android:name="com.testing.kotlinapplication.ui.detailproduct.DetailProductFragment"
+        android:label="fragment_detail_product"
+        tools:layout="@layout/fragment_detail_product" />
+    <fragment
+        android:id="@+id/detailHelpFragment"
+        android:name="com.testing.kotlinapplication.ui.detailhelp.DetailHelpFragment"
+        android:label="fragment_detail_help"
+        tools:layout="@layout/fragment_detail_help" >
+        <argument
+            android:name="type"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 
 

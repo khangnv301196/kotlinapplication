@@ -1,17 +1,13 @@
-package com.testing.kotlinapplication.UI.recent
+package com.testing.kotlinapplication.ui.recent
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.testing.kotlinapplication.R
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ProductAdapter(private val mList: ArrayList<String>, private val mContext: Context) :

@@ -2,6 +2,7 @@ package com.testing.kotlinapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -20,6 +21,16 @@ class MainActivity : AppCompatActivity() {
         var navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         var navController = navHostFragment.navController
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.navController)
+    }
+
+    fun showBottomNavigation()
+    {
+        bottomNavigationView.visibility = View.VISIBLE
+    }
+
+    fun hideBottomNavigation()
+    {
+        bottomNavigationView.visibility = View.GONE
     }
 
 

@@ -1,4 +1,4 @@
-package com.testing.kotlinapplication.UI.help
+package com.testing.kotlinapplication.ui.help
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.testing.kotlinapplication.R
-import com.testing.kotlinapplication.UI.help.model.Item
+import com.testing.kotlinapplication.ui.help.model.Item
 import kotlinx.android.synthetic.main.fragment_help.*
 
 /**

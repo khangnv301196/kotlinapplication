@@ -1,12 +1,12 @@
-package com.testing.kotlinapplication.UI.recent
+package com.testing.kotlinapplication.ui.recent
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.testing.kotlinapplication.R
@@ -14,7 +14,7 @@ import com.testing.kotlinapplication.R
 /**
  * A simple [Fragment] subclass.
  */
-class RecentFragment : Fragment() {
+class RecentFragment : Fragment(), Itemclick {
 
     private lateinit var rv_top: RecyclerView
     private lateinit var productAdapter: ProductAdapter
@@ -42,6 +42,10 @@ class RecentFragment : Fragment() {
             layoutManager = GridLayoutManager(view.context, 2)
             adapter = productAdapter
         }
+    }
+
+    override fun onItemClick() {
+        findNavController().navigate(R.id.action_recentFragment_to_detailProductFragment)
     }
 
 }
