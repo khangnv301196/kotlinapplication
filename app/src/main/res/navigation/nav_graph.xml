@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/recentFragment"
         android:name="com.testing.kotlinapplication.ui.recent.RecentFragment"
-        android:label="fragment_receent"
+        android:label="Home"
         tools:layout="@layout/fragment_recent">
         <action
             android:id="@+id/action_recentFragment_to_detailProductFragment"
@@ -19,12 +19,12 @@
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.testing.kotlinapplication.ui.category.CategoryFragment"
-        android:label="fragment_category"
+        android:label="Category"
         tools:layout="@layout/fragment_category"/>
     <fragment
         android:id="@+id/helpFragment"
         android:name="com.testing.kotlinapplication.ui.help.HelpFragment"
-        android:label="fragment_category"
+        android:label="Help"
         tools:layout="@layout/fragment_help">
         <action
             android:id="@+id/action_helpFragment_to_detailHelpFragment"
@@ -33,19 +33,19 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.testing.kotlinapplication.ui.profile.ProfileFragment"
-        android:label="fragment_category"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile">
 
     </fragment>
     <fragment
         android:id="@+id/detailProductFragment"
         android:name="com.testing.kotlinapplication.ui.detailproduct.DetailProductFragment"
-        android:label="fragment_detail_product"
+        android:label="Detail Product"
         tools:layout="@layout/fragment_detail_product" />
-    <fragment
+     <fragment
         android:id="@+id/detailHelpFragment"
         android:name="com.testing.kotlinapplication.ui.detailhelp.DetailHelpFragment"
-        android:label="fragment_detail_help"
+        android:label="Detail help"
         tools:layout="@layout/fragment_detail_help" >
         <argument
             android:name="type"

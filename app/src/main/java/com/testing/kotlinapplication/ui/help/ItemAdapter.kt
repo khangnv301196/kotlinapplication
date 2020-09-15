@@ -9,7 +9,7 @@ import com.testing.kotlinapplication.R
 import com.testing.kotlinapplication.ui.help.model.Item
 import kotlinx.android.synthetic.main.row_help.view.*
 
-class ItemAdapter(val mContext: Context, val mList: ArrayList<Item>) :
+class ItemAdapter(val mContext: Context, val mList: ArrayList<Item>, val itemClick: HelpItemClick) :
     RecyclerView.Adapter<ItemAdapter.ItemViewholder>() {
     class ItemViewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txt_name_help = itemView.txt_name_help
@@ -19,7 +19,8 @@ class ItemAdapter(val mContext: Context, val mList: ArrayList<Item>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewholder {
-        var itemView = LayoutInflater.from(mContext).inflate(R.layout.row_help, parent, false) as View
+        var itemView =
+            LayoutInflater.from(mContext).inflate(R.layout.row_help, parent, false) as View
         return ItemViewholder(itemView)
     }
 
@@ -33,5 +34,6 @@ class ItemAdapter(val mContext: Context, val mList: ArrayList<Item>) :
 
     override fun onBindViewHolder(holder: ItemViewholder, position: Int) {
         holder.bindView(mList.get(position))
+        holder.itemView.setOnClickListener({ view -> itemClick.onItemClick(position) })
     }
 }

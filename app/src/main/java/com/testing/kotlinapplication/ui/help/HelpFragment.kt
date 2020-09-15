@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.testing.kotlinapplication.R
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_help.*
 /**
  * A simple [Fragment] subclass.
  */
-class HelpFragment : Fragment() {
+class HelpFragment : Fragment(), HelpItemClick {
     private lateinit var mAdapter: ItemAdapter
 
     override fun onCreateView(
@@ -28,7 +29,7 @@ class HelpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mAdapter = ItemAdapter(view.context, prepareData())
+        mAdapter = ItemAdapter(view.context, prepareData(), this)
         rv_help.apply {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
@@ -43,5 +44,10 @@ class HelpFragment : Fragment() {
         mList.add(Item("Profile", 3))
         mList.add(Item("Contact Us", 4))
         return mList
+    }
+
+    override fun onItemClick(id: Int) {
+        val action = HelpFragmentDirections.actionHelpFragmentToDetailHelpFragment(id)
+        findNavController().navigate(action)
     }
 }
