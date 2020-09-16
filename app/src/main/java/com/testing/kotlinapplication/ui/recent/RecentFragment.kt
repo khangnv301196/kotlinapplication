@@ -36,7 +36,7 @@ class RecentFragment : Fragment(), Itemclick {
         for (i in 0..9) {
             mList.add("new omega");
         }
-        productAdapter = ProductAdapter(mList, view.context)
+        productAdapter = ProductAdapter(mList, view.context,this)
         rv_top.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(view.context, 2)

@@ -20,7 +20,11 @@
         android:id="@+id/categoryFragment"
         android:name="com.testing.kotlinapplication.ui.category.CategoryFragment"
         android:label="Category"
-        tools:layout="@layout/fragment_category"/>
+        tools:layout="@layout/fragment_category">
+        <action
+            android:id="@+id/action_categoryFragment_to_categoryDetailFragment"
+            app:destination="@id/categoryDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/helpFragment"
         android:name="com.testing.kotlinapplication.ui.help.HelpFragment"
@@ -28,7 +32,8 @@
         tools:layout="@layout/fragment_help">
         <action
             android:id="@+id/action_helpFragment_to_detailHelpFragment"
-            app:destination="@id/detailHelpFragment" />
+            app:destination="@id/detailHelpFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -51,6 +56,15 @@
             android:name="type"
             app:argType="integer"
             android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryDetailFragment"
+        android:name="com.testing.kotlinapplication.ui.categorydetail.CategoryDetailFragment"
+        android:label="fragment_category_detail"
+        tools:layout="@layout/fragment_category_detail" >
+        <action
+            android:id="@+id/action_categoryDetailFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
     </fragment>
 
 

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.testing.kotlinapplication.R
 import kotlin.collections.ArrayList
 
-class ProductAdapter(private val mList: ArrayList<String>, private val mContext: Context) :
+class ProductAdapter(private val mList: ArrayList<String>, private val mContext: Context,private val itemClick:Itemclick) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     class ProductViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         fun bindView(data: String) {
@@ -38,6 +38,7 @@ class ProductAdapter(private val mList: ArrayList<String>, private val mContext:
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.bindView(mList.get(position))
+        holder.itemView.setOnClickListener({view ->  itemClick.onItemClick()})
     }
 
 }

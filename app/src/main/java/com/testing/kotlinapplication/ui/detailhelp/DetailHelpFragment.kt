@@ -31,8 +31,8 @@ class DetailHelpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val data = args.type
-        val id: Int
-        val title=""
+        var id=0
+        var title=""
         when (data) {
             0 -> {
                 id = R.string.html_0
@@ -55,7 +55,7 @@ class DetailHelpFragment : Fragment() {
                 title="Contact Us"
             }
         }
-        val htmlResource = Html.fromHtml(getString(R.string.html_2), 1)
+        val htmlResource = Html.fromHtml(getString(id), 1)
         txtview.setText(htmlResource)
         (activity as MainActivity).setTitle(title)
     }
