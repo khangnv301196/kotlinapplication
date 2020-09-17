@@ -38,21 +38,21 @@ class DetailHelpFragment : Fragment() {
                 id = R.string.html_0
                 title = "How to order"
             }
-            1 ->{
-                id=R.string.html_1
-                title="Payment"
+            1 -> {
+                id = R.string.html_1
+                title = "Payment"
             }
-            2->{
-                id=R.string.html_2
-                title="Shipping"
+            2 -> {
+                id = R.string.html_2
+                title = "Shipping"
             }
-            3->{
-                id=R.string.html_3
-                title="Profile"
+            3 -> {
+                id = R.string.html_3
+                title = "Profile"
             }
-            4->{
-                id=R.string.html_4
-                title="Contact Us"
+            4 -> {
+                id = R.string.html_4
+                title = "Contact Us"
             }
         }
         val htmlResource = Html.fromHtml(getString(id), 1)
