@@ -9,7 +9,11 @@ import com.testing.kotlinapplication.R
 import com.testing.kotlinapplication.ui.category.model.Category
 import kotlinx.android.synthetic.main.row_category.view.*
 
-class CategoryAdapter(val mContext: Context, val mList: ArrayList<Category>) :
+class CategoryAdapter(
+    val mContext: Context,
+    val mList: ArrayList<Category>,
+    val categoryItemClick: CategoryItemClick
+) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,6 +44,10 @@ class CategoryAdapter(val mContext: Context, val mList: ArrayList<Category>) :
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.bindView(mList.get(position))
+        holder.itemView.setOnClickListener({ v -> categoryItemClick.onItemClick(mList.get(position)) })
+    }
 
+    interface CategoryItemClick {
+        fun onItemClick(category: Category)
     }
 }

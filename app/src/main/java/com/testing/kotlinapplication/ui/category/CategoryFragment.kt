@@ -1,10 +1,12 @@
 package com.testing.kotlinapplication.ui.category
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.testing.kotlinapplication.R
@@ -14,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_category.*
 /**
  * A simple [Fragment] subclass.
  */
-class CategoryFragment : Fragment() {
+class CategoryFragment : Fragment(), CategoryAdapter.CategoryItemClick {
 
     private lateinit var mAdapter: CategoryAdapter
     private lateinit var mListCategory: ArrayList<Category>
@@ -35,12 +37,12 @@ class CategoryFragment : Fragment() {
         mapping(view)
         rv_category.apply {
             adapter = mAdapter
-            layoutManager=LinearLayoutManager(view.context,LinearLayoutManager.VERTICAL,false)
+            layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
         }
     }
 
     private fun mapping(view: View) {
-        mAdapter = CategoryAdapter(view.context, mListCategory)
+        mAdapter = CategoryAdapter(view.context, mListCategory,this)
     }
 
     private fun initData() {
@@ -52,5 +54,11 @@ class CategoryFragment : Fragment() {
         mListCategory.add(Category("Home & Furnitrue", R.drawable.ic_real_estate, 38, 5))
         mListCategory.add(Category("Office & Industry", R.drawable.ic_printer, 40, 5))
     }
+
+    override fun onItemClick(category: Category) {
+        val action = CategoryFragmentDirections.actionCategoryFragmentToCategoryDetailFragment()
+        findNavController().navigate(action)
+    }
+
 
 }

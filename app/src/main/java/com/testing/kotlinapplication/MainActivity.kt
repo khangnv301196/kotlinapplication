@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.navController)
 
+
         var appBarConfiguration = AppBarConfiguration(
             topLevelDestinationIds = setOf(
                 R.id.recentFragment,
@@ -44,6 +45,8 @@ class MainActivity : AppCompatActivity() {
             navController,
             appBarConfiguration
         )
+
+
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
 
@@ -63,10 +66,12 @@ class MainActivity : AppCompatActivity() {
 
     fun showAppBar() {
         toolbar.visibility = View.VISIBLE
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
     }
 
     fun hideAppBar() {
-        toolbar.visibility = View.VISIBLE
+        toolbar.visibility = View.GONE
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
     }
 
     fun setTitle(title: String) {

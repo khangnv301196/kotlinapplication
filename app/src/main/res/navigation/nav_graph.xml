@@ -41,12 +41,20 @@
         android:label="Profile"
         tools:layout="@layout/fragment_profile">
 
+        <action
+            android:id="@+id/action_profileFragment_to_orderHistoryFragment"
+            app:destination="@id/orderHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailProductFragment"
         android:name="com.testing.kotlinapplication.ui.detailproduct.DetailProductFragment"
         android:label="Detail Product"
-        tools:layout="@layout/fragment_detail_product" />
+        tools:layout="@layout/fragment_detail_product" >
+        <argument android:name="turn"
+            app:argType="integer" />
+        <argument android:name="id"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/detailHelpFragment"
         android:name="com.testing.kotlinapplication.ui.detailhelp.DetailHelpFragment"
@@ -60,7 +68,7 @@
     <fragment
         android:id="@+id/categoryDetailFragment"
         android:name="com.testing.kotlinapplication.ui.categorydetail.CategoryDetailFragment"
-        android:label="fragment_category_detail"
+        android:label="Detail Category"
         tools:layout="@layout/fragment_category_detail">
         <action
             android:id="@+id/action_categoryDetailFragment_to_detailProductFragment"
@@ -71,6 +79,11 @@
         android:name="com.testing.kotlinapplication.ui.card.CardFragment"
         android:label="Shopping Cart"
         tools:layout="@layout/fragment_card"></fragment>
+    <fragment
+        android:id="@+id/orderHistoryFragment"
+        android:name="com.testing.kotlinapplication.ui.orderhistory.OrderHistoryFragment"
+        android:label="Order HIstory"
+        tools:layout="@layout/fragment_order_history" />
 
 
 </navigation>

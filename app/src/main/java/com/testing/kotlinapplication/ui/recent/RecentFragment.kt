@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,7 @@ class RecentFragment : Fragment(), Itemclick {
         for (i in 0..9) {
             mList.add("new omega");
         }
-        productAdapter = ProductAdapter(mList, view.context,this)
+        productAdapter = ProductAdapter(mList, view.context, this)
         rv_top.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(view.context, 2)
@@ -45,7 +46,9 @@ class RecentFragment : Fragment(), Itemclick {
     }
 
     override fun onItemClick() {
-        findNavController().navigate(R.id.action_recentFragment_to_detailProductFragment)
+
+        val action = RecentFragmentDirections.actionRecentFragmentToDetailProductFragment(1,3)
+        findNavController().navigate(action)
     }
 
 }
