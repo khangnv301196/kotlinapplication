@@ -99,6 +99,12 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    fun setActionBar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+    }
 
+    fun resetActionBar() {
+        setSupportActionBar(toolbar)
+    }
 
 }

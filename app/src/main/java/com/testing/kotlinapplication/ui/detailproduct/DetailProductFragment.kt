@@ -2,10 +2,8 @@ package com.testing.kotlinapplication.ui.detailproduct
 
 import android.content.Context
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.navArgs
@@ -26,6 +24,7 @@ class DetailProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_detail_product, container, false)
     }
 
@@ -49,8 +48,9 @@ class DetailProductFragment : Fragment() {
                     titleIsShowing = false
                 }
             }
-        })
 
+        })
+        (activity as MainActivity).setActionBar(toolbar)
     }
 
     override fun onAttach(context: Context) {
@@ -62,11 +62,11 @@ class DetailProductFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         (activity as MainActivity).showAppBar()
+        (activity as MainActivity).resetActionBar()
         if (args.turn == 1) {
             (activity as MainActivity).showBottomNavigation()
         }
     }
-
 
 }
 

@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testing.kotlinapplication.MainActivity
 import com.testing.kotlinapplication.R
 import kotlinx.android.synthetic.main.fragment_card.*
+import kotlinx.android.synthetic.main.fragment_detail_product.*
 
 
 class CardFragment : Fragment() {
@@ -35,6 +37,10 @@ class CardFragment : Fragment() {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
         }
+        ll_checkout.setOnClickListener({ v -> doNavigateToOrder(v) })
+
+
+
     }
 
     override fun onAttach(context: Context) {
@@ -45,11 +51,19 @@ class CardFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         (activity as MainActivity).showBottomNavigation()
+
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-
-        inflater.inflate(R.menu.cart_menu, menu)
+        inflater?.inflate(R.menu.cart_menu, menu)
     }
+
+    fun doNavigateToOrder(v: View) {
+        val action = CardFragmentDirections.actionCardFragmentToOrderFragment()
+        findNavController().navigate(action)
+    }
+
+
 
 }
