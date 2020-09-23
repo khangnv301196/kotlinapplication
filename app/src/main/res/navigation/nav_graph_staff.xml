@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph_staff">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_staff"
+    app:startDestination="@id/satisticFragment">
 
+    <fragment
+        android:id="@+id/satisticFragment"
+        android:name="com.testing.kotlinapplication.ui.staff.statistic.SatisticFragment"
+        android:label="fragment_satistic"
+        tools:layout="@layout/fragment_satistic" />
 </navigation>
