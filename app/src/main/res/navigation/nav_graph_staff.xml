@@ -8,6 +8,16 @@
     <fragment
         android:id="@+id/satisticFragment"
         android:name="com.testing.kotlinapplication.ui.staff.statistic.SatisticFragment"
-        android:label="fragment_satistic"
+        android:label="DashBoard"
         tools:layout="@layout/fragment_satistic" />
+    <fragment
+        android:id="@+id/orderStaffFragment"
+        android:name="com.testing.kotlinapplication.ui.staff.order.OrderStaffFragment"
+        android:label="Order List"
+        tools:layout="@layout/fragment_order_staff" />
+    <fragment
+        android:id="@+id/customerListFragment"
+        android:name="com.testing.kotlinapplication.ui.staff.customerlist.CustomerListFragment"
+        android:label="Customer List"
+        tools:layout="@layout/fragment_customer_list" />
 </navigation>
