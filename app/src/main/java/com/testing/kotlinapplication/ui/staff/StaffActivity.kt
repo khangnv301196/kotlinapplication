@@ -31,7 +31,8 @@ class StaffActivity : AppCompatActivity() {
         var appBarConfiguration = AppBarConfiguration(
             topLevelDestinationIds = setOf(
                 R.id.satisticFragment,
-                R.id.orderStaffFragment
+                R.id.orderStaffFragment,
+                R.id.productWareHouseFragment
             )
         )
         findViewById<Toolbar>(R.id.toolbar).setupWithNavController(

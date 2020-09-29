@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_customer_list" />
     <fragment
         android:id="@+id/productWareHouseFragment"
-        android:name="com.testing.kotlinapplication.ui.staff.ProductWareHouseFragment"
+        android:name="com.testing.kotlinapplication.ui.staff.productwarehouse.ProductWareHouseFragment"
         android:label="Products"
         tools:layout="@layout/fragment_product_ware_house" />
 </navigation>
