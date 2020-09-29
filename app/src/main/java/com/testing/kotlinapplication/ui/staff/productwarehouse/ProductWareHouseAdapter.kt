@@ -7,16 +7,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.testing.kotlinapplication.R
 
 class ProductWareHouseAdapter(private var mContext: Context, private var mList: ArrayList<String>) :
     RecyclerView.Adapter<ProductWareHouseAdapter.ProductWareHouseViewHolder>() {
     class ProductWareHouseViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        fun bindView(item: String) {
-            var img=itemView.findViewById(R.id.img_product) as ImageView
+        fun bindView(item: String, context: Context) {
+            val radius = context.resources.getDimensionPixelSize(R.dimen.corner_radius)
+            var img = itemView.findViewById(R.id.img_product) as ImageView
             Glide.with(itemView)
-                .load("https://cdn.mos.cms.futurecdn.net/ahevYTh9pWRzkNPF85MQhb-1200-80.jpg")
+                .load("https://media.karousell.com/media/photos/products/2019/07/05/dx_crocodile_crack_full_bottle_kamen_rider_rogue_1562334404_80a67b20.jpg")
+                .transform(RoundedCorners(radius))
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(img)
         }
     }
@@ -35,6 +40,6 @@ class ProductWareHouseAdapter(private var mContext: Context, private var mList: 
     }
 
     override fun onBindViewHolder(holder: ProductWareHouseViewHolder, position: Int) {
-        holder.bindView(mList.get(position))
+        holder.bindView(mList.get(position), mContext)
     }
 }

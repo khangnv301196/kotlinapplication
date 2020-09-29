@@ -25,7 +25,7 @@ class ProductWareHouseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mList = ArrayList<String>()
-        for (i in 0..11) {
+        for (i in 0..10) {
             mList.add(" ")
         }
         mAdapter = context?.let { ProductWareHouseAdapter(it, mList) }!!
