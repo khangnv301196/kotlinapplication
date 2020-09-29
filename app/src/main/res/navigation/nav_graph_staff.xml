@@ -20,4 +20,9 @@
         android:name="com.testing.kotlinapplication.ui.staff.customerlist.CustomerListFragment"
         android:label="Customer List"
         tools:layout="@layout/fragment_customer_list" />
+    <fragment
+        android:id="@+id/productWareHouseFragment"
+        android:name="com.testing.kotlinapplication.ui.staff.ProductWareHouseFragment"
+        android:label="Products"
+        tools:layout="@layout/fragment_product_ware_house" />
 </navigation>
