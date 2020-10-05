@@ -2,6 +2,7 @@ package com.testing.kotlinapplication.ui.staff
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -32,7 +33,8 @@ class StaffActivity : AppCompatActivity() {
             topLevelDestinationIds = setOf(
                 R.id.satisticFragment,
                 R.id.orderStaffFragment,
-                R.id.productWareHouseFragment
+                R.id.productWareHouseFragment,
+                R.id.profilestaff
             )
         )
         findViewById<Toolbar>(R.id.toolbar).setupWithNavController(
@@ -44,4 +46,44 @@ class StaffActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    fun setActionBar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+    }
+
+    fun resetActionBar() {
+        setSupportActionBar(toolbar)
+    }
+
+    fun showBottomNavigation() {
+        bottomNavigationView.visibility = View.VISIBLE
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    fun hideBottomNavigation() {
+        bottomNavigationView.visibility = View.GONE
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    fun showAppBar() {
+        toolbar.visibility = View.VISIBLE
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
+    }
+
+    fun hideAppBar() {
+        toolbar.visibility = View.GONE
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
+    }
+
+    fun setTitle(title: String) {
+        supportActionBar?.setTitle(title)
+    }
+
 }

@@ -13,7 +13,7 @@ class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            var intent = Intent(this, MainActivity::class.java)
+            var intent = Intent(this, StaffActivity::class.java)
             startActivity(intent)
         }, 3000)
     }
