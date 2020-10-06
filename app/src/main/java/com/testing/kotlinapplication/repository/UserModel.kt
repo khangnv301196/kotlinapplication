@@ -11,7 +11,11 @@ data class UserModel(
     @ColumnInfo(name = "password")
     var Password: String,
     @ColumnInfo(name = "usertype")
-    var userType: Int
+    var userType: Int,
+    @ColumnInfo(name = "email")
+    var email:String,
+    @ColumnInfo(name = "address")
+    var address: String
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
