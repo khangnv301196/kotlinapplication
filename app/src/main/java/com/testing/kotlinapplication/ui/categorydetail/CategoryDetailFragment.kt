@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.testing.kotlinapplication.MainActivity
 
 import com.testing.kotlinapplication.R
-import com.testing.kotlinapplication.ui.recent.Itemclick
 import com.testing.kotlinapplication.ui.recent.ProductAdapter
 import kotlinx.android.synthetic.main.fragment_category_detail.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class CategoryDetailFragment : Fragment(), Itemclick {
+class CategoryDetailFragment : Fragment(), ProductAdapter.Itemclick {
     private lateinit var mList: ArrayList<String>
     private lateinit var mAdapter: ProductAdapter
 

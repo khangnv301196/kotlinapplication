@@ -39,8 +39,6 @@ class CardFragment : Fragment() {
         }
         ll_checkout.setOnClickListener({ v -> doNavigateToOrder(v) })
 
-
-
     }
 
     override fun onAttach(context: Context) {

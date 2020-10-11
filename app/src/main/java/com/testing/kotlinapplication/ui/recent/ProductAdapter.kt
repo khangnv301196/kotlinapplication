@@ -7,16 +7,29 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.testing.kotlinapplication.R
 import kotlin.collections.ArrayList
 
-class ProductAdapter(private val mList: ArrayList<String>, private val mContext: Context,private val itemClick:Itemclick) :
+class ProductAdapter(
+    private val mList: ArrayList<String>,
+    private val mContext: Context,
+    private val itemClick: Itemclick
+) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     class ProductViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         fun bindView(data: String) {
-            var img=mView.findViewById(R.id.img_product) as ImageView
+            var img = mView.findViewById(R.id.img_product) as ImageView
             Glide.with(mView)
-                .load("https://cdn.mos.cms.futurecdn.net/ahevYTh9pWRzkNPF85MQhb-1200-80.jpg")
+                .load("https://static.toiimg.com/thumb/msid-77328879,width-640,resizemode-4/77328879.jpg")
+                .apply(
+                    RequestOptions().transform(
+                        CenterCrop(),
+                        RoundedCorners(50)
+                    )
+                )
                 .into(img)
 
         }
@@ -38,7 +51,11 @@ class ProductAdapter(private val mList: ArrayList<String>, private val mContext:
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.bindView(mList.get(position))
-        holder.itemView.setOnClickListener({view ->  itemClick.onItemClick()})
+        holder.itemView.setOnClickListener({ view -> itemClick.onItemClick() })
+    }
+
+    interface Itemclick {
+        fun onItemClick()
     }
 
 }

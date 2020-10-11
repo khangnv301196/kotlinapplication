@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/qant"
-                android:tint="#BB3E50B4" />
+                android:tint="#25FF6600" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

@@ -1,10 +1,12 @@
 package com.testing.kotlinapplication
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.view.inputmethod.InputMethod
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
@@ -78,21 +80,21 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setTitle(title)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.action_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.cart_menu -> {
-                navController.navigate(R.id.cardFragment)
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.action_menu, menu)
+//        return true
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//
+//        when (item.itemId) {
+//            R.id.cart_menu -> {
+//                navController.navigate(R.id.cardFragment)
+//                return true
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -105,6 +107,30 @@ class MainActivity : AppCompatActivity() {
 
     fun resetActionBar() {
         setSupportActionBar(toolbar)
+    }
+
+    fun hideSoftKeyBoard() {
+        var inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+    }
+
+    fun setUpUI(view: View) {
+        if (!(view is EditText)) {
+            view.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+                    hideSoftKeyBoard();
+                    return false;
+                }
+            })
+        }
+    }
+
+    fun setUIGroup(viewGroup: ViewGroup) {
+        for (i in 0..viewGroup.childCount) {
+            var innerView = viewGroup.getChildAt(i)
+            setUpUI(innerView)
+        }
     }
 
 }
