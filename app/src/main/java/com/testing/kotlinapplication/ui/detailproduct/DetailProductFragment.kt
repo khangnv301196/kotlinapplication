@@ -3,15 +3,19 @@ package com.testing.kotlinapplication.ui.detailproduct
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.testing.kotlinapplication.MainActivity
 
 import com.testing.kotlinapplication.R
+import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_detail_product.*
 
 /**
@@ -19,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_detail_product.*
  */
 class DetailProductFragment : Fragment() {
 
+    private lateinit var btn_add: LinearLayout
     private val args: DetailProductFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +31,10 @@ class DetailProductFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_detail_product, container, false)
+        var view=inflater.inflate(R.layout.fragment_detail_product, container, false)
+        mapping(view)
+        setListener()
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,26 +77,37 @@ class DetailProductFragment : Fragment() {
         }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.action_menu, menu)
-//        return true
-//    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
             R.id.cart_menu -> {
-                findNavController().navigate(R.id.cardFragment)
+                var bundle = Bundle()
+                bundle.putInt("Product", 1)
+                findNavController().navigate(R.id.cardFragment, bundle)
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.action_menu, menu)
+    }
+
+    fun mapping(view: View) {
+        btn_add = view.findViewById(R.id.bottom)
+
+    }
+
+    fun setListener() {
+        btn_add.setOnClickListener {
+            val bottomsheet=layoutInflater.inflate(R.layout.bottom_sheet,null)
+            val dialog = context?.let { it1 -> BottomSheetDialog(it1) }
+            dialog?.setContentView(bottomsheet)
+            dialog?.show()
+        }
+
     }
 
 }

@@ -141,4 +141,8 @@ class LoginFragment : Fragment() {
         dialog.hide()
     }
 
+    fun doMappingUI(view: View) {
+
+    }
+
 }

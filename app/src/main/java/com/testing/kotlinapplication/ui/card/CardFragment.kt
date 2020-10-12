@@ -16,6 +16,7 @@ class CardFragment : Fragment() {
 
     private lateinit var mAdapter: CartAdapter
     private lateinit var mList: ArrayList<String>
+    private var type = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +24,10 @@ class CardFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
+        type = arguments?.getInt("Product")!!
+        if (type == 1) {
+            (activity as MainActivity).showAppBar()
+        }
         return inflater.inflate(R.layout.fragment_card, container, false)
     }
 
@@ -48,7 +53,12 @@ class CardFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        (activity as MainActivity).showBottomNavigation()
+        if (type == 1) {
+            (activity as MainActivity).hideAppBar()
+            (activity as MainActivity).hideBottomNavigation()
+        } else {
+            (activity as MainActivity).showBottomNavigation()
+        }
 
     }
 
@@ -61,7 +71,6 @@ class CardFragment : Fragment() {
         val action = CardFragmentDirections.actionCardFragmentToOrderFragment()
         findNavController().navigate(action)
     }
-
 
 
 }
