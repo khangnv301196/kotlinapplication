@@ -19,6 +19,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 import com.testing.kotlinapplication.R
+import com.testing.kotlinapplication.network.ServiceBuilder
+import com.testing.kotlinapplication.util.Constant
+import com.testing.kotlinapplication.util.Preference
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recent.*
 
 /**
@@ -33,12 +39,16 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     private lateinit var mList: ArrayList<String>
     private lateinit var mListPromotion: ArrayList<String>
     private lateinit var mListCoupon: ArrayList<String>
+    private lateinit var preference: Preference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_recent, container, false) as View
+        preference = Preference(view.context)
+        doLoadApi()
         mapping(view)
         return view
     }
@@ -103,6 +113,22 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         mListCoupon.add("https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/07/Best_Baby_Clothes_1296x728.png?w=1155&h=1528")
         mListCoupon.add("https://i.pinimg.com/originals/02/23/3e/02233e46ec1eca2967460ec0c2648290.jpg")
 
+    }
+
+    fun doLoadApi() {
+        var param = HashMap<String, String>()
+        param.put("page", "1")
+        var compositeDisposable = CompositeDisposable(
+            ServiceBuilder.buildService()
+                .getProduct(preference.getValueString(Constant.TOKEN), param)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Toast.makeText(context, "get data", Toast.LENGTH_SHORT).show()
+                }, {
+                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                })
+        )
     }
 
     override fun onItemClick() {

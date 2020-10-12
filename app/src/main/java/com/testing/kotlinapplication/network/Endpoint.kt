@@ -1,10 +1,10 @@
 package com.testing.kotlinapplication.network
 
 import com.testing.kotlinapplication.network.model.LoginRespone
+import com.testing.kotlinapplication.network.model.ProductRespone
 import com.testing.kotlinapplication.network.model.RegisterRespone
 import io.reactivex.Observable
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface Endpoint {
@@ -13,4 +13,7 @@ interface Endpoint {
 
     @POST("/api/customer/dang-nhap")
     fun login(@Body params: HashMap<String, String>): Observable<LoginRespone>
+
+    @GET("/api/customer/danh-sach-san-pham")
+    fun getProduct(@Header("Authorization") token: String, @QueryMap params: HashMap<String, String>): Observable<ProductRespone>
 }

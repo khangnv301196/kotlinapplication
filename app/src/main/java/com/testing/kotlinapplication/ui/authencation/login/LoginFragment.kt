@@ -98,8 +98,8 @@ class LoginFragment : Fragment() {
 //                }
 //            })
         val paramater = HashMap<String, String>()
-        paramater.put("email","khangnv@gmail.com")
-        paramater.put("password","123456")
+        paramater.put("email", "khangnv@gmail.com")
+        paramater.put("password", "123456")
         val compositeDisposable = CompositeDisposable()
         compositeDisposable.add(
             ServiceBuilder.buildService().login(paramater)
@@ -110,6 +110,14 @@ class LoginFragment : Fragment() {
                     when (it.status) {
                         200 -> {
                             Toast.makeText(context, it.user.email, Toast.LENGTH_SHORT).show()
+                            preference.save(Constant.TOKEN, "Bearer ${it.user.access_token}")
+                            preference.save(Constant.IS_LOGIN, true)
+                            var intent = Intent(context, MainActivity::class.java)
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            (activity as AuthencationActivity).startActivity(intent)
+                            (activity as AuthencationActivity).finish()
+
                         }
                         401 -> {
                             Toast.makeText(context, "Error 401", Toast.LENGTH_SHORT).show()

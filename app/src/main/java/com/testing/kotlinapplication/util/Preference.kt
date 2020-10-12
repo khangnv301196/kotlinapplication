@@ -37,9 +37,9 @@ class Preference(val context: Context) {
         editor.commit()
     }
 
-    fun getValueString(KEY_NAME: String): String? {
+    fun getValueString(KEY_NAME: String): String {
 
-        return sharedPref.getString(KEY_NAME, null)
+        return sharedPref.getString(KEY_NAME, "").toString()
 
 
     }

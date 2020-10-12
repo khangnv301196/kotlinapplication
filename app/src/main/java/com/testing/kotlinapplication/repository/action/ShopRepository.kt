@@ -29,8 +29,8 @@ class ShopRepository {
             CoroutineScope(IO).launch {
                 val encodeString: String =
                     Base64.encodeToString(password.toByteArray(), Base64.DEFAULT)
-                val userModel = UserModel(userName, encodeString, type, email, address)
-                shopDatabase!!.ShopDAO().insertData(userModel)
+//                val userModel = UserModel(userName, encodeString, type, email, address)
+//                shopDatabase!!.ShopDAO().insertData(userModel)
             }
         }
 

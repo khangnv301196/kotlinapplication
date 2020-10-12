@@ -13,6 +13,6 @@ interface DAOAccess {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertData(userModel: UserModel)
 
-    @Query("SELECT * FROM User WHERE username LIKE :name")
+    @Query("SELECT * FROM User WHERE TenDangNhap LIKE :name")
     fun findByName(name: String): LiveData<UserModel>
 }
