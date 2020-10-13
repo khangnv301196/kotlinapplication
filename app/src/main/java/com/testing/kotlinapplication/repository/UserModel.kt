@@ -21,7 +21,7 @@ data class UserModel(
     @ColumnInfo(name = "HoTen")
     var HoTen: String,
     @ColumnInfo(name = "LoaiTaiKhoan")
-    var LoaiTaiKhoan: String,
+    var LoaiTaiKhoan: Int,
     @ColumnInfo(name = "NgaySinh")
     var NgaySinh: String,
     @ColumnInfo(name = "SDT")

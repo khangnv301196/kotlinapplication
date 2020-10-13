@@ -2,6 +2,8 @@ package com.testing.kotlinapplication.ui.recent
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +14,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import android.widget.ViewFlipper
 import androidx.core.os.bundleOf
+import androidx.core.widget.NestedScrollView
+import androidx.core.widget.NestedScrollView.OnScrollChangeListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,12 +24,15 @@ import com.bumptech.glide.Glide
 
 import com.testing.kotlinapplication.R
 import com.testing.kotlinapplication.network.ServiceBuilder
+import com.testing.kotlinapplication.network.model.Data
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_product_ware_house.*
 import kotlinx.android.synthetic.main.fragment_recent.*
+import kotlinx.android.synthetic.main.fragment_recent.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -36,10 +43,16 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     private lateinit var rv_promotion: RecyclerView
     private lateinit var productAdapter: ProductAdapter
     private lateinit var couponAdapter: CouponAdapter
-    private lateinit var mList: ArrayList<String>
+    private lateinit var mList: ArrayList<Data>
     private lateinit var mListPromotion: ArrayList<String>
     private lateinit var mListCoupon: ArrayList<String>
     private lateinit var preference: Preference
+    private lateinit var gridlayoutManager: GridLayoutManager
+
+    private var pastVisiblesItems = 0
+    private var totalItemCount = 0
+    private var visibleItemCount = 0
+    private var isLoading: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,8 +61,8 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_recent, container, false) as View
         preference = Preference(view.context)
-        doLoadApi()
         mapping(view)
+        doLoadApi()
         return view
     }
 
@@ -67,12 +80,25 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         rv_promotion = view.findViewById(R.id.promotion)
         mList = ArrayList()
         for (i in 0..9) {
-            mList.add("new omega");
+            mList.add(Data())
         }
         productAdapter = ProductAdapter(mList, view.context, this)
+        gridlayoutManager = GridLayoutManager(view.context, 2)
+        gridlayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            //Each item occupies 1 span by default.
+            override fun getSpanSize(p0: Int): Int {
+                return when (productAdapter.getItemViewType(p0)) {
+                    //returns total no of spans, to occupy full sapce for progressbar
+                    ProductAdapter.VIEW_TYPE_PROGRESS -> gridlayoutManager.spanCount
+                    ProductAdapter.VIEW_TYPE_DATA -> 1
+                    else -> -1
+                }
+            }
+        }
+
         rv_top.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(view.context, 2)
+            layoutManager = gridlayoutManager
             adapter = productAdapter
         }
         mListCoupon = ArrayList()
@@ -82,6 +108,36 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
             adapter = couponAdapter
         }
+        view.scrollview.setOnScrollChangeListener(object : NestedScrollView.OnScrollChangeListener {
+            override fun onScrollChange(
+                v: NestedScrollView?,
+                scrollX: Int,
+                scrollY: Int,
+                oldScrollX: Int,
+                oldScrollY: Int
+            ) {
+//                //total no. of items
+//                totalItemCount = gridlayoutManager.itemCount
+//                //last visible item position
+//                pastVisiblesItems = gridlayoutManager.findFirstCompletelyVisibleItemPosition()
+//                //visible item count
+//                visibleItemCount = gridlayoutManager.childCount
+//                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleItemCount)) {
+//                    loadMore()
+//                    isLoading = true
+//                }
+
+                visibleItemCount = gridlayoutManager.getChildCount();
+                totalItemCount = gridlayoutManager.getItemCount();
+                pastVisiblesItems = gridlayoutManager.findFirstVisibleItemPosition();
+
+                if (!isLoading && ((visibleItemCount + pastVisiblesItems) >= totalItemCount)) {
+                    Toast.makeText(context, "load end", Toast.LENGTH_SHORT).show()
+                    loadMore()
+                    isLoading = true
+                }
+            }
+        })
 
     }
 
@@ -124,11 +180,25 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+//                    mList.addAll(it.data)
+//                    productAdapter.notifyDataSetChanged()
                     Toast.makeText(context, "get data", Toast.LENGTH_SHORT).show()
                 }, {
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 })
         )
+    }
+
+    private fun loadMore() {
+        Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            Toast.makeText(context, "load end", Toast.LENGTH_SHORT).show()
+            for (i in 0..9) {
+                mList.add(Data())
+            }
+            productAdapter.notifyDataSetChanged()
+            isLoading = false
+        }, 2000)
+
     }
 
     override fun onItemClick() {

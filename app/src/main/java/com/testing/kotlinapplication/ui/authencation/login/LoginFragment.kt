@@ -27,6 +27,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 import kotlinx.android.synthetic.main.fragment_login.*
+import retrofit2.HttpException
 
 
 /**
@@ -98,8 +99,8 @@ class LoginFragment : Fragment() {
 //                }
 //            })
         val paramater = HashMap<String, String>()
-        paramater.put("email", "khangnv@gmail.com")
-        paramater.put("password", "123456")
+        paramater.put("email", mUserName)
+        paramater.put("password", mPassword)
         val compositeDisposable = CompositeDisposable()
         compositeDisposable.add(
             ServiceBuilder.buildService().login(paramater)
@@ -109,9 +110,10 @@ class LoginFragment : Fragment() {
                     hideDialog(dialog)
                     when (it.status) {
                         200 -> {
-                            Toast.makeText(context, it.user.email, Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(context, it.user.email, Toast.LENGTH_SHORT).show()
                             preference.save(Constant.TOKEN, "Bearer ${it.user.access_token}")
                             preference.save(Constant.IS_LOGIN, true)
+                            preference.save(Constant.USER_TYPE, it.user.LoaiTaiKhoan)
                             var intent = Intent(context, MainActivity::class.java)
                             intent.flags =
                                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -119,16 +121,27 @@ class LoginFragment : Fragment() {
                             (activity as AuthencationActivity).finish()
 
                         }
-                        401 -> {
-                            Toast.makeText(context, "Error 401", Toast.LENGTH_SHORT).show()
-                        }
-                        500 -> {
-                            Toast.makeText(context, "Error 500", Toast.LENGTH_SHORT).show()
-                        }
                     }
                 }, {
+                    var error = (it as HttpException).code()
                     hideDialog(dialog)
-                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    when (error) {
+                        401 -> Toast.makeText(
+                            context,
+                            "Wrong User Name or Password",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        500 -> Toast.makeText(
+                            context,
+                            "Failed to connection database",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        else -> {
+                            Toast.makeText(context, "${error}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+
                 })
         )
     }
@@ -141,8 +154,5 @@ class LoginFragment : Fragment() {
         dialog.hide()
     }
 
-    fun doMappingUI(view: View) {
-
-    }
 
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.testing.kotlinapplication.MainActivity
 
 import com.testing.kotlinapplication.R
+import com.testing.kotlinapplication.network.model.Data
 import com.testing.kotlinapplication.ui.recent.ProductAdapter
 import kotlinx.android.synthetic.main.fragment_category_detail.*
 
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_category_detail.*
  * A simple [Fragment] subclass.
  */
 class CategoryDetailFragment : Fragment(), ProductAdapter.Itemclick {
-    private lateinit var mList: ArrayList<String>
+    private lateinit var mList: ArrayList<Data>
     private lateinit var mAdapter: ProductAdapter
 
     override fun onCreateView(
@@ -42,14 +43,17 @@ class CategoryDetailFragment : Fragment(), ProductAdapter.Itemclick {
     private fun initData() {
         mList = ArrayList()
         for (i in 0..15) {
-            mList.add(" ")
+            mList.add(Data())
         }
         mAdapter = context?.let { ProductAdapter(mList, it, this) }!!
     }
 
     override fun onItemClick() {
         val action =
-            CategoryDetailFragmentDirections.actionCategoryDetailFragmentToDetailProductFragment(0,0)
+            CategoryDetailFragmentDirections.actionCategoryDetailFragmentToDetailProductFragment(
+                0,
+                0
+            )
         findNavController().navigate(action)
     }
 
