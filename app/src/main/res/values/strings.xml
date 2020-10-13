@@ -95,4 +95,7 @@ Email : help.solodroid@gmail.com
 		Aenean ullamcorper dolor non condimentum congue. Aenean mauris nunc, pellentesque at placerat vitae,
 		aliquet quis orci. Curabitur maximus augue ut bibendum sagittis.
 	</string>
+    <string name="rating_dialog_overview_image_content_description">App Icon</string>
+    <string name="rating_dialog_overview_title">How was your experience with this app?</string>
+    <string name="rating_dialog_overview_button_confirm">Confirm</string>
 </resources>

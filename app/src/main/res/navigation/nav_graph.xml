@@ -119,7 +119,7 @@
     <fragment
         android:id="@+id/orderCompleteFragment"
         android:name="com.testing.kotlinapplication.ui.ordercomplete.OrderCompleteFragment"
-        android:label="fragment_order_complete"
+        android:label="Complete Order"
         tools:layout="@layout/fragment_order_complete" />
 
 

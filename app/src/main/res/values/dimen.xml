@@ -9,4 +9,7 @@
     <dimen name="chip_close_icon_size">18dp</dimen>
     <dimen name="chip_close_icon_size2">24dp</dimen>
     <dimen name="chip_close_icon_padding">3dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_big">32dp</dimen>
+    <dimen name="margin_extra_big">42dp</dimen>
 </resources>

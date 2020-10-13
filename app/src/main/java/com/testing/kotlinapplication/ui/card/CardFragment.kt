@@ -24,10 +24,6 @@ class CardFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
-        type = arguments?.getInt("Product")!!
-        if (type == 1) {
-            (activity as MainActivity).showAppBar()
-        }
         return inflater.inflate(R.layout.fragment_card, container, false)
     }
 
@@ -48,6 +44,10 @@ class CardFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        type = arguments?.getInt("Product")!!
+        if (type == 1) {
+            (activity as MainActivity).showAppBar()
+        }
         (activity as MainActivity).hideBottomNavigation()
     }
 

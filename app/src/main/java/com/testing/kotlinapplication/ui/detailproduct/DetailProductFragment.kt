@@ -105,6 +105,12 @@ class DetailProductFragment : Fragment() {
             val bottomsheet=layoutInflater.inflate(R.layout.bottom_sheet,null)
             val dialog = context?.let { it1 -> BottomSheetDialog(it1) }
             dialog?.setContentView(bottomsheet)
+            dialog?.btn_order?.setOnClickListener{
+                var bundle = Bundle()
+                bundle.putInt("Product", 1)
+                findNavController().navigate(R.id.cardFragment, bundle)
+                dialog?.hide()
+            }
             dialog?.show()
         }
 
