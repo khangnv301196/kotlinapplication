@@ -56,6 +56,8 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     private var totalItemCount = 0
     private var visibleItemCount = 0
     private var isLoading: Boolean = false
+    private var page = 1
+    private var first_scroll = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +65,7 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_recent, container, false) as View
-        dialog=ProgressDialogutil.setProgressDialog(view.context,"Loading")
+        dialog = ProgressDialogutil.setProgressDialog(view.context, "Loading")
         dialog.show()
         preference = Preference(view.context)
         mapping(view)
@@ -125,10 +127,10 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                 totalItemCount = gridlayoutManager.getItemCount();
                 pastVisiblesItems = gridlayoutManager.findFirstVisibleItemPosition();
 
-                if (!isLoading && ((visibleItemCount + pastVisiblesItems) >= totalItemCount)) {
-//                    loadMore()
-//                    isLoading = true
-                }
+                if (isLoading == false && ((visibleItemCount + pastVisiblesItems) >= totalItemCount) && first_scroll == true) {
+                    loadMore()
+                    isLoading = true
+                } else first_scroll = true
             }
         })
 
@@ -177,8 +179,33 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                     productAdapter.notifyDataSetChanged()
                     Toast.makeText(context, "get data", Toast.LENGTH_SHORT).show()
                     dialog.hide()
+                    page++
                 }, {
                     dialog.hide()
+                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                })
+        )
+    }
+
+    fun doLoadmore(page: Int) {
+        var param = HashMap<String, String>()
+        param.put("page", "${page}")
+        var compositeDisposable = CompositeDisposable(
+            ServiceBuilder.buildService()
+                .getProduct(preference.getValueString(Constant.TOKEN), param)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    rv_top.postDelayed(Runnable {
+                        //removes load item in list.
+                        mList.removeAt(mList.size - 1)
+                        mList.addAll(it.data)
+                        productAdapter.notifyDataSetChanged()
+                        isLoading = false
+                    }, 7000)
+
+                }, {
+
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 })
         )
@@ -188,21 +215,9 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         var emptyData = Data()
         emptyData.viewType = 1
         mList.add(emptyData)
-        productAdapter.notifyItemInserted(mList.size-2)
-        rv_top.postDelayed(Runnable {
-            //removes load item in list.
-            mList.removeAt(mList.size - 1)
-            var listSize = mList.size
-            productAdapter.notifyItemRemoved(listSize)
-            //next limit
-            var nextLimit = listSize + 10
-            for (i in listSize until nextLimit) {
-                mList.add(Data())
-            }
-            productAdapter.notifyDataSetChanged()
-            isLoading = false
+        productAdapter.notifyDataSetChanged()
+        doLoadmore(page++)
 
-        }, 7000)
     }
 
     override fun onItemClick() {

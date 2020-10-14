@@ -1,6 +1,7 @@
 package com.testing.kotlinapplication.ui.recent
 
 import android.content.Context
+import android.icu.text.DecimalFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,9 @@ class ProductAdapter(
 
     class ProductViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         fun bindView(data: Data) {
+            val format = DecimalFormat("###,###,###,###")
             mView.txt_name_product.setText(data.TenSP)
+            mView.txt_price.setText("${format.format(data.DongGia.toInt())} đ")
             var img = mView.findViewById(R.id.img_product) as ImageView
             Glide.with(mView)
                 .load(data.AnhChinh)

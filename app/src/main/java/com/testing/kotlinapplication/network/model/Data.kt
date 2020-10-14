@@ -12,5 +12,5 @@ data class Data(
     val updated_at: String,
     var viewType: Int = 0
 ) {
-    constructor() : this("", "", 0, "", "", "", 0, 3,"")
+    constructor() : this("", "0", 0, "", "", "", 0, 3,"")
 }
