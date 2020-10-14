@@ -8,7 +8,9 @@ data class Data(
     val TenSP: String,
     val created_at: String,
     val id: Int,
-    val updated_at: String
+    val rating: Int,
+    val updated_at: String,
+    var viewType: Int = 0
 ) {
-    constructor() : this("", "", 0, "", "", "", 0, "")
+    constructor() : this("", "", 0, "", "", "", 0, 3,"")
 }

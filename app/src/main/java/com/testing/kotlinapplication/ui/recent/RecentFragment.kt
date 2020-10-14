@@ -1,5 +1,6 @@
 package com.testing.kotlinapplication.ui.recent
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -27,6 +28,7 @@ import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.Data
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
+import com.testing.kotlinapplication.util.view.ProgressDialogutil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -48,6 +50,7 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     private lateinit var mListCoupon: ArrayList<String>
     private lateinit var preference: Preference
     private lateinit var gridlayoutManager: GridLayoutManager
+    private lateinit var dialog: Dialog
 
     private var pastVisiblesItems = 0
     private var totalItemCount = 0
@@ -60,6 +63,8 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_recent, container, false) as View
+        dialog=ProgressDialogutil.setProgressDialog(view.context,"Loading")
+        dialog.show()
         preference = Preference(view.context)
         mapping(view)
         doLoadApi()
@@ -76,12 +81,13 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     }
 
     fun mapping(view: View) {
+        //create list
+        mListPromotion = ArrayList()
+        mList = ArrayList()
+        mListCoupon = ArrayList()
+        //mapping
         rv_top = view.findViewById(R.id.rv_top)
         rv_promotion = view.findViewById(R.id.promotion)
-        mList = ArrayList()
-        for (i in 0..9) {
-            mList.add(Data())
-        }
         productAdapter = ProductAdapter(mList, view.context, this)
         gridlayoutManager = GridLayoutManager(view.context, 2)
         gridlayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -101,7 +107,6 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
             layoutManager = gridlayoutManager
             adapter = productAdapter
         }
-        mListCoupon = ArrayList()
         couponAdapter = CouponAdapter(view.context, mListCoupon)
         rv_promotion.apply {
             setHasFixedSize(true)
@@ -116,25 +121,13 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                 oldScrollX: Int,
                 oldScrollY: Int
             ) {
-//                //total no. of items
-//                totalItemCount = gridlayoutManager.itemCount
-//                //last visible item position
-//                pastVisiblesItems = gridlayoutManager.findFirstCompletelyVisibleItemPosition()
-//                //visible item count
-//                visibleItemCount = gridlayoutManager.childCount
-//                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleItemCount)) {
-//                    loadMore()
-//                    isLoading = true
-//                }
-
                 visibleItemCount = gridlayoutManager.getChildCount();
                 totalItemCount = gridlayoutManager.getItemCount();
                 pastVisiblesItems = gridlayoutManager.findFirstVisibleItemPosition();
 
                 if (!isLoading && ((visibleItemCount + pastVisiblesItems) >= totalItemCount)) {
-                    Toast.makeText(context, "load end", Toast.LENGTH_SHORT).show()
-                    loadMore()
-                    isLoading = true
+//                    loadMore()
+//                    isLoading = true
                 }
             }
         })
@@ -142,7 +135,7 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     }
 
     fun setupUI(context: Context, viewFlipper: ViewFlipper) {
-        mListPromotion = ArrayList()
+
         mListPromotion.add("https://luatminhkhue.vn/LMK/article/mergepost/mau-thong-bao-thuc-hien-chuong-trinh-khuyen-mai-moi-nhat-nam-2018-97963.jpg")
         mListPromotion.add("https://hanoicomputercdn.com/media/news/18_0630_chuong_trinh_khuyen_mai_thang_lg_qua_me_ly.jpg")
         mListPromotion.add("https://www.bigc.vn/files/blog/cong-bo-ket-qua/luckydraw.jpg")
@@ -180,25 +173,36 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-//                    mList.addAll(it.data)
-//                    productAdapter.notifyDataSetChanged()
+                    mList.addAll(it.data)
+                    productAdapter.notifyDataSetChanged()
                     Toast.makeText(context, "get data", Toast.LENGTH_SHORT).show()
+                    dialog.hide()
                 }, {
+                    dialog.hide()
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 })
         )
     }
 
     private fun loadMore() {
-        Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            Toast.makeText(context, "load end", Toast.LENGTH_SHORT).show()
-            for (i in 0..9) {
+        var emptyData = Data()
+        emptyData.viewType = 1
+        mList.add(emptyData)
+        productAdapter.notifyItemInserted(mList.size-2)
+        rv_top.postDelayed(Runnable {
+            //removes load item in list.
+            mList.removeAt(mList.size - 1)
+            var listSize = mList.size
+            productAdapter.notifyItemRemoved(listSize)
+            //next limit
+            var nextLimit = listSize + 10
+            for (i in listSize until nextLimit) {
                 mList.add(Data())
             }
             productAdapter.notifyDataSetChanged()
             isLoading = false
-        }, 2000)
 
+        }, 7000)
     }
 
     override fun onItemClick() {

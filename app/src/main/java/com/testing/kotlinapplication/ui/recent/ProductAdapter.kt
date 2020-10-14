@@ -28,10 +28,10 @@ class ProductAdapter(
 
     class ProductViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         fun bindView(data: Data) {
-//            mView.txt_name_product.setText(data.TenLoaiSanPham)
+            mView.txt_name_product.setText(data.TenSP)
             var img = mView.findViewById(R.id.img_product) as ImageView
             Glide.with(mView)
-                .load("https://static.toiimg.com/thumb/msid-77328879,width-640,resizemode-4/77328879.jpg")
+                .load(data.AnhChinh)
                 .apply(
                     RequestOptions().transform(
                         CenterCrop(),
@@ -42,15 +42,27 @@ class ProductAdapter(
 
         }
     }
+
     class ProgressViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.item_grid, parent, false) as View
-        return ProductViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_DATA -> {
+                val view =
+                    LayoutInflater.from(mContext).inflate(R.layout.item_grid, parent, false)
+                ProductViewHolder(view)
+            }
+            VIEW_TYPE_PROGRESS -> {
+                val view =
+                    LayoutInflater.from(mContext).inflate(R.layout.progressbar, parent, false)
+                ProgressViewHolder(view)
+            }
+            else -> throw IllegalArgumentException("Different View type")
+        }
+
     }
 
     override fun getItemCount(): Int {
-
         if (mList == null) {
             return 0
         } else {
@@ -58,10 +70,19 @@ class ProductAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun getItemViewType(position: Int): Int {
+        var viewtype = mList.get(position).viewType
+        return when (viewtype) {
+            1 -> VIEW_TYPE_PROGRESS
+            else -> VIEW_TYPE_DATA
+        }
+    }
 
-        (holder as ProductViewHolder).bindView(mList.get(position))
-        holder.itemView.setOnClickListener({ view -> itemClick.onItemClick() })
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is ProductViewHolder) {
+            holder.bindView(mList.get(position))
+            holder.itemView.setOnClickListener({ view -> itemClick.onItemClick() })
+        }
     }
 
     interface Itemclick {
