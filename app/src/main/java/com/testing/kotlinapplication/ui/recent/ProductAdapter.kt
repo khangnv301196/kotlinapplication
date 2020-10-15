@@ -84,12 +84,12 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ProductViewHolder) {
             holder.bindView(mList.get(position))
-            holder.itemView.setOnClickListener({ view -> itemClick.onItemClick() })
+            holder.itemView.setOnClickListener({ view -> itemClick.onItemClick(mList.get(position).id) })
         }
     }
 
     interface Itemclick {
-        fun onItemClick()
+        fun onItemClick(id:Int)
     }
 
 }

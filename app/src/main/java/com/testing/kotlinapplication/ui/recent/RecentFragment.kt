@@ -67,6 +67,8 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         var view = inflater.inflate(R.layout.fragment_recent, container, false) as View
         dialog = ProgressDialogutil.setProgressDialog(view.context, "Loading")
         dialog.show()
+        page = 1
+        first_scroll = false
         preference = Preference(view.context)
         mapping(view)
         doLoadApi()
@@ -123,14 +125,23 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                 oldScrollX: Int,
                 oldScrollY: Int
             ) {
-                visibleItemCount = gridlayoutManager.getChildCount();
-                totalItemCount = gridlayoutManager.getItemCount();
-                pastVisiblesItems = gridlayoutManager.findFirstVisibleItemPosition();
+                if (v != null) {
+                    if(v.getChildAt(v.childCount - 1) != null) {
+                        if ((scrollY >= (v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight)) &&
+                            scrollY > oldScrollY) {
 
-                if (isLoading == false && ((visibleItemCount + pastVisiblesItems) >= totalItemCount) && first_scroll == true) {
-                    loadMore()
-                    isLoading = true
-                } else first_scroll = true
+                            visibleItemCount = gridlayoutManager.getChildCount();
+                            totalItemCount = gridlayoutManager.getItemCount();
+                            pastVisiblesItems = gridlayoutManager.findFirstVisibleItemPosition();
+                            if (isLoading == false && ((visibleItemCount + pastVisiblesItems) >= totalItemCount) ) {
+                                loadMore()
+                                isLoading = true
+                            }
+
+                        }
+                    }
+                }
+
             }
         })
 
@@ -177,9 +188,8 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                 .subscribe({
                     mList.addAll(it.data)
                     productAdapter.notifyDataSetChanged()
-                    Toast.makeText(context, "get data", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "get data", Toast.LENGTH_SHORT).show()
                     dialog.hide()
-                    page++
                 }, {
                     dialog.hide()
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
@@ -190,6 +200,7 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     fun doLoadmore(page: Int) {
         var param = HashMap<String, String>()
         param.put("page", "${page}")
+        Toast.makeText(context, "${page}", Toast.LENGTH_SHORT).show()
         var compositeDisposable = CompositeDisposable(
             ServiceBuilder.buildService()
                 .getProduct(preference.getValueString(Constant.TOKEN), param)
@@ -199,10 +210,13 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                     rv_top.postDelayed(Runnable {
                         //removes load item in list.
                         mList.removeAt(mList.size - 1)
+                        var curent_size=productAdapter.itemCount
+                        productAdapter.notifyItemRemoved(mList.size - 1)
                         mList.addAll(it.data)
+//                        productAdapter.notifyItemRangeInserted(curent_size,it.data.size)
                         productAdapter.notifyDataSetChanged()
                         isLoading = false
-                    }, 7000)
+                    }, 5000)
 
                 }, {
 
@@ -214,14 +228,15 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     private fun loadMore() {
         var emptyData = Data()
         emptyData.viewType = 1
-        mList.add(emptyData)
+        mList.add(mList.size,emptyData)
         productAdapter.notifyDataSetChanged()
-        doLoadmore(page++)
+        page=page+1
+        doLoadmore(page)
 
     }
 
-    override fun onItemClick() {
-        val action = RecentFragmentDirections.actionRecentFragmentToDetailProductFragment(1, 3)
+    override fun onItemClick(id: Int) {
+        val action = RecentFragmentDirections.actionRecentFragmentToDetailProductFragment(1, id)
         findNavController().navigate(action)
     }
 

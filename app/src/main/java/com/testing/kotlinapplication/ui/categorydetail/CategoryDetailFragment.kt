@@ -48,15 +48,6 @@ class CategoryDetailFragment : Fragment(), ProductAdapter.Itemclick {
         mAdapter = context?.let { ProductAdapter(mList, it, this) }!!
     }
 
-    override fun onItemClick() {
-        val action =
-            CategoryDetailFragmentDirections.actionCategoryDetailFragmentToDetailProductFragment(
-                0,
-                0
-            )
-        findNavController().navigate(action)
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as MainActivity).hideBottomNavigation()
@@ -65,6 +56,15 @@ class CategoryDetailFragment : Fragment(), ProductAdapter.Itemclick {
     override fun onDetach() {
         super.onDetach()
         (activity as MainActivity).showBottomNavigation()
+    }
+
+    override fun onItemClick(id: Int) {
+        val action =
+            CategoryDetailFragmentDirections.actionCategoryDetailFragmentToDetailProductFragment(
+                0,
+                0
+            )
+        findNavController().navigate(action)
     }
 
 }
