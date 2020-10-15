@@ -17,15 +17,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/ll_info"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
+
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/circularImageView"
-        app:layout_constraintEnd_toStartOf="@+id/btn_edit"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/circularImageView"
         app:layout_constraintTop_toTopOf="@+id/circularImageView">
 
@@ -58,17 +59,23 @@
 
     <TextView
         android:id="@+id/btn_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_ripple"
-        android:clickable="true"
-        android:text="EDIT"
+        android:background="@drawable/ripple_red"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="LOGIN"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintBottom_toBottomOf="@+id/circularImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/circularImageView"
+        app:layout_constraintTop_toTopOf="@+id/circularImageView" />
 
     <View
         android:id="@+id/view2"

@@ -6,11 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.testing.kotlinapplication.MainActivity
 
 import com.testing.kotlinapplication.R
+import com.testing.kotlinapplication.repository.action.ShopRepository
 import com.testing.kotlinapplication.ui.authencation.AuthencationActivity
+import com.testing.kotlinapplication.util.Constant
+import com.testing.kotlinapplication.util.Preference
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.Dispatchers.Main
 
@@ -19,17 +23,21 @@ import kotlinx.coroutines.Dispatchers.Main
  */
 class ProfileFragment : Fragment() {
 
+    private lateinit var preference: Preference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false) as View
+        preference=Preference(view.context)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpLayout()
         ll_history.setOnClickListener({ v ->
             doNavigateToHistory()
         })
@@ -46,5 +54,24 @@ class ProfileFragment : Fragment() {
         findNavController().navigate(action)
     }
 
+    fun setUpLayout() {
+        if (preference.getValueBoolien(Constant.IS_LOGIN, false) == true) {
+            btn_edit.visibility = View.GONE
+            ll_info.visibility = View.VISIBLE
+            context?.let {
+                ShopRepository.getUser(it, preference.getValueInt(Constant.USER_ID))!!
+                    .observe(viewLifecycleOwner,
+                        Observer {
+                            txt_acc_name.text = it.TenDangNhap
+                            txt_acc_mail.text = it.email
+                            txt_acc_phone.text = it.SDT
+                            txt_acc_address.text = it.DiaChi_SoNha
+                        })
+            }
+        } else {
+            btn_edit.visibility = View.VISIBLE
+            ll_info.visibility = View.GONE
+        }
+    }
 
 }

@@ -3,6 +3,7 @@ package com.testing.kotlinapplication.repository
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.testing.kotlinapplication.network.model.User
 
 @Entity(tableName = "User")
 data class UserModel(
@@ -40,13 +41,14 @@ data class UserModel(
     var email_verified_at: String,
     @ColumnInfo(name = "expires_at")
     val expires_at: String,
-//    @ColumnInfo(name = "id")
-//    val id: Int,
     @ColumnInfo(name = "token_type")
     val token_type: String,
     @ColumnInfo(name = "updated_at")
-    val updated_at: String
+    val updated_at: String,
+    @ColumnInfo(name = "user_id")
+    val user_id: Int
 ) {
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var Id: Int? = null

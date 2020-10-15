@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as AuthencationActivity).setUIGroup(view.findViewById(R.id.group))
         btn_login.setOnClickListener {
-            showDialog(dialog)
+            dialog.show()
             context?.let { it ->
                 doLogin(
                     it,
@@ -71,33 +71,6 @@ class LoginFragment : Fragment() {
     }
 
     fun doLogin(context: Context, mUserName: String, mPassword: String) {
-//        var userModel =
-//            ShopRepository.checkUser(context, mUserName)!!.observe(viewLifecycleOwner, Observer {
-//                if (it == null) {
-//                    Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show()
-//                } else {
-//                    var data = Base64.decode(it.Password, Base64.DEFAULT)
-//                    var dbPassword = String(data)
-//                    if (mPassword.equals(dbPassword)) {
-//                        preference.save(Constant.IS_LOGIN, true)
-//                        preference.save(Constant.USER_TYPE, it.userType)
-//                    }
-//                    hideDialog(dialog)
-//                    if (preference.getValueInt(Constant.USER_TYPE) == 1) {
-//                        var intent = Intent(context, MainActivity::class.java)
-//                        intent.flags =
-//                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                        (activity as AuthencationActivity).startActivity(intent)
-//                        (activity as AuthencationActivity).finish()
-//                    } else if (preference.getValueInt(Constant.USER_TYPE) == 2) {
-//                        var intent = Intent(context, StaffActivity::class.java)
-//                        intent.flags =
-//                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                        (activity as AuthencationActivity).startActivity(intent)
-//                        (activity as AuthencationActivity).finish()
-//                    }
-//                }
-//            })
         val paramater = HashMap<String, String>()
         paramater.put("email", mUserName)
         paramater.put("password", mPassword)
@@ -114,6 +87,8 @@ class LoginFragment : Fragment() {
                             preference.save(Constant.TOKEN, "Bearer ${it.user.access_token}")
                             preference.save(Constant.IS_LOGIN, true)
                             preference.save(Constant.USER_TYPE, it.user.LoaiTaiKhoan)
+                            preference.save(Constant.USER_ID, it.user.id)
+                            ShopRepository.insertData(context, it.user)
                             var intent = Intent(context, MainActivity::class.java)
                             intent.flags =
                                 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -200,7 +200,6 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     fun doLoadmore(page: Int) {
         var param = HashMap<String, String>()
         param.put("page", "${page}")
-        Toast.makeText(context, "${page}", Toast.LENGTH_SHORT).show()
         var compositeDisposable = CompositeDisposable(
             ServiceBuilder.buildService()
                 .getProduct(preference.getValueString(Constant.TOKEN), param)
