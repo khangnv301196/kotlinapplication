@@ -12,4 +12,5 @@
     <color name="colorChipTextClicked">#F5F5F5</color>
     <color name="colorChipCloseInactive">#757575</color>
     <color name="colorChipCloseClicked">#F5F5F5</color>
+    <color name="colorText">#FFFFFF</color>
 </resources>

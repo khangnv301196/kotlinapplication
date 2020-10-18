@@ -57,7 +57,6 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     private var visibleItemCount = 0
     private var isLoading: Boolean = false
     private var page = 1
-    private var first_scroll = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +67,6 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         dialog = ProgressDialogutil.setProgressDialog(view.context, "Loading")
         dialog.show()
         page = 1
-        first_scroll = false
         preference = Preference(view.context)
         mapping(view)
         doLoadApi()
@@ -126,14 +124,15 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                 oldScrollY: Int
             ) {
                 if (v != null) {
-                    if(v.getChildAt(v.childCount - 1) != null) {
+                    if (v.getChildAt(v.childCount - 1) != null) {
                         if ((scrollY >= (v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight)) &&
-                            scrollY > oldScrollY) {
+                            scrollY > oldScrollY
+                        ) {
 
                             visibleItemCount = gridlayoutManager.getChildCount();
                             totalItemCount = gridlayoutManager.getItemCount();
                             pastVisiblesItems = gridlayoutManager.findFirstVisibleItemPosition();
-                            if (isLoading == false && ((visibleItemCount + pastVisiblesItems) >= totalItemCount) ) {
+                            if (isLoading == false && ((visibleItemCount + pastVisiblesItems) >= totalItemCount)) {
                                 loadMore()
                                 isLoading = true
                             }
@@ -141,7 +140,6 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                         }
                     }
                 }
-
             }
         })
 
@@ -209,7 +207,7 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
                     rv_top.postDelayed(Runnable {
                         //removes load item in list.
                         mList.removeAt(mList.size - 1)
-                        var curent_size=productAdapter.itemCount
+                        var curent_size = productAdapter.itemCount
                         productAdapter.notifyItemRemoved(mList.size - 1)
                         mList.addAll(it.data)
 //                        productAdapter.notifyItemRangeInserted(curent_size,it.data.size)
@@ -227,9 +225,9 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     private fun loadMore() {
         var emptyData = Data()
         emptyData.viewType = 1
-        mList.add(mList.size,emptyData)
+        mList.add(mList.size, emptyData)
         productAdapter.notifyDataSetChanged()
-        page=page+1
+        page = page + 1
         doLoadmore(page)
 
     }

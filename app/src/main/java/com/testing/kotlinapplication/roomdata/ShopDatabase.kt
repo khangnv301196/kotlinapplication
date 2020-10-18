@@ -4,11 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.testing.kotlinapplication.repository.CardModel
+import com.testing.kotlinapplication.repository.ProductsModel
 import com.testing.kotlinapplication.repository.UserModel
 
-@Database(entities = arrayOf(UserModel::class), version = 1)
+@Database(entities = arrayOf(UserModel::class, CardModel::class, ProductsModel::class), version = 1)
 abstract class ShopDatabase : RoomDatabase() {
     abstract fun ShopDAO(): DAOAccess
+    abstract fun CardDAOAcess(): CardDAOAcess
+    abstract fun ProductDAOAcess(): ProductDAOAcess
 
     companion object {
         @Volatile

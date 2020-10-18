@@ -3,6 +3,7 @@ package com.testing.kotlinapplication.ui.card
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +47,7 @@ class CardFragment : Fragment() {
         super.onAttach(context)
         type = arguments?.getInt("Product")!!
         if (type == 1) {
+            (activity as MainActivity).resetActionBar()
             (activity as MainActivity).showAppBar()
         }
         (activity as MainActivity).hideBottomNavigation()
@@ -65,6 +67,16 @@ class CardFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.cart_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.delete -> {
+                Toast.makeText(context, "delete nha", Toast.LENGTH_SHORT).show()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun doNavigateToOrder(v: View) {

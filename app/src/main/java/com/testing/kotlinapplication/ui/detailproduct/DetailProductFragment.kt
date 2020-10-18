@@ -23,6 +23,7 @@ import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.DetailProductReponse
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
+import com.testing.kotlinapplication.util.view.MyInCreaseView
 import com.testing.kotlinapplication.util.view.ProgressDialogutil
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -37,6 +38,7 @@ import kotlinx.android.synthetic.main.fragment_detail_product.*
 class DetailProductFragment : Fragment() {
 
     private lateinit var btn_add: LinearLayout
+    private lateinit var counter: MyInCreaseView
     private val args: DetailProductFragmentArgs by navArgs()
     private lateinit var preference: Preference
     private lateinit var dialog: Dialog
@@ -60,8 +62,8 @@ class DetailProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         toolbar.setNavigationOnClickListener({ v -> activity?.onBackPressed() })
         appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-            internal var titleIsShowing = false
-            internal var scrollRange = -1
+            var titleIsShowing = false
+            var scrollRange = -1
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
                 if (scrollRange == -1) {
@@ -117,7 +119,6 @@ class DetailProductFragment : Fragment() {
 
     fun mapping(view: View) {
         btn_add = view.findViewById(R.id.bottom)
-
     }
 
 
@@ -134,7 +135,6 @@ class DetailProductFragment : Fragment() {
             }
             dialog?.show()
         }
-
     }
 
     fun doLoadApi(id: Int) {
@@ -148,10 +148,10 @@ class DetailProductFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     setLayout(it)
-                    Toast.makeText(context, "has Data", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "has Data", Toast.LENGTH_SHORT).show()
                     dialog.hide()
                 }, {
-                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     dialog.hide()
                 })
         )
@@ -167,7 +167,7 @@ class DetailProductFragment : Fragment() {
         txt_title_product.setText(data.TenSP)
         val format = DecimalFormat("###,###,###,###")
         txt_price.setText("${format.format(data.DongGia.toInt())}đ")
-        txt_detail.setText(Html.fromHtml(data.MoTa,1))
+        txt_detail.setText(Html.fromHtml(data.MoTa, 1))
     }
 
 }
