@@ -10,8 +10,8 @@ interface CardDAOAcess {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCart(cart: CardModel)
 
-    @Query("SELECT * FROM Card")
-    fun getAllCard(): LiveData<ArrayList<CardModel>>
+    @Query("SELECT * FROM Card WHERE user_id LIKE :id AND status like :status")
+    fun getAllCard(id: Int, status: Boolean): LiveData<CardModel>
 
     @Update
     fun Update(cart: CardModel)

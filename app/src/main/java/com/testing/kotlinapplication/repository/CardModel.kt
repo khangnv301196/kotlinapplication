@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Card")
 data class CardModel(
     @ColumnInfo(name = "user_id")
-    var user_id: String,
+    var user_id: Int,
     @ColumnInfo(name = "status")
     var status: Boolean
 ) {

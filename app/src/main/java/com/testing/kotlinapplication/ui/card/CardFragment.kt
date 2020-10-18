@@ -9,6 +9,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testing.kotlinapplication.MainActivity
 import com.testing.kotlinapplication.R
+import com.testing.kotlinapplication.network.DataCallBack
+import com.testing.kotlinapplication.network.ServiceBuilder
+import com.testing.kotlinapplication.network.model.CartResponse
+import com.testing.kotlinapplication.util.Constant
+import com.testing.kotlinapplication.util.Preference
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_card.*
 import kotlinx.android.synthetic.main.fragment_detail_product.*
 
@@ -19,13 +26,17 @@ class CardFragment : Fragment() {
     private lateinit var mList: ArrayList<String>
     private var type = 0
 
+    private lateinit var preference: Preference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_card, container, false)
+        var view = inflater.inflate(R.layout.fragment_card, container, false)
+        preference = Preference(view.context)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,6 +93,20 @@ class CardFragment : Fragment() {
     fun doNavigateToOrder(v: View) {
         val action = CardFragmentDirections.actionCardFragmentToOrderFragment()
         findNavController().navigate(action)
+    }
+
+    fun doLoadApi(id: Int, callBack: DataCallBack<CartResponse>) {
+        var params = HashMap<String, String>()
+        params.put("MaKhachHang", "${id}")
+        var disposable = ServiceBuilder.buildService()
+            .getCartByUserId(preference.getValueString(Constant.TOKEN), params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                callBack.Complete(it)
+            }, {
+                callBack.Error(it)
+            })
     }
 
 

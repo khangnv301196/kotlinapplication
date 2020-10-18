@@ -13,7 +13,7 @@ interface ProductDAOAcess {
     suspend fun insertProuct(productsModel: ProductsModel)
 
     @Query("select * from Product where idCart LIKE :id ")
-    fun getAllProductByIdCart(id: Int): LiveData<ArrayList<ProductsModel>>
+    fun getAllProductByIdCart(id: Int): LiveData<List<ProductsModel>>
 
     @Delete
     fun deleteProduct(productsModel: ProductsModel)

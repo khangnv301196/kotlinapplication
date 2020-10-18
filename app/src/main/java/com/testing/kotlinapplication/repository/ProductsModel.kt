@@ -1,20 +1,10 @@
 package com.testing.kotlinapplication.repository
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import android.view.Display
+import androidx.room.*
 
 @Entity(
-    tableName = "Product",
-    foreignKeys = [
-        ForeignKey(
-            entity = CardModel::class,
-            parentColumns = ["id"],
-            childColumns = ["idCart"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+    tableName = "Product"
 )
 data class ProductsModel(
     @ColumnInfo(name = "name")

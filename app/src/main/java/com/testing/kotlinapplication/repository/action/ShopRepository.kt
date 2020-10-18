@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Base64
 import androidx.lifecycle.LiveData
 import com.testing.kotlinapplication.network.model.User
+import com.testing.kotlinapplication.repository.CardModel
 import com.testing.kotlinapplication.repository.UserModel
 import com.testing.kotlinapplication.roomdata.ShopDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +15,7 @@ class ShopRepository {
     companion object {
         var shopDatabase: ShopDatabase? = null
         var userModel: LiveData<UserModel>? = null
+        var listCard: LiveData<CardModel>? = null
         fun initializeDB(context: Context): ShopDatabase {
             return ShopDatabase.getDatabaseClient(context)
         }
@@ -59,6 +61,26 @@ class ShopRepository {
             shopDatabase = initializeDB(context)
             userModel = shopDatabase!!.ShopDAO().findByID(id)
             return userModel
+        }
+
+        fun doAddNewCart(context: Context, userId: Int) {
+            CoroutineScope(IO).launch {
+                shopDatabase = initializeDB(context)
+                shopDatabase!!.CardDAOAcess().insertCart(CardModel(userId, true))
+            }
+        }
+
+        fun getCardByUserID(context: Context, userId: Int): LiveData<CardModel> {
+            shopDatabase = initializeDB(context)
+            listCard = shopDatabase!!.CardDAOAcess().getAllCard(userId, true)
+            return listCard as LiveData<CardModel>
+        }
+
+        fun doDeletecart(context: Context, card: CardModel) {
+            CoroutineScope(IO).launch {
+                shopDatabase = initializeDB(context)
+                shopDatabase!!.CardDAOAcess().delete(card)
+            }
         }
     }
 }

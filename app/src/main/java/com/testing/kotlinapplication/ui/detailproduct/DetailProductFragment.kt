@@ -7,25 +7,25 @@ import android.os.Bundle
 import android.text.Html
 import android.view.*
 import android.widget.LinearLayout
-import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.AsyncListUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.testing.kotlinapplication.MainActivity
 
 import com.testing.kotlinapplication.R
+import com.testing.kotlinapplication.network.DataCallBack
 import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.DetailProductReponse
+import com.testing.kotlinapplication.network.model.RegisterRespone
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
 import com.testing.kotlinapplication.util.view.MyInCreaseView
 import com.testing.kotlinapplication.util.view.ProgressDialogutil
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -38,10 +38,10 @@ import kotlinx.android.synthetic.main.fragment_detail_product.*
 class DetailProductFragment : Fragment() {
 
     private lateinit var btn_add: LinearLayout
-    private lateinit var counter: MyInCreaseView
     private val args: DetailProductFragmentArgs by navArgs()
     private lateinit var preference: Preference
-    private lateinit var dialog: Dialog
+    private lateinit var progressDialog: Dialog
+    private lateinit var useCase: AddCartUseCase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,8 +51,9 @@ class DetailProductFragment : Fragment() {
         setHasOptionsMenu(true)
         var view = inflater.inflate(R.layout.fragment_detail_product, container, false)
         preference = Preference(view.context)
-        dialog = ProgressDialogutil.setProgressDialog(view.context, "Loading")
-        dialog.show()
+        progressDialog = ProgressDialogutil.setProgressDialog(view.context, "Loading")
+        progressDialog.show()
+        useCase = AddCartUseCase(view.context)
         mapping(view)
         setListener()
         return view
@@ -130,8 +131,21 @@ class DetailProductFragment : Fragment() {
             dialog?.btn_order?.setOnClickListener {
                 var bundle = Bundle()
                 bundle.putInt("Product", 1)
-                findNavController().navigate(R.id.cardFragment, bundle)
-                dialog?.hide()
+                progressDialog.show()
+                doUpdateCart(args.id, 3, object : DataCallBack<RegisterRespone> {
+                    override fun Complete(respon: RegisterRespone) {
+                        progressDialog.hide()
+                        findNavController().navigate(R.id.cardFragment, bundle)
+                        dialog?.hide()
+                    }
+
+                    override fun Error(error: Throwable) {
+                        Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+                        progressDialog.hide()
+                        dialog?.hide()
+                    }
+                })
+
             }
             dialog?.show()
         }
@@ -149,10 +163,10 @@ class DetailProductFragment : Fragment() {
                 .subscribe({
                     setLayout(it)
 //                    Toast.makeText(context, "has Data", Toast.LENGTH_SHORT).show()
-                    dialog.hide()
+                    progressDialog.hide()
                 }, {
 //                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                    dialog.hide()
+                    progressDialog
                 })
         )
     }
@@ -168,6 +182,26 @@ class DetailProductFragment : Fragment() {
         val format = DecimalFormat("###,###,###,###")
         txt_price.setText("${format.format(data.DongGia.toInt())}đ")
         txt_detail.setText(Html.fromHtml(data.MoTa, 1))
+    }
+
+    fun doUpdateCart(id: Int, quantity: Int, callback: DataCallBack<RegisterRespone>) {
+        var bodys = HashMap<String, String>()
+        bodys.put("MaChiTietSanPham", "${id}")
+        bodys.put("MaKhachHang", "${preference.getValueInt(Constant.USER_ID)}")
+        bodys.put("SoLuong", "1")
+
+        var compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(
+            ServiceBuilder.buildService()
+                .postNewCart(preference.getValueString(Constant.TOKEN), bodys)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    callback.Complete(it)
+                }, {
+                    callback.Error(it)
+                })
+        )
     }
 
 }
