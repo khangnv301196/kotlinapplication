@@ -5,6 +5,7 @@ import android.content.Context
 import android.icu.text.DecimalFormat
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -134,15 +135,16 @@ class DetailProductFragment : Fragment() {
                 progressDialog.show()
                 doUpdateCart(args.id, 3, object : DataCallBack<RegisterRespone> {
                     override fun Complete(respon: RegisterRespone) {
-                        progressDialog.hide()
                         findNavController().navigate(R.id.cardFragment, bundle)
                         dialog?.hide()
+                        progressDialog.hide()
                     }
 
                     override fun Error(error: Throwable) {
                         Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-                        progressDialog.hide()
                         dialog?.hide()
+                        progressDialog.hide()
+
                     }
                 })
 
@@ -166,7 +168,7 @@ class DetailProductFragment : Fragment() {
                     progressDialog.hide()
                 }, {
 //                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                    progressDialog
+                    progressDialog.hide()
                 })
         )
     }
@@ -189,7 +191,7 @@ class DetailProductFragment : Fragment() {
         bodys.put("MaChiTietSanPham", "${id}")
         bodys.put("MaKhachHang", "${preference.getValueInt(Constant.USER_ID)}")
         bodys.put("SoLuong", "1")
-
+        Log.d("KHANGNVDEBUG", "${preference.getValueInt(Constant.USER_ID)}")
         var compositeDisposable = CompositeDisposable()
         compositeDisposable.add(
             ServiceBuilder.buildService()

@@ -12,18 +12,19 @@ import com.testing.kotlinapplication.R
 import com.testing.kotlinapplication.network.DataCallBack
 import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.CartResponse
+import com.testing.kotlinapplication.network.model.DanhSachGioHang
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_card.*
-import kotlinx.android.synthetic.main.fragment_detail_product.*
 
 
 class CardFragment : Fragment() {
 
     private lateinit var mAdapter: CartAdapter
-    private lateinit var mList: ArrayList<String>
+    private lateinit var mList: ArrayList<DanhSachGioHang>
     private var type = 0
 
     private lateinit var preference: Preference
@@ -42,15 +43,23 @@ class CardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mList = ArrayList()
-        for (i in 0..10) {
-            mList.add("new")
-        }
         mAdapter = CartAdapter(view.context, mList)
         rv_cart.apply {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
         }
         ll_checkout.setOnClickListener({ v -> doNavigateToOrder(v) })
+
+        doLoadApi(preference.getValueInt(Constant.USER_ID), object : DataCallBack<CartResponse> {
+            override fun Complete(respon: CartResponse) {
+                mList.addAll(respon.danhSachGioHang)
+                mAdapter.notifyDataSetChanged()
+            }
+
+            override fun Error(error: Throwable) {
+
+            }
+        })
 
     }
 
@@ -98,15 +107,20 @@ class CardFragment : Fragment() {
     fun doLoadApi(id: Int, callBack: DataCallBack<CartResponse>) {
         var params = HashMap<String, String>()
         params.put("MaKhachHang", "${id}")
-        var disposable = ServiceBuilder.buildService()
-            .getCartByUserId(preference.getValueString(Constant.TOKEN), params)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                callBack.Complete(it)
-            }, {
-                callBack.Error(it)
-            })
+
+        var compositeDisposable: CompositeDisposable
+        compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(
+            ServiceBuilder.buildService()
+                .getCartByUserId(preference.getValueString(Constant.TOKEN), params)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    callBack.Complete(it)
+                }, {
+                    callBack.Error(it)
+                })
+        )
     }
 
 

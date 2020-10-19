@@ -18,6 +18,9 @@ interface Endpoint {
         @QueryMap params: HashMap<String, String>
     ): Observable<ProductRespone>
 
+    @GET("/api/customer/dashboard")
+    fun getDashBoard(): Observable<TopResponse>
+
     @GET("/api/customer/chi-tiet-san-pham")
     fun getDetailProduct(
         @Header("Authorization") token: String,

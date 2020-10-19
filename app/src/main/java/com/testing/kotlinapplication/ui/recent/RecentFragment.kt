@@ -24,8 +24,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 import com.testing.kotlinapplication.R
+import com.testing.kotlinapplication.network.DataCallBack
 import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.Data
+import com.testing.kotlinapplication.network.model.Slider
+import com.testing.kotlinapplication.network.model.TopResponse
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
 import com.testing.kotlinapplication.util.view.ProgressDialogutil
@@ -69,7 +72,19 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         page = 1
         preference = Preference(view.context)
         mapping(view)
-        doLoadApi()
+        doLoadApi(object : DataCallBack<TopResponse> {
+            override fun Complete(respon: TopResponse) {
+                setupUI(view.context, flipper, respon.sliders)
+                mList.clear()
+                mList.addAll(respon.danhSachSanPham)
+                productAdapter.notifyDataSetChanged()
+                dialog.hide()
+            }
+
+            override fun Error(error: Throwable) {
+                dialog.hide()
+            }
+        })
         return view
     }
 
@@ -77,8 +92,10 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         super.onViewCreated(view, savedInstanceState)
         flipper.setInAnimation(view.context, android.R.anim.slide_in_left)
         flipper.setOutAnimation(view.context, android.R.anim.slide_out_right)
-        setupUI(view.context, flipper)
-        flipper.startFlipping()
+        mListCoupon.add("https://www.kaijubattle.net/uploads/2/9/5/7/29570123/711976090_orig.jpg")
+        mListCoupon.add("https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/07/Best_Baby_Clothes_1296x728.png?w=1155&h=1528")
+        mListCoupon.add("https://i.pinimg.com/originals/02/23/3e/02233e46ec1eca2967460ec0c2648290.jpg")
+
         couponAdapter.notifyDataSetChanged()
     }
 
@@ -145,14 +162,10 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
 
     }
 
-    fun setupUI(context: Context, viewFlipper: ViewFlipper) {
+    fun setupUI(context: Context, viewFlipper: ViewFlipper, mList: List<Slider>) {
 
-        mListPromotion.add("https://luatminhkhue.vn/LMK/article/mergepost/mau-thong-bao-thuc-hien-chuong-trinh-khuyen-mai-moi-nhat-nam-2018-97963.jpg")
-        mListPromotion.add("https://hanoicomputercdn.com/media/news/18_0630_chuong_trinh_khuyen_mai_thang_lg_qua_me_ly.jpg")
-        mListPromotion.add("https://www.bigc.vn/files/blog/cong-bo-ket-qua/luckydraw.jpg")
-        mListPromotion.add("https://www.emart.com.vn/wp-content/uploads/vui-khai-truong-ngan-khuyen-mai-1715-960x480.jpg")
-        mListPromotion.add("https://anh.24h.com.vn/upload/4-2016/images/2016-11-02/1478067064-khuyen-mai-mung-khai-truong.jpg")
-        for (img in mListPromotion) {
+        viewFlipper.removeAllViews()
+        for (slider in mList) {
             val imageView = ImageView(context)
             val layoutParams = FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -164,33 +177,26 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
             imageView.setOnClickListener {
                 Toast.makeText(context, "new omega", Toast.LENGTH_SHORT).show()
             }
-            Glide.with(context).load(img).centerCrop().into(imageView)
+            Glide.with(context).load(slider.Anh).centerCrop().into(imageView)
             viewFlipper.addView(imageView)
         }
 
-
-        mListCoupon.add("https://www.kaijubattle.net/uploads/2/9/5/7/29570123/711976090_orig.jpg")
-        mListCoupon.add("https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/07/Best_Baby_Clothes_1296x728.png?w=1155&h=1528")
-        mListCoupon.add("https://i.pinimg.com/originals/02/23/3e/02233e46ec1eca2967460ec0c2648290.jpg")
+        flipper.startFlipping()
 
     }
 
-    fun doLoadApi() {
+    fun doLoadApi(dataCallBack: DataCallBack<TopResponse>) {
         var param = HashMap<String, String>()
         param.put("page", "1")
         var compositeDisposable = CompositeDisposable(
             ServiceBuilder.buildService()
-                .getProduct(preference.getValueString(Constant.TOKEN), param)
+                .getDashBoard()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    mList.addAll(it.data)
-                    productAdapter.notifyDataSetChanged()
-//                    Toast.makeText(context, "get data", Toast.LENGTH_SHORT).show()
-                    dialog.hide()
+                    dataCallBack.Complete(it)
                 }, {
-                    dialog.hide()
-                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    dataCallBack.Error(it)
                 })
         )
     }
