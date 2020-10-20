@@ -5,6 +5,7 @@ import android.util.Base64
 import androidx.lifecycle.LiveData
 import com.testing.kotlinapplication.network.model.User
 import com.testing.kotlinapplication.repository.CardModel
+import com.testing.kotlinapplication.repository.ProductsModel
 import com.testing.kotlinapplication.repository.UserModel
 import com.testing.kotlinapplication.roomdata.ShopDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -82,5 +83,13 @@ class ShopRepository {
                 shopDatabase!!.CardDAOAcess().delete(card)
             }
         }
+
+        fun doAddProductToCard(context: Context, product: ProductsModel) {
+            CoroutineScope(IO).launch {
+                shopDatabase = initializeDB(context)
+                shopDatabase!!.ProductDAOAcess().insertProuct(product)
+            }
+        }
+
     }
 }

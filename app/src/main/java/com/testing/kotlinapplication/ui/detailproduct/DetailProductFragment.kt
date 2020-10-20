@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.AsyncListUtil
@@ -23,6 +24,8 @@ import com.testing.kotlinapplication.network.DataCallBack
 import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.DetailProductReponse
 import com.testing.kotlinapplication.network.model.RegisterRespone
+import com.testing.kotlinapplication.repository.ProductsModel
+import com.testing.kotlinapplication.repository.action.ShopRepository
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
 import com.testing.kotlinapplication.util.view.MyInCreaseView
@@ -132,21 +135,34 @@ class DetailProductFragment : Fragment() {
             dialog?.btn_order?.setOnClickListener {
                 var bundle = Bundle()
                 bundle.putInt("Product", 1)
-                progressDialog.show()
-                doUpdateCart(args.id, 3, object : DataCallBack<RegisterRespone> {
-                    override fun Complete(respon: RegisterRespone) {
-                        findNavController().navigate(R.id.cardFragment, bundle)
-                        dialog?.hide()
-                        progressDialog.hide()
-                    }
+//                progressDialog.show()
+//                doUpdateCart(args.id, 3, object : DataCallBack<RegisterRespone> {
+//                    override fun Complete(respon: RegisterRespone) {
+//                        findNavController().navigate(R.id.cardFragment, bundle)
+//                        dialog?.hide()
+//                        progressDialog.hide()
+//                    }
+//
+//                    override fun Error(error: Throwable) {
+//                        Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+//                        dialog?.hide()
+//                        progressDialog.hide()
+//
+//                    }
+//                })
 
-                    override fun Error(error: Throwable) {
-                        Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-                        dialog?.hide()
-                        progressDialog.hide()
-
-                    }
-                })
+//                context?.let { it1 -> ShopRepository.doAddNewCart(it1, preference.getValueInt(Constant.USER_ID)) }
+//                context?.let { it1 ->
+//                    ShopRepository.getCardByUserID(
+//                        it1,
+//                        preference.getValueInt(Constant.USER_ID)
+//                    ).observe(viewLifecycleOwner, Observer {
+//                        Log.d("KHANGNVDEBUG", it.Id.toString())
+//                    })
+//                }
+//                var product: ProductsModel
+//                product = ProductsModel("new omega", 1, "IMAGE", 1234, 3, 10000)
+//                context?.let { it1 -> ShopRepository.doAddProductToCard(it1, product) }
 
             }
             dialog?.show()

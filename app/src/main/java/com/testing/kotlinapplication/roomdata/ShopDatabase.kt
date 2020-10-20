@@ -8,11 +8,16 @@ import com.testing.kotlinapplication.repository.CardModel
 import com.testing.kotlinapplication.repository.ProductsModel
 import com.testing.kotlinapplication.repository.UserModel
 
-@Database(entities = arrayOf(UserModel::class, CardModel::class, ProductsModel::class), version = 1)
+@Database(
+    entities = arrayOf(UserModel::class, CardModel::class, ProductsModel::class),
+    version = 1,
+    exportSchema = false
+)
 abstract class ShopDatabase : RoomDatabase() {
     abstract fun ShopDAO(): DAOAccess
     abstract fun CardDAOAcess(): CardDAOAcess
     abstract fun ProductDAOAcess(): ProductDAOAcess
+
 
     companion object {
         @Volatile
@@ -25,7 +30,6 @@ abstract class ShopDatabase : RoomDatabase() {
 
                 INSTANCE = Room
                     .databaseBuilder(context, ShopDatabase::class.java, "LOGIN_DATABASE")
-                    .fallbackToDestructiveMigration()
                     .build()
 
                 return INSTANCE!!

@@ -3,9 +3,7 @@ package com.testing.kotlinapplication.repository
 import android.view.Display
 import androidx.room.*
 
-@Entity(
-    tableName = "Product"
-)
+@Entity(tableName = "Product")
 data class ProductsModel(
     @ColumnInfo(name = "name")
     var productName: String,
@@ -14,7 +12,7 @@ data class ProductsModel(
     @ColumnInfo(name = "image")
     var image: String,
     @ColumnInfo(name = "id_server")
-    var idServer: String,
+    var idServer: Int,
     @ColumnInfo(name = "total")
     var Total: Int,
     @ColumnInfo(name = "price")
