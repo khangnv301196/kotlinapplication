@@ -17,6 +17,7 @@ class ShopRepository {
         var shopDatabase: ShopDatabase? = null
         var userModel: LiveData<UserModel>? = null
         var listCard: LiveData<CardModel>? = null
+        var listProduct: LiveData<List<ProductsModel>>? = null
         fun initializeDB(context: Context): ShopDatabase {
             return ShopDatabase.getDatabaseClient(context)
         }
@@ -89,6 +90,12 @@ class ShopRepository {
                 shopDatabase = initializeDB(context)
                 shopDatabase!!.ProductDAOAcess().insertProuct(product)
             }
+        }
+
+        fun doGetAllProductByCardid(context: Context, id: Int): LiveData<List<ProductsModel>> {
+            shopDatabase = initializeDB(context)
+            listProduct = shopDatabase!!.ProductDAOAcess().getAllProductByIdCart(id)
+            return listProduct as LiveData<List<ProductsModel>>
         }
 
     }

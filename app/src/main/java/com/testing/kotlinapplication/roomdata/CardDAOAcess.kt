@@ -8,7 +8,7 @@ import com.testing.kotlinapplication.repository.CardModel
 interface CardDAOAcess {
     //Query for Cart
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCart(cart: CardModel)
+    suspend fun insertCart(cart: CardModel): Long
 
     @Query("SELECT * FROM Card WHERE user_id LIKE :id AND status like :status")
     fun getAllCard(id: Int, status: Boolean): LiveData<CardModel>

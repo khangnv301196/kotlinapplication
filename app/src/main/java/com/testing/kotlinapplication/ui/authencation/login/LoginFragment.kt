@@ -90,14 +90,14 @@ class LoginFragment : Fragment() {
                             preference.save(Constant.USER_ID, it.user.id)
                             ShopRepository.insertData(context, it.user)
                             when (it.user.LoaiTaiKhoan) {
-                                2 -> {
+                                3 -> {
                                     var intent = Intent(context, MainActivity::class.java)
                                     intent.flags =
                                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     (activity as AuthencationActivity).startActivity(intent)
                                     (activity as AuthencationActivity).finish()
                                 }
-                                3 -> {
+                                2 -> {
                                     var intent = Intent(context, StaffActivity::class.java)
                                     intent.flags =
                                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

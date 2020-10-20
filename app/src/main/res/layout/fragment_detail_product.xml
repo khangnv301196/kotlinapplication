@@ -105,7 +105,7 @@
                                 android:text="(6 reviews)" />
                         </LinearLayout>
                         <TextView
-                            android:id="@+id/txt_price"
+                            android:id="@+id/txt_price_z"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="textEnd"
