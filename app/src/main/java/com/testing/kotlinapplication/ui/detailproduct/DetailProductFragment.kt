@@ -4,6 +4,8 @@ import android.app.Dialog
 import android.content.Context
 import android.icu.text.DecimalFormat
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Html
 import android.util.Log
 import android.view.*
@@ -21,7 +23,9 @@ import com.testing.kotlinapplication.R
 import com.testing.kotlinapplication.network.DataCallBack
 import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.DetailProductReponse
+import com.testing.kotlinapplication.network.model.DetailProductType
 import com.testing.kotlinapplication.network.model.RegisterRespone
+import com.testing.kotlinapplication.repository.CardModel
 import com.testing.kotlinapplication.repository.ProductsModel
 import com.testing.kotlinapplication.repository.action.ShopRepository
 import com.testing.kotlinapplication.util.Constant
@@ -63,7 +67,7 @@ class DetailProductFragment : Fragment() {
         var bottomsheet = layoutInflater.inflate(R.layout.bottom_sheet, null)
         dialog = BottomSheetDialog(view.context)
         dialog.setContentView(bottomsheet)
-        useCase = AddCartUseCase(view.context)
+        useCase = AddCartUseCase(view.context, viewLifecycleOwner)
         mapping(view)
         setListener()
         return view
@@ -132,11 +136,13 @@ class DetailProductFragment : Fragment() {
         btn_add = view.findViewById(R.id.bottom)
     }
 
-    fun doLoadradio() {
-        for (i in 0..3) {
+    fun doLoadradio(listData: List<DetailProductType>) {
+        segment.removeAllViews()
+        for (i in listData) {
             var radioButton: RadioButton
             radioButton = layoutInflater.inflate(R.layout.radio_button_item, null) as RadioButton
-            radioButton.id = i
+            radioButton.id = i.id
+            radioButton.text = i.Mau
             segment.addView(radioButton)
         }
         segment.updateBackground()
@@ -213,45 +219,43 @@ class DetailProductFragment : Fragment() {
         txt_price_dialog = dialog.findViewById(R.id.txt_price)!!
         val format = DecimalFormat("###,###,###,###")
         txt_price_dialog.setText("${format.format(data.DongGia.toInt())} đ")
-        doLoadradio()
+        doLoadradio(data.chi_tiet_san_pham)
         dialog.btn_order?.setOnClickListener {
             var bundle = Bundle()
             bundle.putInt("Product", 1)
-//                            progressDialog.show()
-//                doUpdateCart(args.id, 3, object : DataCallBack<RegisterRespone> {
-//                    override fun Complete(respon: RegisterRespone) {
-//                        findNavController().navigate(R.id.cardFragment, bundle)
-//                        dialog?.hide()
-//                        progressDialog.hide()
-//                    }
-//
-//                    override fun Error(error: Throwable) {
-//                        Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-//                        dialog?.hide()
-//                        progressDialog.hide()
-//
-//                    }
-//                })
-//
-//                context?.let { it1 -> ShopRepository.doAddNewCart(it1, preference.getValueInt(Constant.USER_ID)) }
-//                context?.let { it1 ->
-//                    ShopRepository.getCardByUserID(
-//                        it1,
-//                        preference.getValueInt(Constant.USER_ID)
-//                    ).observe(viewLifecycleOwner, Observer {
-//                        Log.d("KHANGNVDEBUG", it.Id.toString())
-//                    })
-//                }
-//                var product: ProductsModel
-//                product = ProductsModel("new omega", 1, "IMAGE", 1234, 3, 10000)
-//                context?.let { it1 -> ShopRepository.doAddProductToCard(it1, product) }
+            dialog.hide()
+            progressDialog.show()
+            useCase.doCheckCart().observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    var product =
+                        it.Id?.let { id ->
+                            ProductsModel(
+                                data.TenSP,
+                                id,
+                                data.AnhChinh,
+                                data.id,
+                                1,
+                                data.DongGia.toInt()
+                            )
+                        }
+                    product?.let { prodc -> useCase.doAddProductByIDCart(prodc) }
+                } else {
+                    var product = ProductsModel(
+                        data.TenSP,
+                        0,
+                        data.AnhChinh,
+                        data.id,
+                        1,
+                        data.DongGia.toInt()
+                    )
+                    useCase.doCreateNewCart(product)
+                }
+            })
 
-            context?.let { it ->
-                ShopRepository.doGetAllProductByCardid(it, 1).observe(viewLifecycleOwner,
-                    Observer {
-                        Log.d("KHANGNVDEBUG", "${it.size}")
-                    })
-            }
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                progressDialog.hide()
+                findNavController().navigate(R.id.cardFragment, bundle)
+            }, 2000)
         }
     }
 

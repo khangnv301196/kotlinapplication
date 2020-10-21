@@ -42,21 +42,23 @@ class CategoryFragment : Fragment(), CategoryAdapter.CategoryItemClick {
     }
 
     private fun mapping(view: View) {
-        mAdapter = CategoryAdapter(view.context, mListCategory,this)
+        mAdapter = CategoryAdapter(view.context, mListCategory, this)
     }
 
     private fun initData() {
         mListCategory = ArrayList()
-        mListCategory.add(Category("Health & Sport", R.drawable.ic_american_football, 30, 5))
-        mListCategory.add(Category("Electronics & Gadgets", R.drawable.ic_computer, 32, 5))
-        mListCategory.add(Category("Fashions", R.drawable.ic_eye_makeup, 34, 4))
-        mListCategory.add(Category("Baby Gear", R.drawable.ic_baby, 36, 5))
-        mListCategory.add(Category("Home & Furnitrue", R.drawable.ic_real_estate, 38, 5))
-        mListCategory.add(Category("Office & Industry", R.drawable.ic_printer, 40, 5))
+        mListCategory.add(Category("Laptop", R.drawable.ic_laptop, 2, 5))
+        mListCategory.add(Category("Health & Sport", R.drawable.ic_american_football, 13, 5))
+        mListCategory.add(Category("Electronics & Gadgets", R.drawable.ic_computer, 14, 5))
+        mListCategory.add(Category("Fashions", R.drawable.ic_eye_makeup, 16, 4))
+        mListCategory.add(Category("Baby Gear", R.drawable.ic_baby, 15, 5))
+        mListCategory.add(Category("Home & Furnitrue", R.drawable.ic_real_estate, 17, 5))
+        mListCategory.add(Category("Office & Industry", R.drawable.ic_printer, 18, 5))
     }
 
     override fun onItemClick(category: Category) {
-        val action = CategoryFragmentDirections.actionCategoryFragmentToCategoryDetailFragment()
+        val action =
+            CategoryFragmentDirections.actionCategoryFragmentToCategoryDetailFragment(id = category.code)
         findNavController().navigate(action)
     }
 

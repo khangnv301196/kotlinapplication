@@ -8,14 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.testing.kotlinapplication.R
 import com.testing.kotlinapplication.network.model.DanhSachGioHang
+import com.testing.kotlinapplication.repository.ProductsModel
 import kotlinx.android.synthetic.main.row_card.view.*
 
-class CartAdapter(val mContext: Context, var mList: ArrayList<DanhSachGioHang>) :
+class CartAdapter(val mContext: Context, var mList: ArrayList<ProductsModel>) :
     RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
     class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(item: DanhSachGioHang) {
-            itemView.txt_product_name.setText(item.TenSP)
-            Glide.with(itemView).load(item.AnhChinh).into(itemView.img_product)
+        fun bindView(item: ProductsModel) {
+            itemView.txt_product_name.setText(item.productName)
+            Glide.with(itemView).load(item.image).into(itemView.img_product)
         }
     }
 

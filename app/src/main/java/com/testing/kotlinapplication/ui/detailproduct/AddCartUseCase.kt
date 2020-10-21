@@ -22,6 +22,10 @@ class AddCartUseCase(private var context: Context, private var lifecycleOwner: L
         )
     }
 
+    fun doAddProductByIDCart(product: ProductsModel) {
+        ShopRepository.doAddProductToCard(context, product)
+    }
+
     fun doCreateNewCart(data: ProductsModel) {
         ShopRepository.doAddNewCart(context, Preference(context).getValueInt(Constant.USER_ID))
         Handler(Looper.myLooper()).postDelayed(Runnable {

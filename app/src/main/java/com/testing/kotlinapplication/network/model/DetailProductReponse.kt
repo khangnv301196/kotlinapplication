@@ -6,7 +6,7 @@ data class DetailProductReponse(
     val MaLoaiSanPham: Int,
     val MoTa: String,
     val TenSP: String,
-    val chi_tiet_san_pham: List<Any>,
+    val chi_tiet_san_pham: List<DetailProductType>,
     val created_at: String,
     val id: Int,
     val rating: Int,

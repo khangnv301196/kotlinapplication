@@ -1,5 +1,6 @@
 package com.testing.kotlinapplication.ui.card
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.*
@@ -13,8 +14,11 @@ import com.testing.kotlinapplication.network.DataCallBack
 import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.CartResponse
 import com.testing.kotlinapplication.network.model.DanhSachGioHang
+import com.testing.kotlinapplication.repository.CardModel
+import com.testing.kotlinapplication.repository.ProductsModel
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
+import com.testing.kotlinapplication.util.view.ProgressDialogutil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +28,9 @@ import kotlinx.android.synthetic.main.fragment_card.*
 class CardFragment : Fragment() {
 
     private lateinit var mAdapter: CartAdapter
-    private lateinit var mList: ArrayList<DanhSachGioHang>
+    private lateinit var mList: ArrayList<ProductsModel>
+    private lateinit var usecase: CartUseCase
+    private lateinit var progresDialog: Dialog
     private var type = 0
 
     private lateinit var preference: Preference
@@ -37,6 +43,8 @@ class CardFragment : Fragment() {
         setHasOptionsMenu(true)
         var view = inflater.inflate(R.layout.fragment_card, container, false)
         preference = Preference(view.context)
+        usecase = CartUseCase(view.context, viewLifecycleOwner)
+        progresDialog = ProgressDialogutil.setProgressDialog(view.context, "Loading")
         return view
     }
 
@@ -49,17 +57,40 @@ class CardFragment : Fragment() {
             adapter = mAdapter
         }
         ll_checkout.setOnClickListener({ v -> doNavigateToOrder(v) })
+        usecase.doGetAllProductFromCart(object : DataCallBack<CardModel> {
+            override fun Complete(respon: CardModel) {
+                respon.Id?.let {
+                    usecase.doGetAllProductByCartId(it,
+                        object : DataCallBack<List<ProductsModel>> {
+                            override fun Complete(respon: List<ProductsModel>) {
+                                Toast.makeText(context, "${respon.size}", Toast.LENGTH_SHORT).show()
+                                mList.addAll(respon)
+                                mAdapter.notifyDataSetChanged()
+                            }
 
-        doLoadApi(preference.getValueInt(Constant.USER_ID), object : DataCallBack<CartResponse> {
-            override fun Complete(respon: CartResponse) {
-                mList.addAll(respon.danhSachGioHang)
-                mAdapter.notifyDataSetChanged()
+                            override fun Error(error: Throwable) {
+
+                            }
+                        })
+                }
             }
 
             override fun Error(error: Throwable) {
 
             }
         })
+
+//        doLoadApi(preference.getValueInt(Constant.USER_ID), object : DataCallBack<CartResponse> {
+//            override fun Complete(respon: CartResponse) {
+//                mList.addAll(respon.danhSachGioHang)
+//                mAdapter.notifyDataSetChanged()
+//            }
+//
+//            override fun Error(error: Throwable) {
+//
+//            }
+//        })
+
 
     }
 
@@ -104,24 +135,24 @@ class CardFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    fun doLoadApi(id: Int, callBack: DataCallBack<CartResponse>) {
-        var params = HashMap<String, String>()
-        params.put("MaKhachHang", "${id}")
-
-        var compositeDisposable: CompositeDisposable
-        compositeDisposable = CompositeDisposable()
-        compositeDisposable.add(
-            ServiceBuilder.buildService()
-                .getCartByUserId(preference.getValueString(Constant.TOKEN), params)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    callBack.Complete(it)
-                }, {
-                    callBack.Error(it)
-                })
-        )
-    }
+//    fun doLoadApi(id: Int, callBack: DataCallBack<CartResponse>) {
+//        var params = HashMap<String, String>()
+//        params.put("MaKhachHang", "${id}")
+//
+//        var compositeDisposable: CompositeDisposable
+//        compositeDisposable = CompositeDisposable()
+//        compositeDisposable.add(
+//            ServiceBuilder.buildService()
+//                .getCartByUserId(preference.getValueString(Constant.TOKEN), params)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe({
+//                    callBack.Complete(it)
+//                }, {
+//                    callBack.Error(it)
+//                })
+//        )
+//    }
 
 
 }

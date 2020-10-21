@@ -92,6 +92,8 @@
         <action
             android:id="@+id/action_categoryDetailFragment_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
+        <argument android:name="id"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/cardFragment"
