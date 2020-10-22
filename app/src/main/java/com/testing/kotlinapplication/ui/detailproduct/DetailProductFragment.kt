@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.testing.kotlinapplication.MainActivity
@@ -36,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.bottom_sheet.*
+import kotlinx.android.synthetic.main.fragment_card.*
 import kotlinx.android.synthetic.main.fragment_detail_product.*
 import kotlinx.android.synthetic.main.fragment_product_ware_house.*
 import kotlinx.android.synthetic.main.item_grid.view.*
@@ -53,6 +55,8 @@ class DetailProductFragment : Fragment() {
     private lateinit var segment: SegmentedGroup
     private lateinit var txt_price_dialog: TextView
     private lateinit var dialog: BottomSheetDialog
+    private var quantity = 1
+    private var detailid = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -148,7 +152,7 @@ class DetailProductFragment : Fragment() {
         segment.updateBackground()
         segment.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
-                Toast.makeText(context, "${p1}", Toast.LENGTH_SHORT).show()
+                detailid = p1
             }
         })
     }
@@ -170,10 +174,8 @@ class DetailProductFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     setLayout(it)
-//                    Toast.makeText(context, "has Data", Toast.LENGTH_SHORT).show()
                     progressDialog.hide()
                 }, {
-//                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     progressDialog.hide()
                 })
         )
@@ -194,25 +196,7 @@ class DetailProductFragment : Fragment() {
 
     }
 
-    fun doUpdateCart(id: Int, quantity: Int, callback: DataCallBack<RegisterRespone>) {
-        var bodys = HashMap<String, String>()
-        bodys.put("MaChiTietSanPham", "${id}")
-        bodys.put("MaKhachHang", "${preference.getValueInt(Constant.USER_ID)}")
-        bodys.put("SoLuong", "1")
-        Log.d("KHANGNVDEBUG", "${preference.getValueInt(Constant.USER_ID)}")
-        var compositeDisposable = CompositeDisposable()
-        compositeDisposable.add(
-            ServiceBuilder.buildService()
-                .postNewCart(preference.getValueString(Constant.TOKEN), bodys)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    callback.Complete(it)
-                }, {
-                    callback.Error(it)
-                })
-        )
-    }
+
 
     fun configDialog(data: DetailProductReponse) {
         segment = dialog.findViewById(R.id.segment)!!
@@ -220,6 +204,15 @@ class DetailProductFragment : Fragment() {
         val format = DecimalFormat("###,###,###,###")
         txt_price_dialog.setText("${format.format(data.DongGia.toInt())} đ")
         doLoadradio(data.chi_tiet_san_pham)
+        dialog.elegant.setNumber("${quantity}", true)
+        dialog.elegant.setOnValueChangeListener(object : ElegantNumberButton.OnValueChangeListener {
+            override fun onValueChange(view: ElegantNumberButton?, oldValue: Int, newValue: Int) {
+                quantity = newValue
+                var total = newValue * data.DongGia.toInt()
+                val format = DecimalFormat("###,###,###,###")
+                txt_price_dialog.setText("${format.format(total)} đ")
+            }
+        })
         dialog.btn_order?.setOnClickListener {
             var bundle = Bundle()
             bundle.putInt("Product", 1)
@@ -228,13 +221,13 @@ class DetailProductFragment : Fragment() {
             useCase.doCheckCart().observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     var product =
-                        it.Id?.let { id ->
+                        it.Id?.let { idCart ->
                             ProductsModel(
                                 data.TenSP,
-                                id,
+                                idCart,
                                 data.AnhChinh,
                                 data.id,
-                                1,
+                                quantity,
                                 data.DongGia.toInt()
                             )
                         }

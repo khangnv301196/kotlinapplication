@@ -18,6 +18,7 @@ class ShopRepository {
         var userModel: LiveData<UserModel>? = null
         var listCard: LiveData<CardModel>? = null
         var listProduct: LiveData<List<ProductsModel>>? = null
+        var product: LiveData<ProductsModel>? = null
         fun initializeDB(context: Context): ShopDatabase {
             return ShopDatabase.getDatabaseClient(context)
         }
@@ -96,6 +97,25 @@ class ShopRepository {
             shopDatabase = initializeDB(context)
             listProduct = shopDatabase!!.ProductDAOAcess().getAllProductByIdCart(id)
             return listProduct as LiveData<List<ProductsModel>>
+        }
+
+        fun doDeletProduct(context: Context, product: ProductsModel) {
+            CoroutineScope(IO).launch {
+                shopDatabase = initializeDB(context)
+                shopDatabase!!.ProductDAOAcess().deleteProduct(product)
+            }
+        }
+
+        fun doUpdateProduct(context: Context, data: ProductsModel) {
+                shopDatabase = initializeDB(context)
+                shopDatabase!!.ProductDAOAcess().updateData(data)
+        }
+
+        fun doCheckProduct(context: Context, data: ProductsModel): LiveData<ProductsModel> {
+            shopDatabase = initializeDB(context)
+            product =
+                shopDatabase!!.ProductDAOAcess().checkProductInCart(data.idServer, data.idCart)
+            return product as LiveData<ProductsModel>
         }
 
     }

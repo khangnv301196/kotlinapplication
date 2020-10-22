@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testing.kotlinapplication.MainActivity
 import com.testing.kotlinapplication.R
@@ -16,16 +17,18 @@ import com.testing.kotlinapplication.network.model.CartResponse
 import com.testing.kotlinapplication.network.model.DanhSachGioHang
 import com.testing.kotlinapplication.repository.CardModel
 import com.testing.kotlinapplication.repository.ProductsModel
+import com.testing.kotlinapplication.repository.action.ShopRepository
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
 import com.testing.kotlinapplication.util.view.ProgressDialogutil
+import com.testing.kotlinapplication.util.view.helper.ItemTouchHelperCallback
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_card.*
 
 
-class CardFragment : Fragment() {
+class CardFragment : Fragment(), DataClick {
 
     private lateinit var mAdapter: CartAdapter
     private lateinit var mList: ArrayList<ProductsModel>
@@ -51,11 +54,13 @@ class CardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mList = ArrayList()
-        mAdapter = CartAdapter(view.context, mList)
+        mAdapter = CartAdapter(view.context, mList, this)
+        val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(mAdapter))
         rv_cart.apply {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
         }
+        itemTouchHelper.attachToRecyclerView(rv_cart)
         ll_checkout.setOnClickListener({ v -> doNavigateToOrder(v) })
         usecase.doGetAllProductFromCart(object : DataCallBack<CardModel> {
             override fun Complete(respon: CardModel) {
@@ -63,7 +68,7 @@ class CardFragment : Fragment() {
                     usecase.doGetAllProductByCartId(it,
                         object : DataCallBack<List<ProductsModel>> {
                             override fun Complete(respon: List<ProductsModel>) {
-                                Toast.makeText(context, "${respon.size}", Toast.LENGTH_SHORT).show()
+                                mList.clear()
                                 mList.addAll(respon)
                                 mAdapter.notifyDataSetChanged()
                             }
@@ -79,18 +84,6 @@ class CardFragment : Fragment() {
 
             }
         })
-
-//        doLoadApi(preference.getValueInt(Constant.USER_ID), object : DataCallBack<CartResponse> {
-//            override fun Complete(respon: CartResponse) {
-//                mList.addAll(respon.danhSachGioHang)
-//                mAdapter.notifyDataSetChanged()
-//            }
-//
-//            override fun Error(error: Throwable) {
-//
-//            }
-//        })
-
 
     }
 
@@ -135,24 +128,11 @@ class CardFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-//    fun doLoadApi(id: Int, callBack: DataCallBack<CartResponse>) {
-//        var params = HashMap<String, String>()
-//        params.put("MaKhachHang", "${id}")
-//
-//        var compositeDisposable: CompositeDisposable
-//        compositeDisposable = CompositeDisposable()
-//        compositeDisposable.add(
-//            ServiceBuilder.buildService()
-//                .getCartByUserId(preference.getValueString(Constant.TOKEN), params)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe({
-//                    callBack.Complete(it)
-//                }, {
-//                    callBack.Error(it)
-//                })
-//        )
-//    }
+    override fun onItemClick(data: ProductsModel) {
+        context?.let { ShopRepository.doUpdateProduct(it, data) }
+    }
 
-
+    override fun onRemove(from: Int) {
+        context?.let { ShopRepository.doDeletProduct(it, mList.get(from)) }
+    }
 }

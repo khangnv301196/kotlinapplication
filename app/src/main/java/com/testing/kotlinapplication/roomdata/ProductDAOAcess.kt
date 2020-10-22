@@ -15,6 +15,12 @@ interface ProductDAOAcess {
     @Query("select * from Product where idCart LIKE :id ")
     fun getAllProductByIdCart(id: Int): LiveData<List<ProductsModel>>
 
+    @Query("select * from Product where id_server Like :idServer and idCart like :idCart")
+    fun checkProductInCart(idServer: Int, idCart: Int): LiveData<ProductsModel>
+
+    @Update
+    fun updateData(productsModel: ProductsModel)
+
     @Delete
     fun deleteProduct(productsModel: ProductsModel)
 

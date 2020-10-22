@@ -3,6 +3,7 @@ package com.testing.kotlinapplication.ui.detailproduct
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -23,7 +24,23 @@ class AddCartUseCase(private var context: Context, private var lifecycleOwner: L
     }
 
     fun doAddProductByIDCart(product: ProductsModel) {
+//        var count = 0
+//        ShopRepository.doCheckProduct(context, product).observe(lifecycleOwner, Observer {
+//            if (it != null) {
+//                var total = it.Total + product.Total
+//                it.Total = total
+//                ShopRepository.doUpdateProduct(context,it)
+//                count = count + 1
+//                Log.d("DEBUG", count.toString())
+//
+//            } else {
+//                Log.d("DEBUG2", it.toString())
+//                ShopRepository.doAddProductToCard(context, product)
+//            }
+//        })
+
         ShopRepository.doAddProductToCard(context, product)
+
     }
 
     fun doCreateNewCart(data: ProductsModel) {

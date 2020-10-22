@@ -1,11 +1,12 @@
 package com.testing.kotlinapplication.util
 
+import android.icu.text.DecimalFormat
 import android.util.Patterns
 import android.widget.EditText
 import com.google.android.material.textfield.TextInputLayout
 import java.util.regex.Pattern
 
-class util{
+class util {
 
     companion object {
 
@@ -169,6 +170,18 @@ class util{
                     data.setError(error)
                 }
             }
+        }
+
+        fun doFormatPrice(data: String): String? {
+            val format = DecimalFormat("###,###,###,###")
+
+            return format.format(data.toInt())
+        }
+
+        fun doFormatPrice(data: Int): String {
+            val format = DecimalFormat("###,###,###,###")
+            return format.format(data)
+
         }
 
     }
