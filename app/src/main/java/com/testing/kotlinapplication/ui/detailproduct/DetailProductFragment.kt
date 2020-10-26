@@ -197,7 +197,6 @@ class DetailProductFragment : Fragment() {
     }
 
 
-
     fun configDialog(data: DetailProductReponse) {
         segment = dialog.findViewById(R.id.segment)!!
         txt_price_dialog = dialog.findViewById(R.id.txt_price)!!

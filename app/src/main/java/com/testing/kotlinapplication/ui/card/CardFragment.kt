@@ -20,6 +20,7 @@ import com.testing.kotlinapplication.repository.ProductsModel
 import com.testing.kotlinapplication.repository.action.ShopRepository
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
+import com.testing.kotlinapplication.util.util
 import com.testing.kotlinapplication.util.view.ProgressDialogutil
 import com.testing.kotlinapplication.util.view.helper.ItemTouchHelperCallback
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -71,6 +72,7 @@ class CardFragment : Fragment(), DataClick {
                                 mList.clear()
                                 mList.addAll(respon)
                                 mAdapter.notifyDataSetChanged()
+                                doResetTotal()
                             }
 
                             override fun Error(error: Throwable) {
@@ -81,7 +83,6 @@ class CardFragment : Fragment(), DataClick {
             }
 
             override fun Error(error: Throwable) {
-
             }
         })
 
@@ -130,9 +131,22 @@ class CardFragment : Fragment(), DataClick {
 
     override fun onItemClick(data: ProductsModel) {
         context?.let { ShopRepository.doUpdateProduct(it, data) }
+        doResetTotal();
     }
 
     override fun onRemove(from: Int) {
-        context?.let { ShopRepository.doDeletProduct(it, mList.get(from)) }
+        var product = mList.get(from)
+        context?.let { ShopRepository.doDeletProduct(it, product) }
+        mList.removeAt(from)
+        mAdapter.notifyItemRemoved(from)
+        doResetTotal();
+    }
+
+    fun doResetTotal() {
+        var total = 0
+        for (i in mList) {
+            total = total + i.price * i.Total
+        }
+        txt_total.setText("Total : ${util.doFormatPrice(total)} đ")
     }
 }

@@ -107,8 +107,10 @@ class ShopRepository {
         }
 
         fun doUpdateProduct(context: Context, data: ProductsModel) {
+            CoroutineScope(IO).launch {
                 shopDatabase = initializeDB(context)
                 shopDatabase!!.ProductDAOAcess().updateData(data)
+            }
         }
 
         fun doCheckProduct(context: Context, data: ProductsModel): LiveData<ProductsModel> {
@@ -116,6 +118,20 @@ class ShopRepository {
             product =
                 shopDatabase!!.ProductDAOAcess().checkProductInCart(data.idServer, data.idCart)
             return product as LiveData<ProductsModel>
+        }
+
+        fun doDeleteUserByID(context: Context, id: Int) {
+            CoroutineScope(IO).launch {
+                shopDatabase = initializeDB(context)
+                shopDatabase!!.ShopDAO().deletUser(id)
+            }
+        }
+
+        fun doDeleteProductByID(context: Context, id: Int) {
+            CoroutineScope((IO)).launch {
+                shopDatabase = initializeDB(context)
+                shopDatabase!!.ProductDAOAcess().deleteByID(id)
+            }
         }
 
     }

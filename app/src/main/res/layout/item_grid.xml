@@ -26,6 +26,7 @@
         android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:maxLines="3"
+        android:lines="3"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="@+id/img_product"
         app:layout_constraintStart_toStartOf="@+id/img_product"

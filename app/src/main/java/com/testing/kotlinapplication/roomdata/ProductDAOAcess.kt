@@ -26,4 +26,7 @@ interface ProductDAOAcess {
 
     @Delete
     fun deleateAllProduct(mList: ArrayList<ProductsModel>)
+
+    @Query("Delete from Product where idCart like :id")
+    fun deleteByID(id: Int)
 }

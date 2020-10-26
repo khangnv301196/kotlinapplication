@@ -1,5 +1,7 @@
 package com.testing.kotlinapplication.ui.recent
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -95,8 +97,42 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         mListCoupon.add("https://www.kaijubattle.net/uploads/2/9/5/7/29570123/711976090_orig.jpg")
         mListCoupon.add("https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/07/Best_Baby_Clothes_1296x728.png?w=1155&h=1528")
         mListCoupon.add("https://i.pinimg.com/originals/02/23/3e/02233e46ec1eca2967460ec0c2648290.jpg")
-
         couponAdapter.notifyDataSetChanged()
+
+        swiperefresh.setOnRefreshListener {
+            container.animate()
+                .alpha(0f)
+                .setDuration(100)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        super.onAnimationEnd(animation)
+                    }
+                })
+            doLoadApi(object : DataCallBack<TopResponse> {
+                override fun Complete(respon: TopResponse) {
+                    swiperefresh.isRefreshing = false
+                    setupUI(view.context, flipper, respon.sliders)
+                    mList.clear()
+                    mList.addAll(respon.danhSachSanPham)
+                    page = 0
+                    productAdapter.notifyDataSetChanged()
+                    container.apply {
+                        alpha = 0f
+                        visibility = View.VISIBLE
+                        animate()
+                            .alpha(1f)
+                            .setDuration(1000)
+                            .setListener(null)
+                    }
+                }
+
+                override fun Error(error: Throwable) {
+                    swiperefresh.isRefreshing = false
+                    Toast.makeText(context, "Load Fail", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+        }
     }
 
     fun mapping(view: View) {

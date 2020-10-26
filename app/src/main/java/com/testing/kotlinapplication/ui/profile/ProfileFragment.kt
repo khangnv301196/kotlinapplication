@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.testing.kotlinapplication.MainActivity
 
 import com.testing.kotlinapplication.R
@@ -15,6 +16,7 @@ import com.testing.kotlinapplication.repository.action.ShopRepository
 import com.testing.kotlinapplication.ui.authencation.AuthencationActivity
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
+import kotlinx.android.synthetic.main.fragment_detail_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.Dispatchers.Main
 
@@ -47,10 +49,17 @@ class ProfileFragment : Fragment() {
                 it.startActivity(intent)
             }
         }
+        ll_info.setOnClickListener{
+            doNavigatietoDetail()
+        }
     }
 
     fun doNavigateToHistory() {
         var action = ProfileFragmentDirections.actionProfileFragmentToOrderHistoryFragment()
+        findNavController().navigate(action)
+    }
+    fun doNavigatietoDetail(){
+        var action = ProfileFragmentDirections.actionProfileFragmentToDetailProfileFragment()
         findNavController().navigate(action)
     }
 
@@ -66,6 +75,9 @@ class ProfileFragment : Fragment() {
                             txt_acc_mail.text = it.email
                             txt_acc_phone.text = it.SDT
                             txt_acc_address.text = it.DiaChi_SoNha
+                            if(!it.HinhAnh.isEmpty()){
+                                Glide.with(requireContext()).load(it.HinhAnh).into(circularImageView)
+                            }
                         })
             }
         } else {

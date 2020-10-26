@@ -24,22 +24,27 @@ class AddCartUseCase(private var context: Context, private var lifecycleOwner: L
     }
 
     fun doAddProductByIDCart(product: ProductsModel) {
-//        var count = 0
-//        ShopRepository.doCheckProduct(context, product).observe(lifecycleOwner, Observer {
-//            if (it != null) {
-//                var total = it.Total + product.Total
-//                it.Total = total
-//                ShopRepository.doUpdateProduct(context,it)
-//                count = count + 1
-//                Log.d("DEBUG", count.toString())
-//
-//            } else {
-//                Log.d("DEBUG2", it.toString())
-//                ShopRepository.doAddProductToCard(context, product)
-//            }
-//        })
+        var update = false
+        ShopRepository.doCheckProduct(context, product).observe(lifecycleOwner, Observer {
+            if (it != null) {
+                var total = it.Total + product.Total
+                product.Total = total
+                product.Id = it.Id
+                update = true
+            } else {
+                Log.d("DEBUG2", it.toString())
+                update = false
 
-        ShopRepository.doAddProductToCard(context, product)
+            }
+        })
+
+        Handler(Looper.myLooper()).postDelayed(Runnable {
+            if (update == true) {
+                ShopRepository.doUpdateProduct(context, product)
+            } else {
+                ShopRepository.doAddProductToCard(context, product)
+            }
+        }, 500)
 
     }
 
@@ -55,4 +60,5 @@ class AddCartUseCase(private var context: Context, private var lifecycleOwner: L
             })
         }, 2000)
     }
+
 }

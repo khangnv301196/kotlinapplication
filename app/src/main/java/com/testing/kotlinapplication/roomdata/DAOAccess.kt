@@ -19,4 +19,7 @@ interface DAOAccess {
 
     @Query("SELECT * FROM User WHERE user_id LIKE:id")
     fun findByID(id: Int): LiveData<UserModel>
+
+    @Query("Delete from User Where user_id like :id")
+    fun deletUser(id: Int)
 }

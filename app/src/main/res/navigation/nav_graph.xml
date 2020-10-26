@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_profileFragment_to_cardFragment"
             app:destination="@id/cardFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_detailProfileFragment"
+            app:destination="@id/detailProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailProductFragment"
@@ -123,6 +126,11 @@
         android:name="com.testing.kotlinapplication.ui.ordercomplete.OrderCompleteFragment"
         android:label="Complete Order"
         tools:layout="@layout/fragment_order_complete" />
+    <fragment
+        android:id="@+id/detailProfileFragment"
+        android:name="com.testing.kotlinapplication.ui.detailprofile.DetailProfileFragment"
+        android:label="Detail Profile"
+        tools:layout="@layout/fragment_detail_profile" />
 
 
 </navigation>
