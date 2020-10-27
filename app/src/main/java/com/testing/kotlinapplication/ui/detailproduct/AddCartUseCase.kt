@@ -56,6 +56,7 @@ class AddCartUseCase(private var context: Context, private var lifecycleOwner: L
                 Preference(context).getValueInt(Constant.USER_ID)
             ).observe(lifecycleOwner, Observer {
                 data.idCart = it.Id!!
+                Preference(context).save(Constant.CART_ID, it.Id!!)
                 ShopRepository.doAddProductToCard(context, data)
             })
         }, 2000)

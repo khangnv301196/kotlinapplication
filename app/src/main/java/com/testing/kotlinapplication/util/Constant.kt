@@ -7,5 +7,6 @@ class Constant {
         const val TOKEN = "TOKEN"
         const val BASE_IMG = "https://apishopbanhang.herokuapp.com"
         const val USER_ID = "USER_ID"
+        const val CART_ID = "CART_ID"
     }
 }

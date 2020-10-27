@@ -12,6 +12,9 @@ interface Endpoint {
     @POST("/api/customer/dang-nhap")
     fun login(@Body params: HashMap<String, String>): Observable<LoginRespone>
 
+    @GET("/api/customer/dang-xuat")
+    fun logout(@Header("Authorization") token: String): Observable<RegisterRespone>
+
     @GET("/api/customer/danh-sach-san-pham")
     fun getProduct(
         @Header("Authorization") token: String,
@@ -29,6 +32,12 @@ interface Endpoint {
 
     @POST("/api/customer/them-gio-hang")
     fun postNewCart(
+        @Header("Authorization") token: String,
+        @Body bodys: HashMap<String, String>
+    ): Observable<RegisterRespone>
+
+    @POST("/api/customer/order")
+    fun postNewOrder(
         @Header("Authorization") token: String,
         @Body bodys: HashMap<String, String>
     ): Observable<RegisterRespone>

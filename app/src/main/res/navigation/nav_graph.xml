@@ -115,8 +115,8 @@
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.testing.kotlinapplication.ui.order.OrderFragment"
-        android:label="fragment_order"
-        tools:layout="@layout/fragment_order" >
+        android:label="Order"
+        tools:layout="@layout/fragment_order">
         <action
             android:id="@+id/action_orderFragment_to_orderCompleteFragment"
             app:destination="@id/orderCompleteFragment" />

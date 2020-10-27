@@ -12,20 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.testing.kotlinapplication.MainActivity
 import com.testing.kotlinapplication.R
 import com.testing.kotlinapplication.network.DataCallBack
-import com.testing.kotlinapplication.network.ServiceBuilder
-import com.testing.kotlinapplication.network.model.CartResponse
-import com.testing.kotlinapplication.network.model.DanhSachGioHang
 import com.testing.kotlinapplication.repository.CardModel
 import com.testing.kotlinapplication.repository.ProductsModel
 import com.testing.kotlinapplication.repository.action.ShopRepository
-import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
 import com.testing.kotlinapplication.util.util
 import com.testing.kotlinapplication.util.view.ProgressDialogutil
 import com.testing.kotlinapplication.util.view.helper.ItemTouchHelperCallback
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_card.*
 
 

@@ -55,6 +55,7 @@ class DetailProductFragment : Fragment() {
     private lateinit var segment: SegmentedGroup
     private lateinit var txt_price_dialog: TextView
     private lateinit var dialog: BottomSheetDialog
+    private lateinit var mContext: Context
     private var quantity = 1
     private var detailid = 0
 
@@ -65,6 +66,7 @@ class DetailProductFragment : Fragment() {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
         var view = inflater.inflate(R.layout.fragment_detail_product, container, false)
+        mContext = view.context
         preference = Preference(view.context)
         progressDialog = ProgressDialogutil.setProgressDialog(view.context, "Loading")
         progressDialog.show()
@@ -225,7 +227,7 @@ class DetailProductFragment : Fragment() {
                                 data.TenSP,
                                 idCart,
                                 data.AnhChinh,
-                                data.id,
+                                detailid,
                                 quantity,
                                 data.DongGia.toInt()
                             )

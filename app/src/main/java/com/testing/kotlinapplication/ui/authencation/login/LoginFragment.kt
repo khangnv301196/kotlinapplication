@@ -4,13 +4,11 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.testing.kotlinapplication.MainActivity
 import com.testing.kotlinapplication.R
@@ -21,7 +19,6 @@ import com.testing.kotlinapplication.ui.staff.StaffActivity
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
 import com.testing.kotlinapplication.util.view.ProgressDialogutil
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

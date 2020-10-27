@@ -10,12 +10,17 @@ import android.widget.EditText
 
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.testing.kotlinapplication.repository.action.ShopRepository
+import com.testing.kotlinapplication.util.Constant
+import com.testing.kotlinapplication.util.Preference
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +31,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupNavigation()
+
+        ShopRepository.getCardByUserID(this, Preference(this).getValueInt(Constant.USER_ID))
+            .observe(this,
+                Observer {
+                    if (it != null) {
+                        if (Preference(this).getValueInt(Constant.CART_ID) == 0) {
+                            it.Id?.let { it1 -> Preference(this).save(Constant.CART_ID, it1) }
+                        }
+                    }
+                })
     }
 
     private fun setupNavigation() {
