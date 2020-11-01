@@ -51,15 +51,18 @@ class AddCartUseCase(private var context: Context, private var lifecycleOwner: L
     fun doCreateNewCart(data: ProductsModel) {
         ShopRepository.doAddNewCart(context, Preference(context).getValueInt(Constant.USER_ID))
         Handler(Looper.myLooper()).postDelayed(Runnable {
-            ShopRepository.getCardByUserID(
+            var cart = ShopRepository.getCardByUserID(
                 context,
                 Preference(context).getValueInt(Constant.USER_ID)
-            ).observe(lifecycleOwner, Observer {
-                data.idCart = it.Id!!
+            )
+            cart.observe(lifecycleOwner, Observer {
                 Preference(context).save(Constant.CART_ID, it.Id!!)
-                ShopRepository.doAddProductToCard(context, data)
             })
-        }, 2000)
+            if (cart.hasActiveObservers()) {
+                data.idCart = Preference(context).getValueInt(Constant.CART_ID)
+                ShopRepository.doAddProductToCard(context, data)
+            }
+        }, 300)
     }
 
 }

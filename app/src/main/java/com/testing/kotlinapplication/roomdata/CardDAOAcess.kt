@@ -19,7 +19,7 @@ interface CardDAOAcess {
     @Delete
     fun delete(cart: CardModel)
 
-    @Query("Update Card set status=0 where id like :id")
+    @Query("Update Card set status = 0 where id like :id")
     fun doDeactiveCart(id: Int)
 
 }

@@ -98,4 +98,12 @@ Email : help.solodroid@gmail.com
     <string name="rating_dialog_overview_image_content_description">App Icon</string>
     <string name="rating_dialog_overview_title">How was your experience with this app?</string>
     <string name="rating_dialog_overview_button_confirm">Confirm</string>
+    <string-array name="planets_array">
+        <item>All</item>
+        <item>Proceed</item>
+        <item>Updating</item>
+        <item>Complete</item>
+        <item>Paid</item>
+        <item>Cancel</item>
+    </string-array>
 </resources>

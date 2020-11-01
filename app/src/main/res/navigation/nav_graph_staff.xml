@@ -21,13 +21,17 @@
         android:label="Customer List"
         tools:layout="@layout/fragment_customer_list" />
     <fragment
-        android:id="@+id/productWareHouseFragment"
-        android:name="com.testing.kotlinapplication.ui.staff.productwarehouse.ProductWareHouseFragment"
-        android:label="Products"
-        tools:layout="@layout/fragment_product_ware_house" />
-    <fragment
         android:id="@+id/profilestaff"
-        android:name="com.testing.kotlinapplication.ui.profile.ProfileFragment"
+        android:name="com.testing.kotlinapplication.ui.staff.ProfileStaffFragment"
         android:label="Account"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile_staff" >
+        <action
+            android:id="@+id/staff_todetail"
+            app:destination="@id/detailProfileFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailProfileFragment2"
+        android:name="com.testing.kotlinapplication.ui.detailprofile.DetailProfileFragment"
+        android:label="Detail"
+        tools:layout="@layout/fragment_detail_profile" />
 </navigation>

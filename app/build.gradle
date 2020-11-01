@@ -94,4 +94,7 @@ dependencies {
 
     //gson
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    //event Bus
+    implementation 'org.greenrobot:eventbus:3.2.0'
 }

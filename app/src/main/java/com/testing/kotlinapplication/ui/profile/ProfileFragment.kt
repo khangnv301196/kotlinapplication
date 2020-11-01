@@ -52,15 +52,21 @@ class ProfileFragment : Fragment() {
         ll_info.setOnClickListener{
             doNavigatietoDetail()
         }
+
+        ll_cart.setOnClickListener{
+            doNavigatetoCart()
+        }
     }
 
     fun doNavigateToHistory() {
-        var action = ProfileFragmentDirections.actionProfileFragmentToOrderHistoryFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_profileFragment_to_orderHistoryFragment)
     }
     fun doNavigatietoDetail(){
-        var action = ProfileFragmentDirections.actionProfileFragmentToDetailProfileFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_profileFragment_to_detailProfileFragment)
+    }
+
+    fun doNavigatetoCart(){
+        findNavController().navigate(R.id.action_profileFragment_to_cardFragment2)
     }
 
     fun setUpLayout() {

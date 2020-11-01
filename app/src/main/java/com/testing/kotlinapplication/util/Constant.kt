@@ -8,5 +8,6 @@ class Constant {
         const val BASE_IMG = "https://apishopbanhang.herokuapp.com"
         const val USER_ID = "USER_ID"
         const val CART_ID = "CART_ID"
+        const val HAS_CART = "HAS_CART"
     }
 }

@@ -219,32 +219,38 @@ class DetailProductFragment : Fragment() {
             bundle.putInt("Product", 1)
             dialog.hide()
             progressDialog.show()
-            useCase.doCheckCart().observe(viewLifecycleOwner, Observer {
+            var cart = useCase.doCheckCart()
+            cart.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
-                    var product =
-                        it.Id?.let { idCart ->
-                            ProductsModel(
-                                data.TenSP,
-                                idCart,
-                                data.AnhChinh,
-                                detailid,
-                                quantity,
-                                data.DongGia.toInt()
-                            )
-                        }
-                    product?.let { prodc -> useCase.doAddProductByIDCart(prodc) }
+                    preference.save(Constant.HAS_CART, true)
+                    it.Id?.let { it1 -> preference.save(Constant.CART_ID, it1) }
+                }
+            })
+
+            if (cart.hasActiveObservers()) {
+                if (preference.getValueBoolien(Constant.HAS_CART, false)) {
+                    var idCart = preference.getValueInt(Constant.CART_ID)
+                    var product = ProductsModel(
+                        data.TenSP,
+                        idCart,
+                        data.AnhChinh,
+                        detailid,
+                        quantity,
+                        data.DongGia.toInt()
+                    )
+                    useCase.doAddProductByIDCart(product)
                 } else {
                     var product = ProductsModel(
                         data.TenSP,
                         0,
                         data.AnhChinh,
                         data.id,
-                        1,
+                        quantity,
                         data.DongGia.toInt()
                     )
                     useCase.doCreateNewCart(product)
                 }
-            })
+            }
 
             Handler(Looper.getMainLooper()).postDelayed(Runnable {
                 progressDialog.hide()
@@ -254,4 +260,3 @@ class DetailProductFragment : Fragment() {
     }
 
 }
-

@@ -1,102 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clipToPadding="false"
+    android:layout_marginBottom="8dp"
     android:clipChildren="false"
-    app:cardCornerRadius="10dp"
-    android:layout_marginBottom="8dp">
+    android:clipToPadding="false"
+    app:cardCornerRadius="10dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
+
         <TextView
-            android:id="@+id/title_order"
+            android:id="@+id/title_order_deli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Order"/>
+            android:text="New Order" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:orientation="horizontal">
+
             <ImageView
-                android:id="@+id/img_content"
+                android:id="@+id/img_content_deli"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:src="@drawable/qant"/>
+                android:src="@drawable/qant" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:orientation="vertical">
+
                 <TextView
-                    android:id="@+id/title_product"
+                    android:id="@+id/title_product_deli"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="HG gundam 0 QanT"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="HG gundam 0 QanT"/>
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/size"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Size HG"/>
-                    <TextView
-                        android:id="@+id/quantity"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
 
-                        android:text="x1"/>
+                    <TextView
+                        android:id="@+id/size_deli"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="Size HG" />
+
+                    <TextView
+                        android:id="@+id/quantity_deli"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="x1"
+
+                        android:textAlignment="textEnd" />
                 </LinearLayout>
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:textAlignment="textEnd"
-                android:text="300$"/>
+
+                <TextView
+                    android:id="@+id/price_deli"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="300$"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
+
         <TextView
-            android:id="@+id/address"
+            android:id="@+id/address_deli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Địa chỉ : 37 Tôn Đức Thắng,Phường Bến Nghé,Quận 1,Tp.HCM"/>
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Địa chỉ : 37 Tôn Đức Thắng,Phường Bến Nghé,Quận 1,Tp.HCM" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="8dp"
-            android:gravity="right">
-            <Button
-                android:id="@+id/btn_detail"
-                android:layout_width="wrap_content"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:id="@+id/status_deli"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/corner_accent"
-                android:textColor="@android:color/white"
+                android:layout_gravity="bottom"
                 android:layout_marginRight="8dp"
-                android:text="Detail"/>
-            <Button
-                android:id="@+id/btn_cancel"
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:text="Status"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ripple_red"
-                android:textColor="@android:color/white"
-                android:text="cancel"/>
+                android:layout_weight="4"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_proceed_deli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/corner_accent"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="Procced"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btn_delivery_deli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/corner_accent"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="Deliveried"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btn_cancel_deli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity=""
+                    android:background="@drawable/ripple_red"
+                    android:text="cancel"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

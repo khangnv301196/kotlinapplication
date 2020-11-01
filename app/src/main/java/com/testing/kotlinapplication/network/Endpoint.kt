@@ -30,33 +30,21 @@ interface Endpoint {
         @QueryMap params: HashMap<String, String>
     ): Observable<DetailProductReponse>
 
-    @POST("/api/customer/them-gio-hang")
-    fun postNewCart(
-        @Header("Authorization") token: String,
-        @Body bodys: HashMap<String, String>
-    ): Observable<RegisterRespone>
-
     @POST("/api/customer/order")
     fun postNewOrder(
         @Header("Authorization") token: String,
         @Body bodys: HashMap<String, String>
     ): Observable<RegisterRespone>
 
-    @GET("/api/customer/danh-sach-gio-hang")
-    fun getCartByUserId(
+    @GET("/api/customer/list-orders")
+    fun getListOrder(
         @Header("Authorization") token: String,
         @QueryMap params: HashMap<String, String>
-    ): Observable<CartResponse>
+    ): Observable<OrderResponse>
 
-    @POST("/api/customer/xoa-gio-hang")
-    fun deleteProductInCart(
+    @POST("/api/customer/update-status-order")
+    fun getUpdateOrder(
         @Header("Authorization") token: String,
         @QueryMap params: HashMap<String, String>
-    )
-
-    @POST("/api/customer/cap-nhat-gio-hang")
-    fun updateCart(
-        @Header("Authorization") token: String,
-        @Body bodys: HashMap<String, String>
-    )
+    ): Observable<RegisterRespone>
 }

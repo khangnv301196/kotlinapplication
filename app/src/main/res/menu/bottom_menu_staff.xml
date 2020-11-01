@@ -14,12 +14,6 @@
         android:title="Orders"
         app:showAsAction="always" />
     <item
-        android:id="@+id/productWareHouseFragment"
-        android:icon="@drawable/ic_test"
-        android:orderInCategory="1"
-        android:title="Management"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/profilestaff"
         android:icon="@drawable/ic_baseline_account_box_24"
         android:orderInCategory="1"

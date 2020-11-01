@@ -65,6 +65,13 @@ class CardFragment : Fragment(), DataClick {
                                 mList.clear()
                                 mList.addAll(respon)
                                 mAdapter.notifyDataSetChanged()
+                                if (mList.size > 0) {
+                                    txt_empty.visibility = View.GONE
+                                    rv_cart.visibility = View.VISIBLE
+                                } else {
+                                    txt_empty.visibility = View.VISIBLE
+                                    rv_cart.visibility = View.GONE
+                                }
                                 doResetTotal()
                             }
 
@@ -118,8 +125,12 @@ class CardFragment : Fragment(), DataClick {
     }
 
     fun doNavigateToOrder(v: View) {
-        val action = CardFragmentDirections.actionCardFragmentToOrderFragment()
-        findNavController().navigate(action)
+        if (mList.size > 0) {
+            val action = CardFragmentDirections.actionCardFragmentToOrderFragment()
+            findNavController().navigate(action)
+        } else {
+            Toast.makeText(context, "You don't have product to checkout", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onItemClick(data: ProductsModel) {
@@ -133,6 +144,13 @@ class CardFragment : Fragment(), DataClick {
         mList.removeAt(from)
         mAdapter.notifyItemRemoved(from)
         doResetTotal();
+        if (mList.size > 0) {
+            txt_empty.visibility = View.GONE
+            rv_cart.visibility = View.VISIBLE
+        } else {
+            txt_empty.visibility = View.VISIBLE
+            rv_cart.visibility = View.GONE
+        }
     }
 
     fun doResetTotal() {

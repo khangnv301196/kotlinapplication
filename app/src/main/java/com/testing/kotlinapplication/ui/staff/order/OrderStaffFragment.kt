@@ -26,8 +26,8 @@ class OrderStaffFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var adapter = FragmentAdapter(childFragmentManager, lifecycle)
         pager.adapter = adapter
-        var names: Array<String> = arrayOf("Fragment A", "Fragment B", "Fragment C", "Fragment D")
-        TabLayoutMediator(tab_layout, pager) { tab, position ->
+        var names: Array<String> = arrayOf("Proceed", "Update", "Delivery","Paid", "Cancel")
+        TabLayoutMediator(tab_layout, pager,false) { tab, position ->
             tab.text = names[position]
         }.attach()
     }

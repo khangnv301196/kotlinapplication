@@ -33,7 +33,6 @@ class StaffActivity : AppCompatActivity() {
             topLevelDestinationIds = setOf(
                 R.id.satisticFragment,
                 R.id.orderStaffFragment,
-                R.id.productWareHouseFragment,
                 R.id.profilestaff
             )
         )
@@ -61,13 +60,13 @@ class StaffActivity : AppCompatActivity() {
     }
 
     fun showBottomNavigation() {
-        bottomNavigationView.visibility = View.VISIBLE
+        bottom_staff.visibility = View.VISIBLE
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
     fun hideBottomNavigation() {
-        bottomNavigationView.visibility = View.GONE
+        bottom_staff.visibility = View.GONE
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

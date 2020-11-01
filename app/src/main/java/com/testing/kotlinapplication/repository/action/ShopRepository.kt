@@ -134,5 +134,12 @@ class ShopRepository {
             }
         }
 
+        fun doDeactiveCartByID(context: Context, id: Int) {
+            CoroutineScope(IO).launch {
+                shopDatabase = initializeDB(context)
+                shopDatabase!!.CardDAOAcess().doDeactiveCart(id)
+            }
+        }
+
     }
 }

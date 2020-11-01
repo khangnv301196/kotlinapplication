@@ -19,6 +19,7 @@ import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.RegisterRespone
 import com.testing.kotlinapplication.repository.UserModel
 import com.testing.kotlinapplication.repository.action.ShopRepository
+import com.testing.kotlinapplication.ui.staff.StaffActivity
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,6 +35,8 @@ class DetailProfileFragment : Fragment() {
     private lateinit var mContext: Context
     private lateinit var preference: Preference
     private lateinit var model: LiveData<UserModel>
+
+    private var isStaff = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,12 +73,22 @@ class DetailProfileFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as MainActivity).hideBottomNavigation()
+        isStaff = arguments?.getBoolean("STAFF", false)!!
+        if (isStaff == true) {
+            (activity as StaffActivity)?.hideBottomNavigation()
+        } else {
+            (activity as MainActivity)?.hideBottomNavigation()
+        }
     }
 
     override fun onDetach() {
         super.onDetach()
-        (activity as MainActivity).showBottomNavigation()
+        if (isStaff == true) {
+            (activity as StaffActivity)?.showBottomNavigation()
+        } else {
+            (activity as MainActivity)?.showBottomNavigation()
+        }
+
     }
 
     fun doLogout() {
@@ -90,16 +103,27 @@ class DetailProfileFragment : Fragment() {
                 var intent = Intent(context, MainActivity::class.java)
                 intent.flags =
                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                (activity as MainActivity).startActivity(intent)
-                (activity as MainActivity).finish()
+                if (isStaff == true) {
+                    (activity as StaffActivity).startActivity(intent)
+                    (activity as StaffActivity).finish()
+                } else {
+                    (activity as MainActivity).startActivity(intent)
+                    (activity as MainActivity).finish()
+                }
+
             }
 
             override fun Error(error: Throwable) {
                 var intent = Intent(context, MainActivity::class.java)
                 intent.flags =
                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                (activity as MainActivity).startActivity(intent)
-                (activity as MainActivity).finish()
+                if (isStaff == true) {
+                    (activity as StaffActivity).startActivity(intent)
+                    (activity as StaffActivity).finish()
+                } else {
+                    (activity as MainActivity).startActivity(intent)
+                    (activity as MainActivity).finish()
+                }
             }
 
         })

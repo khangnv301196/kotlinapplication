@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             .observe(this,
                 Observer {
                     if (it != null) {
-                        if (Preference(this).getValueInt(Constant.CART_ID) == 0) {
+                        if (Preference(this).getValueBoolien(Constant.HAS_CART, false)) {
                             it.Id?.let { it1 -> Preference(this).save(Constant.CART_ID, it1) }
                         }
                     }
