@@ -36,6 +36,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var dialog: Dialog
     private lateinit var preference: Preference
+    private lateinit var mContext: Context
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +44,7 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var itemView = inflater.inflate(R.layout.fragment_login, container, false) as View
+        mContext = itemView.context
         preference = Preference(itemView.context)
         dialog = ProgressDialogutil.setProgressDialog(itemView.context, "loading...")
         return itemView
@@ -53,13 +55,12 @@ class LoginFragment : Fragment() {
         (activity as AuthencationActivity).setUIGroup(view.findViewById(R.id.group))
         btn_login.setOnClickListener {
             dialog.show()
-            context?.let { it ->
-                doLogin(
-                    it,
-                    txt_name.editText?.text.toString(),
-                    textInputLayout.editText?.text.toString()
-                )
-            }
+            doLogin(
+                mContext,
+                txt_name.editText?.text.toString(),
+                textInputLayout.editText?.text.toString()
+            )
+
         }
         btn_register.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment();

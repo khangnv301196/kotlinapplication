@@ -27,11 +27,12 @@ import org.greenrobot.eventbus.EventBus
 
 class ItemDeliveryAdapter(
     private var mContext: Context,
-    private var mList: ArrayList<OrderResponseItem>
+    private var mList: ArrayList<OrderResponseItem>,
+    private var itemClick: ItemClick
 ) :
     RecyclerView.Adapter<ItemDeliveryAdapter.ItemDeliberyViewHolder>() {
     class ItemDeliberyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(data: OrderResponseItem) {
+        fun bindView(data: OrderResponseItem, itemClick: ItemClick) {
             var img = data.chi_tiet_hoa_don.get(0).AnhChinh
             var total = 0
             for (detail in data.chi_tiet_hoa_don) {
@@ -84,12 +85,15 @@ class ItemDeliveryAdapter(
                     itemView.btn_cancel_deli.visibility = View.INVISIBLE
                     itemView.btn_delivery_deli.visibility = View.INVISIBLE
                 }
-                5->{
+                5 -> {
                     itemView.status_deli.setText("Paid")
                     itemView.btn_proceed_deli.visibility = View.INVISIBLE
                     itemView.btn_cancel_deli.visibility = View.INVISIBLE
                     itemView.btn_delivery_deli.visibility = View.INVISIBLE
                 }
+            }
+            itemView.setOnClickListener {
+                itemClick.OnItemCLick(data.id)
             }
         }
     }
@@ -104,6 +108,6 @@ class ItemDeliveryAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemDeliberyViewHolder, position: Int) {
-        holder.bindView(mList.get(position))
+        holder.bindView(mList.get(position), itemClick)
     }
 }

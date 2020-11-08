@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.testing.kotlinapplication.util.view.CircularImageView
-        android:id="@+id/avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/qant"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txt_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Nguyen Khang"
-        android:textAllCaps="true"
+        android:textStyle="bold|italic"
         android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatar" />
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:text="Information"/>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_name">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
+            android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:orientation="horizontal">
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Status :"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="Done"
+                android:textColor="@color/design_default_color_primary"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -55,41 +65,20 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
                 android:text="New omega"
                 android:textStyle="bold" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="Gender :"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/gender"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:text="Male"
-                android:textStyle="bold" />
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
+            android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:orientation="horizontal">
+            android:paddingBottom="8dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -105,12 +94,14 @@
                 android:text="0794417722"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
+            android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:orientation="horizontal">
+            android:paddingBottom="8dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -126,12 +117,14 @@
                 android:text="Ho Chi Minh"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
+            android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:orientation="horizontal">
+            android:paddingBottom="8dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -147,12 +140,14 @@
                 android:text="Go Vap"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
+            android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:orientation="horizontal">
+            android:paddingBottom="8dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -168,12 +163,14 @@
                 android:text="05"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
+            android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:orientation="horizontal">
+            android:paddingBottom="8dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -192,4 +189,11 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:nestedScrollingEnabled="false" />
+
+</LinearLayout>

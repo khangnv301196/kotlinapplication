@@ -75,6 +75,9 @@ class OrderHistoryAdapter(
                     itemView.btn_cancel.visibility = View.INVISIBLE
                 }
             }
+            itemView.setOnClickListener {
+                callback.onItemClick(data.id)
+            }
         }
     }
 

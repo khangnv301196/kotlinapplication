@@ -33,7 +33,7 @@ class ProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false) as View
-        preference=Preference(view.context)
+        preference = Preference(view.context)
         return view
     }
 
@@ -49,11 +49,11 @@ class ProfileFragment : Fragment() {
                 it.startActivity(intent)
             }
         }
-        ll_info.setOnClickListener{
+        ll_info.setOnClickListener {
             doNavigatietoDetail()
         }
 
-        ll_cart.setOnClickListener{
+        ll_cart.setOnClickListener {
             doNavigatetoCart()
         }
     }
@@ -61,12 +61,17 @@ class ProfileFragment : Fragment() {
     fun doNavigateToHistory() {
         findNavController().navigate(R.id.action_profileFragment_to_orderHistoryFragment)
     }
-    fun doNavigatietoDetail(){
-        findNavController().navigate(R.id.action_profileFragment_to_detailProfileFragment)
+
+    fun doNavigatietoDetail() {
+        var bundle = Bundle()
+        bundle.putBoolean("STAFF", false)
+        findNavController().navigate(R.id.action_profileFragment_to_detailProfileFragment, bundle)
     }
 
-    fun doNavigatetoCart(){
-        findNavController().navigate(R.id.action_profileFragment_to_cardFragment2)
+    fun doNavigatetoCart() {
+        var bundle = Bundle()
+        bundle.putInt("Product", 0)
+        findNavController().navigate(R.id.action_profileFragment_to_cardFragment2,bundle)
     }
 
     fun setUpLayout() {
@@ -81,14 +86,17 @@ class ProfileFragment : Fragment() {
                             txt_acc_mail.text = it.email
                             txt_acc_phone.text = it.SDT
                             txt_acc_address.text = it.DiaChi_SoNha
-                            if(!it.HinhAnh.isEmpty()){
-                                Glide.with(requireContext()).load(it.HinhAnh).into(circularImageView)
+                            if (!it.HinhAnh.isEmpty()) {
+                                Glide.with(requireContext()).load(it.HinhAnh)
+                                    .into(circularImageView)
                             }
                         })
             }
+            ll_cart.visibility = View.VISIBLE
         } else {
             btn_edit.visibility = View.VISIBLE
             ll_info.visibility = View.GONE
+            ll_cart.visibility = View.GONE
         }
     }
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.testing.kotlinapplication.R
@@ -17,7 +18,9 @@ import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.OrderResponse
 import com.testing.kotlinapplication.network.model.OrderResponseItem
 import com.testing.kotlinapplication.network.model.RegisterRespone
+import com.testing.kotlinapplication.ui.staff.order.ItemClick
 import com.testing.kotlinapplication.ui.staff.order.ItemDeliveryAdapter
+import com.testing.kotlinapplication.ui.staff.order.OrderStaffFragmentDirections
 import com.testing.kotlinapplication.ui.staff.order.modelcontract.CancelingModel
 import com.testing.kotlinapplication.ui.staff.order.modelcontract.ProceedModel
 import com.testing.kotlinapplication.util.Constant
@@ -33,7 +36,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * A simple [Fragment] subclass.
  */
-class ProceedFragment : Fragment() {
+class ProceedFragment : Fragment(), ItemClick {
 
     private lateinit var mList: ArrayList<OrderResponseItem>
     private lateinit var mAdapter: ItemDeliveryAdapter
@@ -62,7 +65,7 @@ class ProceedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mList = ArrayList()
-        mAdapter = context?.let { ItemDeliveryAdapter(it, mList) }!!
+        mAdapter = context?.let { ItemDeliveryAdapter(it, mList, this) }!!
         rv_proceed.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
@@ -82,6 +85,11 @@ class ProceedFragment : Fragment() {
                         .scaleX(1f).scaleY(1f)
                         .setDuration(1000)
                         .setListener(null)
+                }
+                if (mList.size == 0) {
+                    txt_empty_proceed.visibility = View.VISIBLE
+                } else {
+                    txt_empty_proceed.visibility = View.GONE
                 }
             }
 
@@ -178,5 +186,11 @@ class ProceedFragment : Fragment() {
                 }
             })
         }
+    }
+
+    override fun OnItemCLick(id: Int) {
+        val action =
+            OrderStaffFragmentDirections.actionOrderStaffFragmentToDetailOrderFragment2(id, 2)
+        findNavController().navigate(action)
     }
 }

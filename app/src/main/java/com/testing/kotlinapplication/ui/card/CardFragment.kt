@@ -117,7 +117,7 @@ class CardFragment : Fragment(), DataClick {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete -> {
-                Toast.makeText(context, "delete nha", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_cardFragment_to_recentFragment)
                 return true
             }
         }

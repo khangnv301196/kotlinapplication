@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.testing.kotlinapplication.R
@@ -15,7 +16,9 @@ import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.Data
 import com.testing.kotlinapplication.network.model.OrderResponse
 import com.testing.kotlinapplication.network.model.OrderResponseItem
+import com.testing.kotlinapplication.ui.staff.order.ItemClick
 import com.testing.kotlinapplication.ui.staff.order.ItemDeliveryAdapter
+import com.testing.kotlinapplication.ui.staff.order.OrderStaffFragmentDirections
 import com.testing.kotlinapplication.ui.staff.order.modelcontract.CancelingModel
 import com.testing.kotlinapplication.ui.staff.order.modelcontract.ProceedModel
 import com.testing.kotlinapplication.ui.staff.order.modelcontract.UpdatingModel
@@ -29,7 +32,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class CompleteFragment : Fragment() {
+class CompleteFragment : Fragment(), ItemClick {
 
     private lateinit var mList: ArrayList<OrderResponseItem>
     private lateinit var mAdapter: ItemDeliveryAdapter
@@ -58,7 +61,7 @@ class CompleteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mList = ArrayList()
-        mAdapter = context?.let { ItemDeliveryAdapter(it, mList) }!!
+        mAdapter = context?.let { ItemDeliveryAdapter(it, mList, this) }!!
         rv_complete.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
@@ -78,6 +81,11 @@ class CompleteFragment : Fragment() {
                         .scaleX(1f).scaleY(1f)
                         .setDuration(1000)
                         .setListener(null)
+                }
+                if(mList.size==0){
+                    txt_empty_complete.visibility=View.VISIBLE
+                }else{
+                    txt_empty_complete.visibility=View.GONE
                 }
             }
 
@@ -112,4 +120,9 @@ class CompleteFragment : Fragment() {
             mAdapter.notifyDataSetChanged()
         }
     }
+
+    override fun OnItemCLick(id: Int) {
+        val action =
+            OrderStaffFragmentDirections.actionOrderStaffFragmentToDetailOrderFragment2(id, 2)
+        findNavController().navigate(action)    }
 }

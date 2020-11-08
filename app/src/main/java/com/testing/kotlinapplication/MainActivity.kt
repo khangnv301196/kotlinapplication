@@ -31,14 +31,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupNavigation()
-
         ShopRepository.getCardByUserID(this, Preference(this).getValueInt(Constant.USER_ID))
             .observe(this,
                 Observer {
                     if (it != null) {
-                        if (Preference(this).getValueBoolien(Constant.HAS_CART, false)) {
+
                             it.Id?.let { it1 -> Preference(this).save(Constant.CART_ID, it1) }
-                        }
+                            Preference(this).save(Constant.HAS_CART, true)
+
                     }
                 })
     }

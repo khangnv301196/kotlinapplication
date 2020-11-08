@@ -14,7 +14,11 @@
         android:id="@+id/orderStaffFragment"
         android:name="com.testing.kotlinapplication.ui.staff.order.OrderStaffFragment"
         android:label="Order List"
-        tools:layout="@layout/fragment_order_staff" />
+        tools:layout="@layout/fragment_order_staff" >
+        <action
+            android:id="@+id/action_orderStaffFragment_to_detailOrderFragment2"
+            app:destination="@id/detailOrderFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/customerListFragment"
         android:name="com.testing.kotlinapplication.ui.staff.customerlist.CustomerListFragment"
@@ -34,4 +38,16 @@
         android:name="com.testing.kotlinapplication.ui.detailprofile.DetailProfileFragment"
         android:label="Detail"
         tools:layout="@layout/fragment_detail_profile" />
+    <fragment
+        android:id="@+id/detailOrderFragment2"
+        android:name="com.testing.kotlinapplication.ui.detailorder.DetailOrderFragment"
+        android:label="Detail Order"
+        tools:layout="@layout/fragment_detail_order">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="type"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_recentFragment_to_cardFragment"
             app:destination="@id/cardFragment" />
+        <action
+            android:id="@+id/action_recentFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 
     <fragment
@@ -109,12 +112,22 @@
         <action
             android:id="@+id/action_cardFragment_to_orderFragment"
             app:destination="@id/orderFragment" />
+        <action
+            android:id="@+id/action_cardFragment_to_recentFragment"
+            app:destination="@id/recentFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true" />
     </fragment>
     <fragment
         android:id="@+id/orderHistoryFragment"
         android:name="com.testing.kotlinapplication.ui.orderhistory.OrderHistoryFragment"
         android:label="Order HIstory"
-        tools:layout="@layout/fragment_order_history" />
+        tools:layout="@layout/fragment_order_history" >
+        <action
+            android:id="@+id/action_orderHistoryFragment_to_detailOrderFragment"
+            app:destination="@id/detailOrderFragment" />
+    </fragment>
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.testing.kotlinapplication.ui.order.OrderFragment"
@@ -134,6 +147,27 @@
         android:name="com.testing.kotlinapplication.ui.detailprofile.DetailProfileFragment"
         android:label="Detail Profile"
         tools:layout="@layout/fragment_detail_profile" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.testing.kotlinapplication.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailOrderFragment"
+        android:name="com.testing.kotlinapplication.ui.detailorder.DetailOrderFragment"
+        android:label="Detail Order"
+        tools:layout="@layout/fragment_detail_order">
+        <argument
+            android:name="type"
+            app:argType="integer" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 
 
 </navigation>

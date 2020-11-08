@@ -111,7 +111,7 @@ class OrderCompleteFragment : Fragment() {
         param.put("address", "${arguments?.getString("address")}")
         param.put("district", "${arguments?.getString("district")}")
         param.put("city", "${arguments?.getString("city")}")
-
+        Log.d("ID", Preference(mContext).getValueInt(Constant.CART_ID).toString())
         listData = ShopRepository.doGetAllProductByCardid(
             mContext,
             Preference(mContext).getValueInt(Constant.CART_ID)
@@ -145,10 +145,10 @@ class OrderCompleteFragment : Fragment() {
                 }
 
                 override fun Error(error: Throwable) {
-                    Log.d("DEBUG", "ERROR")
+                    Log.d("DEBUG", error.toString())
                 }
             })
-        }, 300)
+        }, 3000)
 
     }
 

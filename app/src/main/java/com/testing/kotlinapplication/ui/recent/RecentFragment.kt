@@ -7,11 +7,9 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Gravity
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Toast
@@ -51,7 +49,6 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     private lateinit var productAdapter: ProductAdapter
     private lateinit var couponAdapter: CouponAdapter
     private lateinit var mList: ArrayList<Data>
-    private lateinit var mListPromotion: ArrayList<String>
     private lateinit var mListCoupon: ArrayList<String>
     private lateinit var preference: Preference
     private lateinit var gridlayoutManager: GridLayoutManager
@@ -69,6 +66,7 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_recent, container, false) as View
+        setHasOptionsMenu(true)
         dialog = ProgressDialogutil.setProgressDialog(view.context, "Loading")
         dialog.show()
         page = 1
@@ -135,9 +133,23 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_search, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search -> {
+                findNavController().navigate(R.id.action_recentFragment_to_searchFragment)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     fun mapping(view: View) {
         //create list
-        mListPromotion = ArrayList()
         mList = ArrayList()
         mListCoupon = ArrayList()
         //mapping
@@ -222,8 +234,6 @@ class RecentFragment : Fragment(), ProductAdapter.Itemclick {
     }
 
     fun doLoadApi(dataCallBack: DataCallBack<TopResponse>) {
-        var param = HashMap<String, String>()
-        param.put("page", "1")
         var compositeDisposable = CompositeDisposable(
             ServiceBuilder.buildService()
                 .getDashBoard()

@@ -47,4 +47,14 @@ interface Endpoint {
         @Header("Authorization") token: String,
         @QueryMap params: HashMap<String, String>
     ): Observable<RegisterRespone>
+
+    @GET("/api/customer/get-quarterly-statistics")
+    fun getQuaterlyStatistics(
+        @Header("Authorization") token: String
+    ): Observable<List<Int>>
+
+    @GET("/api/customer/get-category-statistics")
+    fun getCategoryStatistics(
+        @Header("Authorization") token: String
+    ): Observable<CategoryStatisticsResponse>
 }

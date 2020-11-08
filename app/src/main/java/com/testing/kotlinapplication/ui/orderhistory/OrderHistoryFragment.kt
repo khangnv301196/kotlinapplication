@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testing.kotlinapplication.MainActivity
 import com.testing.kotlinapplication.R
@@ -221,6 +222,12 @@ class OrderHistoryFragment : Fragment(), AdapterView.OnItemSelectedListener, Ord
 
             }
         })
+    }
+
+    override fun onItemClick(id: Int) {
+        val action =
+            OrderHistoryFragmentDirections.actionOrderHistoryFragmentToDetailOrderFragment(1, id)
+        findNavController().navigate(action)
     }
 
 

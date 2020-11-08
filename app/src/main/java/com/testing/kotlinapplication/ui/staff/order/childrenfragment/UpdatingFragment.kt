@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.testing.kotlinapplication.R
@@ -18,7 +19,10 @@ import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.OrderResponse
 import com.testing.kotlinapplication.network.model.OrderResponseItem
 import com.testing.kotlinapplication.network.model.RegisterRespone
+import com.testing.kotlinapplication.ui.staff.order.ItemClick
 import com.testing.kotlinapplication.ui.staff.order.ItemDeliveryAdapter
+import com.testing.kotlinapplication.ui.staff.order.OrderStaffFragment
+import com.testing.kotlinapplication.ui.staff.order.OrderStaffFragmentDirections
 import com.testing.kotlinapplication.ui.staff.order.modelcontract.ProceedModel
 import com.testing.kotlinapplication.ui.staff.order.modelcontract.UpdatingModel
 import com.testing.kotlinapplication.util.Constant
@@ -35,7 +39,7 @@ import kotlin.math.log
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-class UpdatingFragment : Fragment() {
+class UpdatingFragment : Fragment(), ItemClick {
 
     private lateinit var mList: ArrayList<OrderResponseItem>
     private lateinit var mAdapter: ItemDeliveryAdapter
@@ -65,7 +69,7 @@ class UpdatingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mList = ArrayList()
-        mAdapter = context?.let { ItemDeliveryAdapter(it, mList) }!!
+        mAdapter = context?.let { ItemDeliveryAdapter(it, mList, this) }!!
         rv_update.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
@@ -86,10 +90,16 @@ class UpdatingFragment : Fragment() {
                         .setDuration(1000)
                         .setListener(null)
                 }
+                if(mList.size==0){
+                    txt_empty_update.visibility=View.VISIBLE
+                }else{
+                    txt_empty_update.visibility=View.GONE
+                }
             }
 
             override fun Error(error: Throwable) {
                 Toast.makeText(mContext, "Error Load", Toast.LENGTH_SHORT).show()
+                
 
             }
         })
@@ -154,6 +164,12 @@ class UpdatingFragment : Fragment() {
                 }
             })
         }
+    }
+
+    override fun OnItemCLick(id: Int) {
+        val action =
+            OrderStaffFragmentDirections.actionOrderStaffFragmentToDetailOrderFragment2(id, 2)
+        findNavController().navigate(action)
     }
 
 }

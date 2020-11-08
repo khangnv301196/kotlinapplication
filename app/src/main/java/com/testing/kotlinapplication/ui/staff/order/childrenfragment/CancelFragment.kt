@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.testing.kotlinapplication.R
@@ -15,7 +16,9 @@ import com.testing.kotlinapplication.network.DataCallBack
 import com.testing.kotlinapplication.network.ServiceBuilder
 import com.testing.kotlinapplication.network.model.OrderResponse
 import com.testing.kotlinapplication.network.model.OrderResponseItem
+import com.testing.kotlinapplication.ui.staff.order.ItemClick
 import com.testing.kotlinapplication.ui.staff.order.ItemDeliveryAdapter
+import com.testing.kotlinapplication.ui.staff.order.OrderStaffFragmentDirections
 import com.testing.kotlinapplication.ui.staff.order.modelcontract.CancelingModel
 import com.testing.kotlinapplication.util.Constant
 import com.testing.kotlinapplication.util.Preference
@@ -30,7 +33,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * A simple [Fragment] subclass.
  */
-class CancelFragment : Fragment() {
+class CancelFragment : Fragment(), ItemClick {
     private lateinit var mList: ArrayList<OrderResponseItem>
     private lateinit var mAdapter: ItemDeliveryAdapter
     private lateinit var mContext: Context
@@ -58,7 +61,7 @@ class CancelFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mList = ArrayList()
-        mAdapter = context?.let { ItemDeliveryAdapter(it, mList) }!!
+        mAdapter = context?.let { ItemDeliveryAdapter(it, mList, this) }!!
         rv_cancel.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
@@ -78,6 +81,11 @@ class CancelFragment : Fragment() {
                         .scaleX(1f).scaleY(1f)
                         .setDuration(1000)
                         .setListener(null)
+                }
+                if(mList.size==0){
+                    txt_empty_cancel.visibility=View.VISIBLE
+                }else{
+                    txt_empty_cancel.visibility=View.GONE
                 }
             }
 
@@ -110,5 +118,11 @@ class CancelFragment : Fragment() {
             mList.add(0, data.data)
             mAdapter.notifyDataSetChanged()
         }
+    }
+
+    override fun OnItemCLick(id: Int) {
+        val action =
+            OrderStaffFragmentDirections.actionOrderStaffFragmentToDetailOrderFragment2(id, 2)
+        findNavController().navigate(action)
     }
 }

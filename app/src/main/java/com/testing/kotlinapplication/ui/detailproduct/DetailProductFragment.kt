@@ -218,45 +218,52 @@ class DetailProductFragment : Fragment() {
             var bundle = Bundle()
             bundle.putInt("Product", 1)
             dialog.hide()
-            progressDialog.show()
-            var cart = useCase.doCheckCart()
-            cart.observe(viewLifecycleOwner, Observer {
-                if (it != null) {
-                    preference.save(Constant.HAS_CART, true)
-                    it.Id?.let { it1 -> preference.save(Constant.CART_ID, it1) }
-                }
-            })
+            if (preference.getValueBoolien(Constant.IS_LOGIN, false)) {
+                progressDialog.show()
+                var cart = useCase.doCheckCart()
+                cart.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        preference.save(Constant.HAS_CART, true)
+                        it.Id?.let { it1 -> preference.save(Constant.CART_ID, it1) }
+                    }
+                })
 
-            if (cart.hasActiveObservers()) {
-                if (preference.getValueBoolien(Constant.HAS_CART, false)) {
-                    var idCart = preference.getValueInt(Constant.CART_ID)
-                    var product = ProductsModel(
-                        data.TenSP,
-                        idCart,
-                        data.AnhChinh,
-                        detailid,
-                        quantity,
-                        data.DongGia.toInt()
-                    )
-                    useCase.doAddProductByIDCart(product)
-                } else {
-                    var product = ProductsModel(
-                        data.TenSP,
-                        0,
-                        data.AnhChinh,
-                        data.id,
-                        quantity,
-                        data.DongGia.toInt()
-                    )
-                    useCase.doCreateNewCart(product)
+                if (cart.hasActiveObservers()) {
+                    Log.d("DETAIL", "${data.id}")
+                    if (preference.getValueBoolien(Constant.HAS_CART, false)) {
+                        var idCart = preference.getValueInt(Constant.CART_ID)
+                        var product = ProductsModel(
+                            data.TenSP,
+                            idCart,
+                            data.AnhChinh,
+                            detailid,
+                            quantity,
+                            data.DongGia.toInt()
+                        )
+                        useCase.doAddProductByIDCart(product)
+                    } else {
+                        var product = ProductsModel(
+                            data.TenSP,
+                            0,
+                            data.AnhChinh,
+                            detailid,
+                            quantity,
+                            data.DongGia.toInt()
+                        )
+                        useCase.doCreateNewCart(product)
+                    }
                 }
+
+                Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                    progressDialog.hide()
+                    findNavController().navigate(R.id.cardFragment, bundle)
+                }, 2000)
+            } else {
+                Toast.makeText(mContext, "Please Login to Order this Product", Toast.LENGTH_SHORT)
+                    .show()
             }
-
-            Handler(Looper.getMainLooper()).postDelayed(Runnable {
-                progressDialog.hide()
-                findNavController().navigate(R.id.cardFragment, bundle)
-            }, 2000)
         }
     }
+
 
 }
