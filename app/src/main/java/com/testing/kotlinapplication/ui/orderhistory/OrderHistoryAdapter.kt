@@ -20,26 +20,28 @@ class OrderHistoryAdapter(
     RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder>() {
     class OrderHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(data: OrderResponseItem, callback: OrderCallback) {
-            var img = data.chi_tiet_hoa_don.get(0).AnhChinh
+            try {
+                var img = data.chi_tiet_hoa_don.get(0).AnhChinh
 
-            itemView.title_order.setText("Create At: ${data.ngaytao}")
-            Glide.with(itemView.context).load(img).into(itemView.img_content)
-            itemView.title_product.setText(data.chi_tiet_hoa_don.get(0).TenSP)
-            itemView.size.setText(
-                "Size: ${data.chi_tiet_hoa_don.get(0).KichThuoc}     Color: ${data.chi_tiet_hoa_don.get(
-                    0
-                ).Mau}"
-            )
-
-            itemView.quantity.setText("x${data.chi_tiet_hoa_don.get(0).SoLuong}")
-            itemView.price.setText(
-                "${util.doFormatPrice(
-                    data.chi_tiet_hoa_don.get(0).SoLuong * data.chi_tiet_hoa_don.get(
+                itemView.title_order.setText("Tạo vào: ${data.ngaytao}")
+                Glide.with(itemView.context).load(img).into(itemView.img_content)
+                itemView.title_product.setText(data.chi_tiet_hoa_don.get(0).TenSP)
+                itemView.size.setText(
+                    "Loại: ${data.chi_tiet_hoa_don.get(0).KichThuoc}     Màu sắc: ${data.chi_tiet_hoa_don.get(
                         0
-                    ).Gia.toInt()
-                )} đ"
-            )
-            itemView.address.setText("Address: ${data.delivery_address.address},${data.delivery_address.district}.${data.delivery_address.city}")
+                    ).Mau}"
+                )
+
+                itemView.quantity.setText("x${data.chi_tiet_hoa_don.get(0).SoLuong}")
+                itemView.price.setText(
+                    "${util.doFormatPrice(
+                        data.chi_tiet_hoa_don.get(0).SoLuong * data.chi_tiet_hoa_don.get(
+                            0
+                        ).Gia.toInt()
+                    )} đ"
+                )
+            }catch (e:Exception){}
+            itemView.address.setText("Địa chỉ: ${data.delivery_address.address},${data.delivery_address.district}.${data.delivery_address.city}")
 
             itemView.btn_cancel.visibility = View.VISIBLE
             itemView.btn_complete.visibility = View.VISIBLE
@@ -52,25 +54,25 @@ class OrderHistoryAdapter(
             }
             when (data.TrangThai) {
                 1 -> {
-                    itemView.status.setText("Procced")
+                    itemView.status.setText("Xử lý")
                     itemView.btn_complete.visibility = View.INVISIBLE
                 }
                 2 -> {
-                    itemView.status.setText("Updating")
+                    itemView.status.setText("Cập nhật")
                     itemView.btn_complete.visibility = View.INVISIBLE
                     itemView.btn_cancel.visibility = View.INVISIBLE
                 }
                 3 -> {
-                    itemView.status.setText("Complete")
+                    itemView.status.setText("Hoàn thành")
                     itemView.btn_cancel.visibility = View.GONE
                 }
                 4 -> {
-                    itemView.status.setText("Cancel")
+                    itemView.status.setText("Hủy")
                     itemView.btn_complete.visibility = View.INVISIBLE
                     itemView.btn_cancel.visibility = View.INVISIBLE
                 }
                 5 -> {
-                    itemView.status.setText("Paid")
+                    itemView.status.setText("Đã thanh toán")
                     itemView.btn_complete.visibility = View.INVISIBLE
                     itemView.btn_cancel.visibility = View.INVISIBLE
                 }

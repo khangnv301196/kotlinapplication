@@ -28,7 +28,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
-        android:text="Sign Up"
+        android:text="Đăng ký"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +58,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="User name" />
+                    android:hint="Tên khách hàng" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -71,7 +71,7 @@
                     android:id="@+id/header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Choose one"
+                    android:text="Lựa chọn"
                     android:layout_gravity="center"
                     android:paddingLeft="2dp"
                     android:textSize="17sp"
@@ -90,13 +90,13 @@
                         android:layout_weight="1"
                         android:layout_marginRight="10dp"
                         style="@style/RadioButton"
-                        android:text="Male"/>
+                        android:text="Nam"/>
                     <RadioButton
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         style="@style/RadioButton"
-                        android:text="Female"/>
+                        android:text="Nữ"/>
                 </info.hoang8f.android.segmented.SegmentedGroup>
             </LinearLayout>
 
@@ -119,7 +119,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone Number" />
+                    android:hint="Số điện thoại" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -132,7 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="Password" />
+                    android:hint="Mật khẩu" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -147,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="Confirm Password" />
+                    android:hint="Xác nhận mật khẩu" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -158,7 +158,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="City | Province" />
+                    android:hint="Tỉnh / Thành phố" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -169,7 +169,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ward" />
+                    android:hint="Quận , Huyện" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txt_address"
@@ -179,7 +179,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Address" />
+                    android:hint="Địa chỉ" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

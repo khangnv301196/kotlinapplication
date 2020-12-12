@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quarterly Revenue"
+        android:text="Doanh thu theo quý"
         android:textSize="16sp"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
@@ -26,7 +26,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Best Seller"
+        android:text="Sản phẩm bán chạy"
         android:textSize="16sp"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />

@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Order Details"
+            android:text="Chi tiết đặt hàng"
             android:textColor="#444"
             android:textSize="18dp"
             android:textStyle="bold" />
@@ -64,7 +64,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/colorAccent"
         android:foreground="?attr/selectableItemBackground"
-        android:text="PROCEED PAYMENT"
+        android:text="tiến hành thanh toán"
         android:textColor="#fff" />
 
 </LinearLayout>

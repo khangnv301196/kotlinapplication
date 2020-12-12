@@ -36,7 +36,7 @@
         android:id="@+id/txt_empty_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order Empty"
+        android:text="Không có đơn hàng"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"

@@ -106,7 +106,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:text="Status"
+                android:text="Trạng thái"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -127,7 +127,7 @@
                     android:background="@drawable/corner_accent"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:text="Procced"
+                    android:text="Xác nhận"
                     android:textColor="@android:color/white" />
 
                 <Button
@@ -139,7 +139,7 @@
                     android:background="@drawable/corner_accent"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:text="Deliveried"
+                    android:text="Đã giao"
                     android:textColor="@android:color/white" />
 
                 <Button
@@ -148,7 +148,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity=""
                     android:background="@drawable/ripple_red"
-                    android:text="cancel"
+                    android:text="Hủy"
                     android:textColor="@android:color/white" />
             </LinearLayout>
         </LinearLayout>

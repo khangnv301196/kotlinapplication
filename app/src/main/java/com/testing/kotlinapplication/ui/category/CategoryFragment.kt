@@ -48,12 +48,12 @@ class CategoryFragment : Fragment(), CategoryAdapter.CategoryItemClick {
     private fun initData() {
         mListCategory = ArrayList()
         mListCategory.add(Category("Laptop", R.drawable.ic_laptop, 2, 5))
-        mListCategory.add(Category("Health & Sport", R.drawable.ic_american_football, 13, 5))
-        mListCategory.add(Category("Electronics & Gadgets", R.drawable.ic_computer, 14, 5))
-        mListCategory.add(Category("Fashions", R.drawable.ic_eye_makeup, 16, 4))
-        mListCategory.add(Category("Baby Gear", R.drawable.ic_baby, 15, 5))
-        mListCategory.add(Category("Home & Furnitrue", R.drawable.ic_real_estate, 17, 5))
-        mListCategory.add(Category("Office & Industry", R.drawable.ic_printer, 18, 5))
+        mListCategory.add(Category("Sức khỏe & Thể thao", R.drawable.ic_american_football, 13, 5))
+        mListCategory.add(Category("Điện tử & tiện ích", R.drawable.ic_computer, 14, 5))
+        mListCategory.add(Category("Thời trang", R.drawable.ic_eye_makeup, 16, 4))
+        mListCategory.add(Category("Sản phẩm cho trẻ", R.drawable.ic_baby, 15, 5))
+        mListCategory.add(Category("Nội thất nhà ở", R.drawable.ic_real_estate, 17, 5))
+        mListCategory.add(Category("Đồ dùng văn phòng", R.drawable.ic_printer, 18, 5))
     }
 
     override fun onItemClick(category: Category) {

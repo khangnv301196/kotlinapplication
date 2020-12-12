@@ -40,7 +40,7 @@
             android:gravity="center"
             android:padding="15dp"
             android:background="@drawable/ripple_red"
-            android:text="NAVIGATE TO DASHBOARD"
+            android:text="Tiếp tục mua sắm"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="14sp"

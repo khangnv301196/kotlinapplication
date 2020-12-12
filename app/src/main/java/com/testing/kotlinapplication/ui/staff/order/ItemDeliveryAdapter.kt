@@ -33,26 +33,31 @@ class ItemDeliveryAdapter(
     RecyclerView.Adapter<ItemDeliveryAdapter.ItemDeliberyViewHolder>() {
     class ItemDeliberyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(data: OrderResponseItem, itemClick: ItemClick) {
-            var img = data.chi_tiet_hoa_don.get(0).AnhChinh
             var total = 0
             for (detail in data.chi_tiet_hoa_don) {
                 total += detail.SoLuong * detail.Gia.toInt()
             }
+            itemView.title_order_deli.setText("Tạo lúc: ${data.ngaytao}")
+            try {
+                var img = data.chi_tiet_hoa_don.get(0).AnhChinh
 
-            itemView.title_order_deli.setText("Create At: ${data.ngaytao}")
-            Glide.with(itemView.context).load(img).into(itemView.img_content_deli)
-            itemView.title_product_deli.setText(data.chi_tiet_hoa_don.get(0).TenSP)
-            itemView.size_deli.setText(
-                "Size: ${data.chi_tiet_hoa_don.get(0).KichThuoc}     Color: ${data.chi_tiet_hoa_don.get(
-                    0
-                ).Mau}"
-            )
+                Glide.with(itemView.context).load(img).into(itemView.img_content_deli)
+                itemView.title_product_deli.setText(data.chi_tiet_hoa_don.get(0).TenSP)
+                itemView.size_deli.setText(
+                    "Loại: ${data.chi_tiet_hoa_don.get(0).KichThuoc}     màu: ${data.chi_tiet_hoa_don.get(
+                        0
+                    ).Mau}"
+                )
+                itemView.quantity_deli.setText("x${data.chi_tiet_hoa_don.get(0).SoLuong}")
+            } catch (e: Exception) {
 
-            itemView.quantity_deli.setText("x${data.chi_tiet_hoa_don.get(0).SoLuong}")
+            }
+
+
             itemView.price_deli.setText(
-                "Total price: ${util.doFormatPrice(total)} đ"
+                "Tổng tiền: ${util.doFormatPrice(total)} đ"
             )
-            itemView.address_deli.setText("Address: ${data.delivery_address.address},${data.delivery_address.district}.${data.delivery_address.city}")
+            itemView.address_deli.setText("Địa chỉ: ${data.delivery_address.address},${data.delivery_address.district}.${data.delivery_address.city}")
             itemView.btn_proceed_deli.setOnClickListener {
                 EventBus.getDefault().post(ProceedModel(false, data))
             }
@@ -65,28 +70,28 @@ class ItemDeliveryAdapter(
 
             when (data.TrangThai) {
                 1 -> {
-                    itemView.status_deli.setText("Procced")
+                    itemView.status_deli.setText("Chờ xác nhận")
                     itemView.btn_delivery_deli.visibility = View.GONE
                 }
                 2 -> {
-                    itemView.status_deli.setText("Updating")
+                    itemView.status_deli.setText("Đang giao hàng")
                     itemView.btn_proceed_deli.visibility = View.GONE
                     itemView.btn_cancel_deli.visibility = View.GONE
                 }
                 3 -> {
-                    itemView.status_deli.setText("Complete")
+                    itemView.status_deli.setText("Đã giao hàng")
                     itemView.btn_cancel_deli.visibility = View.INVISIBLE
                     itemView.btn_proceed_deli.visibility = View.INVISIBLE
                     itemView.btn_delivery_deli.visibility = View.INVISIBLE
                 }
                 4 -> {
-                    itemView.status_deli.setText("Cancel")
+                    itemView.status_deli.setText("hủy")
                     itemView.btn_proceed_deli.visibility = View.INVISIBLE
                     itemView.btn_cancel_deli.visibility = View.INVISIBLE
                     itemView.btn_delivery_deli.visibility = View.INVISIBLE
                 }
                 5 -> {
-                    itemView.status_deli.setText("Paid")
+                    itemView.status_deli.setText("Đã thanh toán")
                     itemView.btn_proceed_deli.visibility = View.INVISIBLE
                     itemView.btn_cancel_deli.visibility = View.INVISIBLE
                     itemView.btn_delivery_deli.visibility = View.INVISIBLE

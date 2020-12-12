@@ -16,7 +16,7 @@
         android:textStyle="bold|italic"
         android:textColor="@color/colorPrimary"
         android:textSize="17sp"
-        android:text="Status"/>
+        android:text="Trạng thái"/>
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/spinner"

@@ -23,7 +23,7 @@ class CategoryAdapter(
 
         fun bindView(item: Category) {
             txt_category.setText(item.name)
-            txt_total.setText("${item.total} item(s)")
+            txt_total.setText("${item.total} sản phẩm")
             imageView.setImageResource(item.image)
         }
     }

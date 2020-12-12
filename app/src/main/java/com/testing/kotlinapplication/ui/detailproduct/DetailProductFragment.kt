@@ -91,7 +91,7 @@ class DetailProductFragment : Fragment() {
                     scrollRange = appBarLayout.totalScrollRange
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsing_toolbar.title = "Detail Product"
+                    collapsing_toolbar.title = "Chi tiết sản phẩm"
                     titleIsShowing = true
                 } else if (titleIsShowing) {
                     collapsing_toolbar.title =

@@ -39,7 +39,7 @@ class OrderFragment : Fragment() {
         mapping(view)
         model = ShopRepository.getUser(view.context, preference.getValueInt(Constant.USER_ID))!!
         model.observe(viewLifecycleOwner, Observer {
-            txtinp_name.editText?.setText(it.HoTen)
+            txtinp_name.editText?.setText(it.TenDangNhap)
             txtinp_email.editText?.setText(it.email)
             txtinp_phone.editText?.setText(it.SDT)
             txtinp_city.editText?.setText(it.DiaChi_ThanhPho)

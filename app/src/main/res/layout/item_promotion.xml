@@ -58,7 +58,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/corner_accent"
             android:padding="3dp"
-            android:text="SHOP NOW"
+            android:text="Mua ngay"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="10sp"

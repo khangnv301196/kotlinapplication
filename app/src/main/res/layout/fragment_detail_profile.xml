@@ -85,7 +85,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:text="Gender :"
+                        android:text="Giới tính :"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
@@ -107,7 +107,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:text="Phone number :"
+                        android:text="Số điện thoại :"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
@@ -129,7 +129,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:text="City :"
+                        android:text="Thành phố/tỉnh :"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
@@ -151,7 +151,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:text="District :"
+                        android:text="Quận/huyện :"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
@@ -173,7 +173,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:text="Address :"
+                        android:text="Địa chỉ :"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
@@ -194,7 +194,7 @@
         android:id="@+id/btn_logout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Log out"
+        android:text="Đăng xuất"
         android:textColor="@color/white"
         android:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"

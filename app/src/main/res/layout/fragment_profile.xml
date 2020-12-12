@@ -120,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="Order History" />
+                android:text="Lịch sử đơn hàng" />
         </LinearLayout>
 
         <View
@@ -271,7 +271,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="Cart" />
+                android:text="Giỏ hàng" />
         </LinearLayout>
 
         <View

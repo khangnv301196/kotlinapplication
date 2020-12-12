@@ -8,12 +8,12 @@
     <fragment
         android:id="@+id/satisticFragment"
         android:name="com.testing.kotlinapplication.ui.staff.statistic.SatisticFragment"
-        android:label="DashBoard"
+        android:label="Bảng thống kê"
         tools:layout="@layout/fragment_satistic" />
     <fragment
         android:id="@+id/orderStaffFragment"
         android:name="com.testing.kotlinapplication.ui.staff.order.OrderStaffFragment"
-        android:label="Order List"
+        android:label="Danh sách đơn hàng"
         tools:layout="@layout/fragment_order_staff" >
         <action
             android:id="@+id/action_orderStaffFragment_to_detailOrderFragment2"
@@ -22,12 +22,12 @@
     <fragment
         android:id="@+id/customerListFragment"
         android:name="com.testing.kotlinapplication.ui.staff.customerlist.CustomerListFragment"
-        android:label="Customer List"
+        android:label="Danh sách người dùng"
         tools:layout="@layout/fragment_customer_list" />
     <fragment
         android:id="@+id/profilestaff"
         android:name="com.testing.kotlinapplication.ui.staff.ProfileStaffFragment"
-        android:label="Account"
+        android:label="Tài khoản"
         tools:layout="@layout/fragment_profile_staff" >
         <action
             android:id="@+id/staff_todetail"
@@ -36,12 +36,12 @@
     <fragment
         android:id="@+id/detailProfileFragment2"
         android:name="com.testing.kotlinapplication.ui.detailprofile.DetailProfileFragment"
-        android:label="Detail"
+        android:label="Chi tiết"
         tools:layout="@layout/fragment_detail_profile" />
     <fragment
         android:id="@+id/detailOrderFragment2"
         android:name="com.testing.kotlinapplication.ui.detailorder.DetailOrderFragment"
-        android:label="Detail Order"
+        android:label="Chi tiết đơn hàng"
         tools:layout="@layout/fragment_detail_order">
         <argument
             android:name="id"

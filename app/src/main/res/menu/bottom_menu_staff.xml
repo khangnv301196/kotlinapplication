@@ -5,18 +5,18 @@
         android:id="@+id/satisticFragment"
         android:icon="@drawable/ic_bar_chart"
         android:orderInCategory="1"
-        android:title="Statistic"
+        android:title="Bảng thống kê"
         app:showAsAction="always" />
     <item
         android:id="@+id/orderStaffFragment"
         android:icon="@drawable/ic_baseline_shop_24"
         android:orderInCategory="1"
-        android:title="Orders"
+        android:title="Đơn hàng"
         app:showAsAction="always" />
     <item
         android:id="@+id/profilestaff"
         android:icon="@drawable/ic_baseline_account_box_24"
         android:orderInCategory="1"
-        android:title="Account"
+        android:title="Tài khoản"
         app:showAsAction="always" />
 </menu>

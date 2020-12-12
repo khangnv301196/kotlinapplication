@@ -42,7 +42,7 @@
                 android:id="@+id/txt_total"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total : 0đ"
+                android:text="Tổng tiền : 0đ"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -51,7 +51,7 @@
                 android:id="@+id/discount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Discount"
+                android:text="Giảm giá"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -68,7 +68,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorAccent"
                 android:gravity="center"
-                android:text="CHECKOUT"
+                android:text="Xác nhận"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -78,7 +78,7 @@
         android:id="@+id/txt_empty"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Product Empty"
+        android:text="Giỏ hàng trống"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"

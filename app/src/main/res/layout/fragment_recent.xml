@@ -44,7 +44,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="10"
-                        android:text="OFFER"
+                        android:text="Đề xuất"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
-                        android:text="see all"
+                        android:text="Xem tất cả"
                         android:textAlignment="textEnd"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -76,7 +76,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="10"
-                        android:text="COUPON"
+                        android:text="Khuyến mãi"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
-                        android:text="see all"
+                        android:text="Xem tất cả"
                         android:textAlignment="textEnd"
                         android:textSize="18sp" />
 

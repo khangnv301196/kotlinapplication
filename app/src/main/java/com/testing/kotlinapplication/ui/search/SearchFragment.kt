@@ -91,7 +91,7 @@ class SearchFragment : Fragment(), ProductAdapter.Itemclick {
 
     fun doGetSearch(keyword: String, callBack: DataCallBack<ProductRespone>) {
         var param = HashMap<String, String>()
-//        param.put("page", keyword)
+        param.put("search", keyword)
         param.put("page", "1")
         var compositeDisposable = CompositeDisposable(
             ServiceBuilder.buildService()

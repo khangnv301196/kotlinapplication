@@ -6,25 +6,25 @@
         android:icon="@android:drawable/ic_menu_recent_history"
         app:showAsAction="always"
         android:orderInCategory="1"
-        android:title="Recent" />
+        android:title="Trang chủ" />
     <item
         android:id="@+id/categoryFragment"
         android:icon="@android:drawable/ic_search_category_default"
         app:showAsAction="always"
-        android:orderInCategory="2"
-        android:title="Category" />
+        android:orderInCategory="1"
+        android:title="Danh mục" />
     <item
         android:id="@+id/helpFragment"
         android:icon="@android:drawable/ic_menu_help"
         app:showAsAction="always"
-        android:orderInCategory="3"
-        android:title="Help" />
+        android:orderInCategory="1"
+        android:title="Trợ giúp" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_person_black_24dp"
         app:showAsAction="always"
-        android:orderInCategory="4"
-        android:title="Profile" />
+        android:orderInCategory="1"
+        android:title="Tài khoản" />
 
 
 

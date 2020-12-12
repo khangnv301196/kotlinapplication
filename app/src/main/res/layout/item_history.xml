@@ -126,7 +126,7 @@
                     android:background="@drawable/corner_accent"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:text="Complete"
+                    android:text="Hoàn tất"
                     android:textColor="@android:color/white" />
 
                 <Button
@@ -134,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:background="@drawable/ripple_red"
-                    android:text="cancel"
+                    android:text="Hủy"
                     android:textColor="@android:color/white" />
             </LinearLayout>
         </LinearLayout>

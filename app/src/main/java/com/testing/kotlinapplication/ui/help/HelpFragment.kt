@@ -38,11 +38,11 @@ class HelpFragment : Fragment(), HelpItemClick {
 
     private fun prepareData(): ArrayList<Item> {
         val mList = ArrayList<Item>() as ArrayList
-        mList.add(Item("How to order", 0))
-        mList.add(Item("Payment", 1))
-        mList.add(Item("Shipping", 2))
-        mList.add(Item("Profile", 3))
-        mList.add(Item("Contact Us", 4))
+        mList.add(Item("Cách đặt hàng", 0))
+        mList.add(Item("Thanh toán", 1))
+        mList.add(Item("Vận chuyển", 2))
+        mList.add(Item("Tài khoản ", 3))
+        mList.add(Item("Thông tin liên hệ", 4))
         return mList
     }
 

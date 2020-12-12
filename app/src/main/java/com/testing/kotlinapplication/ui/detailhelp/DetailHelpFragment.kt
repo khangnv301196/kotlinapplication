@@ -36,23 +36,23 @@ class DetailHelpFragment : Fragment() {
         when (data) {
             0 -> {
                 id = R.string.html_0
-                title = "How to order"
+                title = "Cách đặt hàng"
             }
             1 -> {
                 id = R.string.html_1
-                title = "Payment"
+                title = "Thanh toán"
             }
             2 -> {
                 id = R.string.html_2
-                title = "Shipping"
+                title = "Vận chuyển"
             }
             3 -> {
                 id = R.string.html_3
-                title = "Profile"
+                title = "Tài khoản "
             }
             4 -> {
                 id = R.string.html_4
-                title = "Contact Us"
+                title = "Thông tin liên hệ"
             }
         }
         val htmlResource = Html.fromHtml(getString(id), 1)
